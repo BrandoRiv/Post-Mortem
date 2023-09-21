@@ -9,61 +9,61 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = postMortem.Web
 build_property.RootNamespace = postMortem.Web
-build_property.ProjectDir = C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\
+build_property.ProjectDir = C:\Users\austi\source\repos\2023_f_brandon\postMortem\postMortem.Web\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web
+build_property.MSBuildProjectDirectory = C:\Users\austi\source\repos\2023_f_brandon\postMortem\postMortem.Web
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/App.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/Counter.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/FetchData.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Pages/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/Index.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Shared/LoginDisplay.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Shared/LoginDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luRGlzcGxheS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Shared/SurveyPrompt.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/_Imports.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Shared/MainLayout.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-55c41kl8ki
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Shared/NavMenu.razor]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-pc5p6k0l6e
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Areas/Identity/Pages/Account/LogOut.cshtml]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Areas/Identity/Pages/Account/LogOut.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dPdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Areas/Identity/Pages/Shared/_LoginPartial.cshtml]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Areas/Identity/Pages/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/Error.cshtml]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/_Host.cshtml]
+[C:/Users/austi/source/repos/2023_f_brandon/postMortem/postMortem.Web/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

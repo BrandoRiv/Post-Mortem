@@ -9,6 +9,8 @@ namespace postMortem.Data.Model
     {
         public int ID { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
         [NotMapped]
         public abstract string EntityType { get; }
     }

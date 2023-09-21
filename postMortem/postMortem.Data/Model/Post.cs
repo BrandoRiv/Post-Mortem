@@ -18,12 +18,14 @@ namespace postMortem.Data.Model
             Poster = poster;
         }
 
+        public string Status { get; set; }
         public string Title { get; set; }
+        public string Message { get; set; }
 
-        /// <summary>
-        /// References objects must be set as virtual.
-        /// </summary>
         public virtual User Poster { get; set; }
+        public virtual int PosterID { get; set; }
+
+        public DateTime Created_At { get; set; }
 
         public override string EntityType => "Post";
     }
