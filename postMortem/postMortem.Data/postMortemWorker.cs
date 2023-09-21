@@ -1,10 +1,12 @@
-﻿using postMortem.Data.Model;
+﻿using BlazorBootstrap;
+using postMortem.Data.Model;
 using postMortem.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace postMortem.Data
 {
@@ -40,10 +42,40 @@ namespace postMortem.Data
         private EfRepository<postMortemContext, User> _Users;
 
         /// <summary>
+        /// Retrieves a list of users.
+        /// </summary>
+        public EfRepository<postMortemContext, BannedUser> BannedUsers { get => _BannedUsers; set => _BannedUsers = value; }
+        private EfRepository<postMortemContext, BannedUser> _BannedUsers;
+
+        /// <summary>
         /// Retrieves a list of posts.
         /// </summary>
         public EfRepository<postMortemContext, Post> Posts { get => _Posts; set => _Posts = value; }
         private EfRepository<postMortemContext, Post> _Posts;
+
+        /// <summary>
+        /// Retrieves a list of comments
+        /// </summary>
+        public EfRepository<postMortemContext, Comment> Comments { get => _Comments; set => _Comments = value; }
+        private EfRepository<postMortemContext, Comment> _Comments;
+
+        /// <summary>
+        /// Retrieves a list of comments
+        /// </summary>
+        public EfRepository<postMortemContext, Report> Reports { get => _Reports; set => _Reports = value; }
+        private EfRepository<postMortemContext, Report> _Reports;
+
+        /// <summary>
+        /// Retrieves a list of awards
+        /// </summary>
+        public EfRepository<postMortemContext, Award> Awards { get => _Awards; set => _Awards = value; }
+        private EfRepository<postMortemContext, Award> _Awards;
+
+        /// <summary>
+        /// Retrieves a list of votes
+        /// </summary>
+        public EfRepository<postMortemContext, Vote> Votes { get => _Votes; set => _Votes = value; }
+        private EfRepository<postMortemContext, Vote> _Votes;
 
         /// <summary>
         /// Dispose of the current object.

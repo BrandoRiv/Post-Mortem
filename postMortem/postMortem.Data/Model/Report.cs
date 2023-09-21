@@ -7,23 +7,24 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Model
 {
-    public class Vote : Entity
+    public class Report : Entity
     {
-        public Vote() { }
-        public Vote(string userID, VoteType voteType)
+        public Report()
         {
-            UserID = userID;
-            VoteType = voteType;
+
         }
 
         public virtual VoteableEntity Entity { get; set; }
         public int? EntityID { get; set; }
 
         public virtual User User { get; set; }
-        public string? UserID { get; set; }
+        public int? UserID { get; set; }
 
-        public VoteType VoteType { get; set; }
+        public bool Archived { get; set; }
+        public bool Deleted { get; set; }
 
-        public override string EntityType => "Vote";
+        public ReportStatus Status { get; set; }
+
+        public override string EntityType => "Report";
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using postMortem.Data;
 
@@ -11,9 +12,11 @@ using postMortem.Data;
 namespace postMortem.Data.Migrations
 {
     [DbContext(typeof(postMortemContext))]
-    partial class postMortemContextModelSnapshot : ModelSnapshot
+    [Migration("20230921022508_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,14 +43,14 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FromID")
+                    b.Property<int>("FromID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ToID")
+                    b.Property<int>("ToID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -77,7 +80,7 @@ namespace postMortem.Data.Migrations
                     b.Property<DateTime>("UntilDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -104,13 +107,13 @@ namespace postMortem.Data.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("EntityID")
+                    b.Property<int>("EntityID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -168,10 +171,11 @@ namespace postMortem.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EntityID")
+                    b.Property<int>("EntityID")
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserID1")
@@ -223,17 +227,22 @@ namespace postMortem.Data.Migrations
                 {
                     b.HasBaseType("postMortem.Data.Model.VoteableEntity");
 
-                    b.Property<int?>("EntityID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int>("ParentID")
                         .HasColumnType("int");
 
-                    b.HasIndex("EntityID");
+                    b.Property<int>("PostID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasIndex("ParentID");
+
+                    b.HasIndex("PostID");
 
                     b.HasIndex("UserID");
 
@@ -254,7 +263,7 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PosterID")
+                    b.Property<int>("PosterID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -273,11 +282,15 @@ namespace postMortem.Data.Migrations
                 {
                     b.HasOne("postMortem.Data.Model.User", "From")
                         .WithMany()
-                        .HasForeignKey("FromID");
+                        .HasForeignKey("FromID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("postMortem.Data.Model.VoteableEntity", "To")
                         .WithMany("AwardsGiven")
-                        .HasForeignKey("ToID");
+                        .HasForeignKey("ToID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("From");
 
@@ -288,7 +301,9 @@ namespace postMortem.Data.Migrations
                 {
                     b.HasOne("postMortem.Data.Model.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -297,11 +312,15 @@ namespace postMortem.Data.Migrations
                 {
                     b.HasOne("postMortem.Data.Model.VoteableEntity", "Entity")
                         .WithMany("Reports")
-                        .HasForeignKey("EntityID");
+                        .HasForeignKey("EntityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("postMortem.Data.Model.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Entity");
 
@@ -312,7 +331,9 @@ namespace postMortem.Data.Migrations
                 {
                     b.HasOne("postMortem.Data.Model.VoteableEntity", "Entity")
                         .WithMany("VotesGiven")
-                        .HasForeignKey("EntityID");
+                        .HasForeignKey("EntityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("postMortem.Data.Model.User", "User")
                         .WithMany()
@@ -327,15 +348,27 @@ namespace postMortem.Data.Migrations
 
             modelBuilder.Entity("postMortem.Data.Model.Comment", b =>
                 {
-                    b.HasOne("postMortem.Data.Model.VoteableEntity", "Entity")
-                        .WithMany("Comments")
-                        .HasForeignKey("EntityID");
+                    b.HasOne("postMortem.Data.Model.Comment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("postMortem.Data.Model.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("postMortem.Data.Model.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserID");
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Entity");
+                    b.Navigation("Parent");
+
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
@@ -344,23 +377,21 @@ namespace postMortem.Data.Migrations
                 {
                     b.HasOne("postMortem.Data.Model.User", "Poster")
                         .WithMany("Posts")
-                        .HasForeignKey("PosterID");
+                        .HasForeignKey("PosterID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Poster");
                 });
 
             modelBuilder.Entity("postMortem.Data.Model.User", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("postMortem.Data.Model.VoteableEntity", b =>
                 {
                     b.Navigation("AwardsGiven");
-
-                    b.Navigation("Comments");
 
                     b.Navigation("Reports");
 

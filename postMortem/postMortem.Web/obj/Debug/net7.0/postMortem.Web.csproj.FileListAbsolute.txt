@@ -159,7 +159,6 @@ C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\n
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.AssemblyInfoInputs.cache
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.AssemblyInfo.cs
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.csproj.CoreCompileInputs.cache
-C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.RazorAssemblyInfo.cache
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.RazorAssemblyInfo.cs

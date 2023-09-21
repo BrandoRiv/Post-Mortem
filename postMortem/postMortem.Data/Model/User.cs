@@ -24,6 +24,10 @@ namespace postMortem.Data.Model
         public string Password { get; set; }
         public UserType Role { get; set; }
         public string Bio { get; set; }
+
+        public virtual List<Post> Posts { get; set; }
+        public virtual List<Comment> Comments { get; set; }
+
         public override string EntityType => "User";
     }
 }
