@@ -12,7 +12,7 @@ namespace postMortem.Data.UI
     /// or manipulating data. Instead, the view delegates all of its logic to the presenter.
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
-    public interface IViewT<TModel> : IView
+    public interface IView<TModel> : IView
         where TModel : class
     {
         TModel Model { get; set; }

@@ -13,7 +13,7 @@ namespace postMortem.Data.UI
     /// the model accordingly.
     /// </summary>
     /// <typeparam name="TView"></typeparam>
-    public interface IPresenterT<TView> : IPresenter
+    public interface IPresenter<TView> : IPresenter
         where TView : class, IView
     {
         TView View { get; }
