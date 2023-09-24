@@ -35,7 +35,7 @@ namespace postMortem.Data.Model
         /// User the subscription belongs to.
         /// </summary>
         [Required]
-        public User? User { get; set; }
+        public virtual User? User { get; set; }
 
         /// <summary>
         /// The tier of the subscription.
