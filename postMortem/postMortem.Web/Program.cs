@@ -27,6 +27,7 @@ namespace postMortem.Web
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            builder.Services.AddScoped<postMortemWorker>(x => new postMortemWorker(x.GetRequiredService<postMortemContext>()));
             builder.Services.AddSingleton<WeatherForecastService>();
 
             // Add Blazor Bootstrap
