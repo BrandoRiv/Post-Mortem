@@ -15,7 +15,7 @@ namespace postMortem.Data.Repository
 
         public List<Post> GetPostsByUser(User user)
         {
-            return base.Find(p => p.Poster == user).ToList();
+            return base.Find(p => p.Owner == user).ToList();
         }
     }
 }

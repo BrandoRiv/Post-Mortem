@@ -102,6 +102,10 @@ namespace postMortem.Data
         {
             _Users = new EfRepository<postMortemContext, User>(_Context);
             _Posts = new EfRepository<postMortemContext, Post>(_Context);
+            _Comments = new EfRepository<postMortemContext, Comment>(_Context);
+            _Reports = new EfRepository<postMortemContext, Report>(_Context);
+            _Awards = new EfRepository<postMortemContext, Award>(_Context);
+            _Votes = new EfRepository<postMortemContext, Vote>(_Context);
         }
     }
 }

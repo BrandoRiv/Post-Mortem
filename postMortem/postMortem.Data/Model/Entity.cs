@@ -7,10 +7,19 @@ namespace postMortem.Data.Model
     /// </summary>
     public abstract class Entity : IEntity
     {
+        /// <summary>
+        /// The default primary key of each table.
+        /// </summary>
         public int ID { get; set; }
 
+        /// <summary>
+        /// The date this entity was created.
+        /// </summary>
         public DateTime CreatedAt { get; set; }
 
+        /// <summary>
+        /// Internally determine what type of entity this is by it's type.
+        /// </summary>
         [NotMapped]
         public abstract string EntityType { get; }
     }

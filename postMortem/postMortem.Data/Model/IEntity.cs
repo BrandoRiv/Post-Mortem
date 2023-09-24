@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Model
 {
+    /// <summary>
+    /// Defines the base object required for an entity to be placed in a database.
+    /// </summary>
     public interface IEntity
     {
         int ID { get; set; }
