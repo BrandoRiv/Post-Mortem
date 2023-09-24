@@ -10,6 +10,7 @@ namespace postMortem.Data.Common
     {
         Active,
         Archive,
+        Locked,
         Deleted
     }
 }
