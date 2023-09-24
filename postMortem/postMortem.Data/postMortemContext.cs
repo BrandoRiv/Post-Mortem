@@ -16,6 +16,10 @@ namespace postMortem.Data
     /// </summary>
     public class postMortemContext : IdentityDbContext
     {
+        /// <summary>
+        /// Initalizes a new instance of the <see cref="postMortemContext"/> class.
+        /// </summary>
+        /// <param name="options"></param>
         public postMortemContext(DbContextOptions<postMortemContext> options)
             : base(options)
         {
@@ -26,6 +30,7 @@ namespace postMortem.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Award> Awards { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Vote> Votes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

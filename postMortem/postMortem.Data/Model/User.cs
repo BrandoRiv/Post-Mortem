@@ -51,6 +51,28 @@ namespace postMortem.Data.Model
         public string Bio { get; set; }
 
         /// <summary>
+        /// Grab the users current subscription tier.
+        /// </summary>
+        public SubscriptionTier GetSubscription
+        {
+            get
+            {
+                if (ActiveSubscriptions != null)
+                {
+                    foreach (var subscription in ActiveSubscriptions)
+                    {
+                        if (!subscription.HasExpired())
+                        {
+                            return subscription.Tier;
+                        }
+                    }
+                }
+
+                return SubscriptionTier.Tier0;
+            }
+        }
+
+        /// <summary>
         /// References posts.
         /// </summary>
         public virtual List<Post> Posts { get; set; }
@@ -59,6 +81,11 @@ namespace postMortem.Data.Model
         /// Referenced comments.
         /// </summary>
         public virtual List<Comment> Comments { get; set; }
+
+        /// <summary>
+        /// Referenced subscriptions
+        /// </summary>
+        public virtual List<Subscription> ActiveSubscriptions { get; set; }
 
         /// <summary>
         /// Date the user account was created.
