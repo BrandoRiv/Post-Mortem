@@ -17,13 +17,11 @@ namespace postMortem.Data.Model
         {
             BanReason = banReason;
             UntilDate = untilDate;
-            UserID = userID;
         }
 
         public string BanReason { get; set; } 
         public DateTime UntilDate { get; set; }
-        public virtual User User { get; set; }
-        public int? UserID { get; set; }
+        public virtual User BanUser { get; set; }
 
         public override string EntityType => "BannedUser";
     }

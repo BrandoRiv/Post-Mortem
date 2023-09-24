@@ -23,10 +23,7 @@ namespace postMortem.Data.Model
         public string Details { get; set; }
 
         public virtual VoteableEntity To { get; set; }
-        public int? ToID { get; set; }
-
         public virtual User From { get; set; }
-        public int? FromID { get; set; }
 
         public override string EntityType => "Award";
     }

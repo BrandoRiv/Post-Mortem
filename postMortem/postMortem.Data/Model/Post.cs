@@ -27,7 +27,6 @@ namespace postMortem.Data.Model
         public string Message { get; set; }
 
         public virtual User Poster { get; set; }
-        public virtual int? PosterID { get; set; }
 
         public override string EntityType => "Post";
     }

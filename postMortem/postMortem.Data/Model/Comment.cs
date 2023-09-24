@@ -13,19 +13,14 @@ namespace postMortem.Data.Model
     public class Comment : VoteableEntity
     {
         public Comment() { }
-        public Comment(string message, int entityID, int userID)
+        public Comment(string message, int entityID)
         {
             Message = message;
-            UserID = userID;
         }
 
         public string Message { get; set; }
-
         public virtual VoteableEntity Entity { get; set; }
-        public int? EntityID { get; set; }
-
         public virtual User User { get; set; }
-        public int? UserID { get; set; }
 
         public override string EntityType => "Comment";
     }

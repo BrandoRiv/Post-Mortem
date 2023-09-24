@@ -15,7 +15,7 @@ namespace postMortem.Data.Repository
 
         public User GetByUsername(string username)
         {
-            return base.FirstOrDefault(u => u.Username == username);
+            return base.FirstOrDefault(u => u.UserName == username);
         }
     }
 }

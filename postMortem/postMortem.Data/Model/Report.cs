@@ -15,10 +15,8 @@ namespace postMortem.Data.Model
         }
 
         public virtual VoteableEntity Entity { get; set; }
-        public int? EntityID { get; set; }
 
         public virtual User User { get; set; }
-        public int? UserID { get; set; }
 
         public bool Archived { get; set; }
         public bool Deleted { get; set; }

@@ -10,17 +10,14 @@ namespace postMortem.Data.Model
     public class Vote : Entity
     {
         public Vote() { }
-        public Vote(string userID, VoteType voteType)
+        public Vote(VoteType voteType)
         {
-            UserID = userID;
             VoteType = voteType;
         }
 
         public virtual VoteableEntity Entity { get; set; }
-        public int? EntityID { get; set; }
 
         public virtual User User { get; set; }
-        public string? UserID { get; set; }
 
         public VoteType VoteType { get; set; }
 
