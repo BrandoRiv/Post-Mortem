@@ -12,7 +12,7 @@ namespace postMortem.Data.Repository
     /// Defines the required properties for creating a repository object. Requires a child element type that derives <see cref="IEntity"/> interface.
     /// </summary>
     /// <typeparam name="TEntity">Type of child element that is derived from <see cref="IEntity"/></typeparam>
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> where TEntity : IEntity
     {
         TEntity Get(int ID);
         IEnumerable<TEntity> GetAll();

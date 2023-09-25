@@ -13,7 +13,7 @@ namespace postMortem.Data.Repository
     /// </summary>
     /// <typeparam name="TEntity">Type of child entity.</typeparam>
     public class ListRepository<TEntity> : IRepository<TEntity>
-        where TEntity : Entity
+        where TEntity : IEntity
     {
         /// <summary>
         /// Private List<T> to use for reference.

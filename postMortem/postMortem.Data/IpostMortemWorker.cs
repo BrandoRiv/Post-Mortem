@@ -19,6 +19,7 @@ namespace postMortem.Data
         EfRepository<postMortemContext, Comment> Comments { get; set; }
         EfRepository<postMortemContext, Report> Reports { get; set; }
         EfRepository<postMortemContext, Award> Awards { get; set; }
+        EfRepository<postMortemContext, Subscription> Subscriptions { get; set; }
         EfRepository<postMortemContext, Vote> Votes { get; set; }
     }
 }

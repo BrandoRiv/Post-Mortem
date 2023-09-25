@@ -17,21 +17,17 @@ namespace postMortem.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
             builder.Services.AddDbContext<postMortemContext>(options => options.UseLazyLoadingProxies()
                 .UseSqlServer(builder.Configuration.GetConnectionString("postMortemContext")
                 ?? throw new InvalidOperationException("Connection string 'postMortemContext' not found.")));
 
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<postMortemContext>();
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            builder.Services.AddScoped<postMortemWorker>(x => new postMortemWorker(x.GetRequiredService<postMortemContext>()));
             builder.Services.AddSingleton<WeatherForecastService>();
 
             // Add Blazor Bootstrap

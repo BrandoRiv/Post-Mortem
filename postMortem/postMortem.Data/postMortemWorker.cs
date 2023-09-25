@@ -10,6 +10,10 @@ using System.Xml.Linq;
 
 namespace postMortem.Data
 {
+    /// <summary>
+    /// Represents our worker class for the <see cref="postMortemContext"/>. The worker class helps bring concrete classes together
+    /// so we can use our referenced repositories instead of using the default DbSet methods.
+    /// </summary>
     public class postMortemWorker : IpostMortemWorker
     {
         /// <summary>
@@ -72,6 +76,12 @@ namespace postMortem.Data
         private EfRepository<postMortemContext, Award> _Awards;
 
         /// <summary>
+        /// Retrieves a list of awards
+        /// </summary>
+        public EfRepository<postMortemContext, Subscription> Subscriptions { get => _Subscriptions; set => _Subscriptions = value; }
+        private EfRepository<postMortemContext, Subscription> _Subscriptions;
+
+        /// <summary>
         /// Retrieves a list of votes
         /// </summary>
         public EfRepository<postMortemContext, Vote> Votes { get => _Votes; set => _Votes = value; }
@@ -102,6 +112,11 @@ namespace postMortem.Data
         {
             _Users = new EfRepository<postMortemContext, User>(_Context);
             _Posts = new EfRepository<postMortemContext, Post>(_Context);
+            _Comments = new EfRepository<postMortemContext, Comment>(_Context);
+            _Reports = new EfRepository<postMortemContext, Report>(_Context);
+            _Awards = new EfRepository<postMortemContext, Award>(_Context);
+            _Subscriptions = new EfRepository<postMortemContext, Subscription>(_Context);
+            _Votes = new EfRepository<postMortemContext, Vote>(_Context);
         }
     }
 }

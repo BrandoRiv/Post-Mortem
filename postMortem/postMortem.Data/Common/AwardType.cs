@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Common
 {
-    public enum UserType
+    public enum AwardType
     {
-        User,
-        Member,
-        Admin
+        Bronze,
+        Silver,
+        Gold,
+        Premium
     }
 }

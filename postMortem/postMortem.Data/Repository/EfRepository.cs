@@ -17,7 +17,7 @@ namespace postMortem.Data.Repository
     /// <typeparam name="TEntity"></typeparam>
     public class EfRepository<TDbContext, TEntity> : IRepository<TEntity>
         where TDbContext : DbContext
-        where TEntity : Entity
+        where TEntity : class, IEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EfRepository{TDbContext, TEntity}"/> class.

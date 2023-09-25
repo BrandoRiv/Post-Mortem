@@ -12,19 +12,46 @@ namespace postMortem.Data.Model
     /// </summary>
     public class BannedUser : Entity
     {
-        public BannedUser() { }
-        public BannedUser(string banReason, DateTime untilDate, int userID)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BannedUser"/> class. This constructor is required for entity framework to include it.
+        /// </summary>
+        public BannedUser() 
+        {
+            BanReason = "";
+            UntilDate = DateTime.Now;
+            User = null;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BannedUser"/> class.
+        /// </summary>
+        /// <param name="banReason">Reason for the ban.</param>
+        /// <param name="untilDate">Date until the ban is lifted.</param>
+        /// <param name="user">The user the ban is for.</param>
+        public BannedUser(string banReason, DateTime untilDate, User user)
         {
             BanReason = banReason;
             UntilDate = untilDate;
-            UserID = userID;
         }
 
+        /// <summary>
+        /// Reason why the user is banned.
+        /// </summary>
         public string BanReason { get; set; } 
-        public DateTime UntilDate { get; set; }
-        public virtual User User { get; set; }
-        public int? UserID { get; set; }
 
+        /// <summary>
+        /// Date until the ban is lifted.
+        /// </summary>
+        public DateTime UntilDate { get; set; }
+
+        /// <summary>
+        /// The user the ban is for.
+        /// </summary>
+        public virtual User? User { get; set; }
+
+        /// <summary>
+        /// Internally determine what type of entity this is by it's type.
+        /// </summary>
         public override string EntityType => "BannedUser";
     }
 }

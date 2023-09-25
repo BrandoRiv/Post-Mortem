@@ -1424,6 +1424,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Blazor.Bootstrap": "1.10.2",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore.Proxies": "7.0.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.11"
@@ -3789,7 +3790,7 @@
       "projectName": "postMortem.Web",
       "projectPath": "C:\\Users\\austi\\source\\repos\\2023_f_brandon\\postMortem\\postMortem.Web\\postMortem.Web.csproj",
       "packagesPath": "C:\\Users\\austi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\austi\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\",
+      "outputPath": "C:\\Users\\austi\\source\\repos\\2023_f_brandon\\postMortem\\postMortem.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
