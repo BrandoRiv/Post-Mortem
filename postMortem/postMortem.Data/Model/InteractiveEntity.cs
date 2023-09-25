@@ -85,5 +85,19 @@ namespace postMortem.Data.Model
         /// Gets or sets a list of referenced votes.
         /// </summary>
         public virtual List<Vote> VotesGiven { get; set; }
+
+        /// <summary>
+        /// Gets the total amount of votes for this post given.
+        /// </summary>
+        /// <returns></returns>
+        public int GetVotes()
+        {
+            int totalVotes = 0;
+
+            // Add votes.
+            VotesGiven.ForEach(v => totalVotes += v.VoteType);
+
+            return totalVotes;
+        }
     }
 }
