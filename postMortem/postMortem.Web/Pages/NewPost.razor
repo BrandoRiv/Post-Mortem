@@ -1,8 +1,4 @@
-﻿@using postMortem.Data;
-@using postMortem.Data.Model;
-@using postMortem.Data.Repository;
-
-@page "/Posts/New";
+﻿@page "/Posts/New";
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
 
@@ -10,6 +6,7 @@
 
 <EditForm Model=@Post OnSubmit=@FormSubmitted>
     <DataAnnotationsValidator />
+    <ServerSideValidator @ref=validator/>
     <div class="form-group">
         <label class="label-primary">Title</label>
         <InputText @bind-Value=Post.Title class="form-control" />
@@ -26,8 +23,11 @@
 
 @code 
 {
+    ServerSideValidator validator;
+
     [Parameter]
     public Post? Post { get; set; } = new Post();
+    private User User;
 
     protected override void OnInitialized()
     {
@@ -39,6 +39,12 @@
         if (!editContext.Validate())
         {
             return;
+        }
+
+        // Make sure the user has a confirmed email before allowing them to post.
+        if (User.EmailConfirmed == false)
+        {
+            validator.DisplayError("Body", "Your email must be confirmed before posting.");
         }
 
         Worker.Posts.Add(Post);
