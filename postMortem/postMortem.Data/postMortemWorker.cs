@@ -1,6 +1,8 @@
 ﻿using BlazorBootstrap;
 using postMortem.Data.Model;
 using postMortem.Data.Repository;
+using postMortem.Data.Repository.Instance;
+using postMortem.Data.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,50 +44,56 @@ namespace postMortem.Data
         /// <summary>
         /// Retrieves a list of users.
         /// </summary>
-        public EfRepository<postMortemContext, User> Users { get => _Users; set => _Users = value; }
-        private EfRepository<postMortemContext, User> _Users;
+        public IUserRepository Users { get => _Users; set => _Users = value; }
+        private IUserRepository _Users;
 
         /// <summary>
         /// Retrieves a list of users.
         /// </summary>
-        public EfRepository<postMortemContext, BannedUser> BannedUsers { get => _BannedUsers; set => _BannedUsers = value; }
-        private EfRepository<postMortemContext, BannedUser> _BannedUsers;
+        public IBannedUserRepository BannedUsers { get => _BannedUsers; set => _BannedUsers = value; }
+        private IBannedUserRepository _BannedUsers;
 
         /// <summary>
         /// Retrieves a list of posts.
         /// </summary>
-        public EfRepository<postMortemContext, Post> Posts { get => _Posts; set => _Posts = value; }
-        private EfRepository<postMortemContext, Post> _Posts;
+        public IPostRepository Posts { get => _Posts; set => _Posts = value; }
+        private IPostRepository _Posts;
 
         /// <summary>
         /// Retrieves a list of comments
         /// </summary>
-        public EfRepository<postMortemContext, Comment> Comments { get => _Comments; set => _Comments = value; }
-        private EfRepository<postMortemContext, Comment> _Comments;
+        public ICommentRepository Comments { get => _Comments; set => _Comments = value; }
+        private ICommentRepository _Comments;
+
+        /// <summary>
+        /// Retrieves a list of tags
+        /// </summary>
+        public ITagRepository Tags { get => _Tags; set => _Tags = value; }
+        private ITagRepository _Tags;
 
         /// <summary>
         /// Retrieves a list of comments
         /// </summary>
-        public EfRepository<postMortemContext, Report> Reports { get => _Reports; set => _Reports = value; }
-        private EfRepository<postMortemContext, Report> _Reports;
+        public IReportRepository Reports { get => _Reports; set => _Reports = value; }
+        private IReportRepository _Reports;
 
         /// <summary>
         /// Retrieves a list of awards
         /// </summary>
-        public EfRepository<postMortemContext, Award> Awards { get => _Awards; set => _Awards = value; }
-        private EfRepository<postMortemContext, Award> _Awards;
+        public IAwardRepository Awards { get => _Awards; set => _Awards = value; }
+        private IAwardRepository _Awards;
 
         /// <summary>
         /// Retrieves a list of awards
         /// </summary>
-        public EfRepository<postMortemContext, Subscription> Subscriptions { get => _Subscriptions; set => _Subscriptions = value; }
-        private EfRepository<postMortemContext, Subscription> _Subscriptions;
+        public ISubscriptionRepository Subscriptions { get => _Subscriptions; set => _Subscriptions = value; }
+        private ISubscriptionRepository _Subscriptions;
 
         /// <summary>
         /// Retrieves a list of votes
         /// </summary>
-        public EfRepository<postMortemContext, Vote> Votes { get => _Votes; set => _Votes = value; }
-        private EfRepository<postMortemContext, Vote> _Votes;
+        public IVoteRepository Votes { get => _Votes; set => _Votes = value; }
+        private IVoteRepository _Votes;
 
         /// <summary>
         /// Dispose of the current object.
@@ -110,13 +118,14 @@ namespace postMortem.Data
         /// </summary>
         private void InitializeRepository()
         {
-            _Users = new EfRepository<postMortemContext, User>(_Context);
-            _Posts = new EfRepository<postMortemContext, Post>(_Context);
-            _Comments = new EfRepository<postMortemContext, Comment>(_Context);
-            _Reports = new EfRepository<postMortemContext, Report>(_Context);
-            _Awards = new EfRepository<postMortemContext, Award>(_Context);
-            _Subscriptions = new EfRepository<postMortemContext, Subscription>(_Context);
-            _Votes = new EfRepository<postMortemContext, Vote>(_Context);
+            _Users = new UserRepository(_Context);
+            _Posts = new PostRepository(_Context);
+            _Comments = new CommentRepository(_Context);
+            _Tags = new TagRepository(_Context);
+            _Reports = new ReportRepository(_Context);
+            _Awards = new AwardRepository(_Context);
+            _Subscriptions = new SubscriptionRepository(_Context);
+            _Votes = new VoteRepository(_Context);
         }
     }
 }

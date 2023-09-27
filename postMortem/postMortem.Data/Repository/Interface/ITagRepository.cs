@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace postMortem.Data.Repository
+namespace postMortem.Data.Repository.Interface
 {
-    public interface IUserRepository : IRepository<User, string>
+    public interface ITagRepository : IRepository<Tag>
     {
     }
 }

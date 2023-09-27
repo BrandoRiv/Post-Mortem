@@ -12,7 +12,7 @@ namespace postMortem.Data.Model
     /// <summary>
     /// Represents a user that has joined the community. A user can create posts, comments, gives votes and awards.
     /// </summary>
-    public class User : IdentityUser, IEntity
+    public class User : IdentityUser, IEntity<string>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class. This constructor is required for entity framework to include it.
@@ -33,16 +33,6 @@ namespace postMortem.Data.Model
             : this()
         {
             Bio = bio;
-        }
-
-        /// <summary>
-        /// DO. NOT. USE. Use <see cref="IdentityUser"/> Id.
-        /// </summary>
-        [NotMapped]
-        public int ID
-        {
-            get { return base.Id.GetHashCode(); }
-            set { throw new NotSupportedException(); }
         }
 
         /// <summary>

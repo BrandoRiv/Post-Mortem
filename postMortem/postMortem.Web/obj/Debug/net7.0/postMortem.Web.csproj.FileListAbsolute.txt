@@ -180,3 +180,4 @@ C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\n
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.genruntimeconfig.cache
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Web\obj\Debug\net7.0\ref\postMortem.Web.dll
 C:\Users\austi\source\repos\2023_f_brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\austi\source\repos\2023_f_brandon\postMortem\postMortem.Web\obj\Debug\net7.0\postMortem.Web.sourcelink.json

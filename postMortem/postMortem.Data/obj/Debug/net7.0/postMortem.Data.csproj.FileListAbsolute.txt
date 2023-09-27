@@ -40,3 +40,4 @@ C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Data\obj\Debug\
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Data\obj\Debug\net7.0\postMortem.Data.pdb
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Data\obj\Debug\net7.0\postMortem.Data.genruntimeconfig.cache
 C:\Users\austi\Source\Repos\2023_F_Brandon\postMortem\postMortem.Data\obj\Debug\net7.0\ref\postMortem.Data.dll
+C:\Users\austi\source\repos\2023_f_brandon\postMortem\postMortem.Data\obj\Debug\net7.0\postMortem.Data.sourcelink.json

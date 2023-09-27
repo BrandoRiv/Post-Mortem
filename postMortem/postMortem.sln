@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "postMortem.Data", "postMortem.Data\postMortem.Data.csproj", "{DA7389D2-850A-4E6E-852C-7715F5033F64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "postMortem.Web", "postMortem.Web\postMortem.Web.csproj", "{0E71A328-C3CF-4B00-9DA7-BC446AC3DEBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "postMortem.Web", "postMortem.Web\postMortem.Web.csproj", "{0E71A328-C3CF-4B00-9DA7-BC446AC3DEBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

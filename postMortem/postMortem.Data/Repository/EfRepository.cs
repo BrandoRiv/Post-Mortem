@@ -11,13 +11,40 @@ namespace postMortem.Data.Repository
     using System.Linq.Expressions;
 
     /// <summary>
+    /// Initializes instances of <see cref="EfRepository{TDbContext, TEntity, TKey}"/> built for postMortem.
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    public abstract class postMortemRepository<TEntity> : postMortemRepository<TEntity, int>
+        where TEntity : class, IEntity<int>
+    {
+        protected postMortemRepository(postMortemContext context) : base(context)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Initializes instances of <see cref="EfRepository{TDbContext, TEntity, TKey}"/> built for postMortem.
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    public abstract class postMortemRepository<TEntity, TKey> : EfRepository<postMortemContext, TEntity, TKey>
+        where TEntity : class, IEntity<TKey>
+    {
+        protected postMortemRepository(postMortemContext context) : base(context)
+        {
+        }
+    }
+
+
+    /// <summary>
     /// Defines a EntityFramework database repository that requires an instance of <see cref="DbContext"/> class. Repository is the container for a database table.
     /// </summary>
     /// <typeparam name="TDbContext"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    public class EfRepository<TDbContext, TEntity> : IRepository<TEntity>
+    public class EfRepository<TDbContext, TEntity, TKey> : IRepository<TEntity, TKey>
         where TDbContext : DbContext
-        where TEntity : class, IEntity
+        where TEntity : class, IEntity<TKey>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EfRepository{TDbContext, TEntity}"/> class.
@@ -43,7 +70,7 @@ namespace postMortem.Data.Repository
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public virtual TEntity Get(int ID)
+        public virtual TEntity Get(TKey ID)
         {
             return this.Context.Set<TEntity>().Find(ID);
         }
@@ -120,7 +147,7 @@ namespace postMortem.Data.Repository
             if (newEntity == null)
                 return;
 
-            TEntity currentVal = Get(newEntity.ID);
+            TEntity currentVal = Get(newEntity.Id);
 
             if (currentVal == null)
                 throw new ArgumentNullException("Invalid entity. No entity exists by ID.");

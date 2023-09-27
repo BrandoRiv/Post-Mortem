@@ -13,7 +13,7 @@ namespace postMortem.Data.Repository
     /// </summary>
     /// <typeparam name="TEntity">Type of child entity.</typeparam>
     public class ListRepository<TEntity> : IRepository<TEntity>
-        where TEntity : IEntity
+        where TEntity : Entity
     {
         /// <summary>
         /// Private List<T> to use for reference.
@@ -63,7 +63,7 @@ namespace postMortem.Data.Repository
         /// <remarks>Important: This is not supported in a List repository.</remarks>
         public void Update(TEntity newEntity)
         {
-            var entity = this._Entities.FirstOrDefault(e => e.ID == newEntity.ID);
+            var entity = this._Entities.FirstOrDefault(e => e.Id == newEntity.Id);
             int index = this._Entities.IndexOf(entity);
 
             this._Entities[index] = newEntity;
@@ -101,7 +101,7 @@ namespace postMortem.Data.Repository
         /// <returns></returns>
         public TEntity Get(int ID)
         {
-            return FirstOrDefault(g => ((TEntity)g).ID == ID);
+            return FirstOrDefault(g => ((TEntity)g).Id == ID);
         }
 
         /// <summary>

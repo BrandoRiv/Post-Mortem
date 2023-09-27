@@ -10,10 +10,13 @@ namespace postMortem.Data.Model
     /// <summary>
     /// Defines the base object required for an entity to be placed in a database.
     /// </summary>
-    public interface IEntity
+    public interface IEntity<TKey>
     {
-        int ID { get; set; }
-        DateTime CreatedAt { get; set; }
+        TKey Id { get; set; }
+
+        /// <summary>
+        /// Internally determine what type of entity this is by it's type.
+        /// </summary>
         string EntityType { get; }
     }
 }
