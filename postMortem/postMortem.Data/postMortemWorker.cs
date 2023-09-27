@@ -68,8 +68,8 @@ namespace postMortem.Data
         /// <summary>
         /// Retrieves a list of tags
         /// </summary>
-        public ICommentRepository Tags { get => _Tags; set => _Tags = value; }
-        private ICommentRepository _Tags;
+        public ITagRepository Tags { get => _Tags; set => _Tags = value; }
+        private ITagRepository _Tags;
 
         /// <summary>
         /// Retrieves a list of comments
@@ -121,7 +121,7 @@ namespace postMortem.Data
             _Users = new UserRepository(_Context);
             _Posts = new PostRepository(_Context);
             _Comments = new CommentRepository(_Context);
-            _Tags = new CommentRepository(_Context);
+            _Tags = new TagRepository(_Context);
             _Reports = new ReportRepository(_Context);
             _Awards = new AwardRepository(_Context);
             _Subscriptions = new SubscriptionRepository(_Context);

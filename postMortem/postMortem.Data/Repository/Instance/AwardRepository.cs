@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository
 {
-    public class AwardRepository : EfRepository<postMortemContext, Award>
+    public class AwardRepository : EfRepository<postMortemContext, Award>, IAwardRepository
     {
         public AwardRepository(postMortemContext context) : base(context)
         {
