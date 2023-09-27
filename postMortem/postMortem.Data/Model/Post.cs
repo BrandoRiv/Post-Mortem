@@ -1,6 +1,7 @@
 ﻿using postMortem.Data.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,8 @@ namespace postMortem.Data.Model
         /// <summary>
         /// Title of the post.
         /// </summary>
+        [Required]
+        [StringLength(32, ErrorMessage = "Title too long (32 character limit).")]
         public string Title { get; set; }
 
         /// <summary>

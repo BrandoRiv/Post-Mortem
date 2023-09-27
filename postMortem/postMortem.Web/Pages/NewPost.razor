@@ -1,0 +1,49 @@
+﻿@using postMortem.Data;
+@using postMortem.Data.Model;
+@using postMortem.Data.Repository;
+
+@page "/Posts/New";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+
+<h3>Create a new post!</h3>
+
+<EditForm Model=@Post OnSubmit=@FormSubmitted>
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label class="label-primary">Title</label>
+        <InputText @bind-Value=Post.Title class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="label-primary">Body</label>
+        <InputText @bind-Value=Post.Message class="form-control" />
+    </div>
+    <br />
+    <ValidationSummary />
+    <input type="submit" class="btn btn-primary" value="Submit!" />
+    <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
+</EditForm>
+
+@code 
+{
+    [Parameter]
+    public Post? Post { get; set; } = new Post();
+
+    protected override void OnInitialized()
+    {
+        this.Post = new Post();
+    }
+
+    private void FormSubmitted(EditContext editContext)
+    {
+        if (!editContext.Validate())
+        {
+            return;
+        }
+
+        Worker.Posts.Add(Post);
+
+        // We're done here.
+        Navigation.NavigateTo("~/");
+    }
+}
