@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository
 {
-    public class VoteRepository : EfRepository<postMortemContext, Vote>, IVoteRepository
+    public class VoteRepository : postMortemRepository<Vote>, IVoteRepository
     {
         public VoteRepository(postMortemContext context) : base(context)
         {

@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository
 {
-    public class UserRepository : EfRepository<postMortemContext, User>, IUserRepository
+    public class UserRepository : postMortemRepository<User, string>, IUserRepository
     {
         public UserRepository(postMortemContext context) : base(context)
         {
-        }
-
-        public User GetByUsername(string username)
-        {
-            return base.FirstOrDefault(u => u.UserName == username);
         }
     }
 }

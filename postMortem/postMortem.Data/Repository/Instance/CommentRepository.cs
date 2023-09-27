@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository.Instance
 {
-    public class CommentRepository : EfRepository<postMortemContext, Comment>, ICommentRepository
+    public class CommentRepository : postMortemRepository<Comment>, ICommentRepository
     {
         public CommentRepository(postMortemContext context) : base(context)
         {

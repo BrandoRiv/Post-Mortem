@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository.Instance
 {
-    public class BannedUserRepository : EfRepository<postMortemContext, BannedUser>, IBannedUserRepository
+    public class BannedUserRepository : postMortemRepository<BannedUser>, IBannedUserRepository
     {
         public BannedUserRepository(postMortemContext context) : base(context)
         {

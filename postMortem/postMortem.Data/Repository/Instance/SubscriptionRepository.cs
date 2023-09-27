@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository.Instance
 {
-    public class SubscriptionRepository : EfRepository<postMortemContext, Subscription>, ISubscriptionRepository
+    public class SubscriptionRepository : postMortemRepository<Subscription>, ISubscriptionRepository
     {
         public SubscriptionRepository(postMortemContext context) : base(context)
         {
