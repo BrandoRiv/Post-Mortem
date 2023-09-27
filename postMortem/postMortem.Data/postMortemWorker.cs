@@ -2,6 +2,7 @@
 using postMortem.Data.Model;
 using postMortem.Data.Repository;
 using postMortem.Data.Repository.Instance;
+using postMortem.Data.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,56 +44,56 @@ namespace postMortem.Data
         /// <summary>
         /// Retrieves a list of users.
         /// </summary>
-        public UserRepository Users { get => _Users; set => _Users = value; }
-        private UserRepository _Users;
+        public IUserRepository Users { get => _Users; set => _Users = value; }
+        private IUserRepository _Users;
 
         /// <summary>
         /// Retrieves a list of users.
         /// </summary>
-        public BannedUserRepository BannedUsers { get => _BannedUsers; set => _BannedUsers = value; }
-        private BannedUserRepository _BannedUsers;
+        public IBannedUserRepository BannedUsers { get => _BannedUsers; set => _BannedUsers = value; }
+        private IBannedUserRepository _BannedUsers;
 
         /// <summary>
         /// Retrieves a list of posts.
         /// </summary>
-        public PostRepository Posts { get => _Posts; set => _Posts = value; }
-        private PostRepository _Posts;
+        public IPostRepository Posts { get => _Posts; set => _Posts = value; }
+        private IPostRepository _Posts;
 
         /// <summary>
         /// Retrieves a list of comments
         /// </summary>
-        public CommentRepository Comments { get => _Comments; set => _Comments = value; }
-        private CommentRepository _Comments;
+        public ICommentRepository Comments { get => _Comments; set => _Comments = value; }
+        private ICommentRepository _Comments;
 
         /// <summary>
         /// Retrieves a list of tags
         /// </summary>
-        public CommentRepository Tags { get => _Tags; set => _Tags = value; }
-        private CommentRepository _Tags;
+        public ICommentRepository Tags { get => _Tags; set => _Tags = value; }
+        private ICommentRepository _Tags;
 
         /// <summary>
         /// Retrieves a list of comments
         /// </summary>
-        public ReportRepository Reports { get => _Reports; set => _Reports = value; }
-        private ReportRepository _Reports;
+        public IReportRepository Reports { get => _Reports; set => _Reports = value; }
+        private IReportRepository _Reports;
 
         /// <summary>
         /// Retrieves a list of awards
         /// </summary>
-        public AwardRepository Awards { get => _Awards; set => _Awards = value; }
-        private AwardRepository _Awards;
+        public IAwardRepository Awards { get => _Awards; set => _Awards = value; }
+        private IAwardRepository _Awards;
 
         /// <summary>
         /// Retrieves a list of awards
         /// </summary>
-        public SubscriptionRepository Subscriptions { get => _Subscriptions; set => _Subscriptions = value; }
-        private SubscriptionRepository _Subscriptions;
+        public ISubscriptionRepository Subscriptions { get => _Subscriptions; set => _Subscriptions = value; }
+        private ISubscriptionRepository _Subscriptions;
 
         /// <summary>
         /// Retrieves a list of votes
         /// </summary>
-        public VoteRepository Votes { get => _Votes; set => _Votes = value; }
-        private VoteRepository _Votes;
+        public IVoteRepository Votes { get => _Votes; set => _Votes = value; }
+        private IVoteRepository _Votes;
 
         /// <summary>
         /// Dispose of the current object.
