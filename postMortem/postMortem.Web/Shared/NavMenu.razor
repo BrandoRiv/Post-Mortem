@@ -1,39 +1,63 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">postMortem.Web</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿@using BlazorBootstrap;
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
+<Sidebar @ref="sidebar"
+         IconName="IconName.HeartFill"
+         Title="PostMortem"
+         BadgeText="v0.0.1"
+         DataProvider="SidebarDataProvider" />
+
+<style>
+    :root {
+        --bb-sidebar-width: 270px;
+        --bb-sidebar-collapsed-width: 50px;
+        --bb-sidebar-background-color: rgba(234, 234, 234, 1);
+        --bb-sidebar-top-row-background-color: rgba(0,0,0,0.08);
+        --bb-sidebar-top-row-border-color: rgb(194,192,192);
+        --bb-sidebar-title-text-color: rgb(0,0,0);
+        --bb-sidebar-brand-icon-color: #6f42c1;
+        --bb-sidebar-brand-image-width: 24px;
+        --bb-sidebar-brand-image-height: 24px;
+        --bb-sidebar-title-badge-text-color: rgb(255,255,255);
+        --bb-sidebar-title-badge-background-color: rgba(25,135,84,var(--bs-bg-opacity,1));
+        --bb-sidebar-navbar-toggler-icon-color: rgb(0,0,0);
+        --bb-sidebar-navbar-toggler-background-color: rgba(0,0,0,0.08);
+        --bb-sidebar-content-border-color: rgb(194,192,192);
+        --bb-sidebar-nav-item-text-color: rgba(0,0,0,0.9);
+        --bb-sidebar-nav-item-text-active-color-rgb: 0,0,0;
+        --bb-sidebar-nav-item-text-hover-color: rgba(var(--bb-sidebar-nav-item-text-active-color-rgb),0.9);
+        --bb-sidebar-nav-item-text-active-color: rgba(var(--bb-sidebar-nav-item-text-active-color-rgb),0.9);
+        --bb-sidebar-nav-item-background-hover-color: rgba(var(--bb-sidebar-nav-item-text-active-color-rgb),0.08);
+        --bb-sidebar-nav-item-group-background-color: rgba(var(--bb-sidebar-nav-item-text-active-color-rgb),0.08);
+    }
+</style>
 
 @code {
-    private bool collapseNavMenu = true;
+    private Sidebar sidebar;
+    private IEnumerable<NavItem> navItems = null;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    private IEnumerable<NavItem> GetNavItems()
     {
-        collapseNavMenu = !collapseNavMenu;
+        navItems = new List<NavItem>
+        {
+            new NavItem { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Home"},
+            new NavItem { Id = "2", IconName = IconName.LayoutSidebarInset, Text = "Me", IconColor = IconColor.Primary },
+            new NavItem { Id = "3", Href = "/Posts", IconName = IconName.Postage, Text = "My posts", ParentId="2"},
+            new NavItem { Id = "4", Href = "/Comments", IconName = IconName.Chat, Text = "My comments", ParentId = "2" },
+            new NavItem { Id = "5", Href = "/Account", IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},
+
+            new NavItem { Id = "6", IconName = IconName.Lock, Text = "Admin", IconColor = IconColor.Danger },
+            new NavItem { Id = "7", Href = "/Reports", IconName = IconName.EnvelopePaperFill, Text = "Reports", ParentId="6"},
+            new NavItem { Id = "8", Href = "/Admins", IconName = IconName.PersonAdd, Text = "Admins", ParentId="6"},
+        };
+
+        return navItems;
     }
+
+    private async Task<SidebarDataProviderResult> SidebarDataProvider(SidebarDataProviderRequest request)
+    {
+        if (navItems is null)
+            navItems = GetNavItems();
+        return await Task.FromResult(request.ApplyTo(navItems));
+    }
+    private void ToogleSidebar() => sidebar.ToggleSidebar();
 }
