@@ -14,7 +14,14 @@ namespace postMortem.Data
     internal interface IWorker<TContext> : IDisposable
         where TContext : DbContext
     {
+        /// <summary>
+        /// Represents the context to the database.
+        /// </summary>
         public TContext Context { get; }
+
+        /// <summary>
+        /// Save the current context changes to the database.
+        /// </summary>
         public void SaveChanges();
     }
 }

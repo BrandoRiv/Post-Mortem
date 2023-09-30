@@ -1,5 +1,6 @@
 ﻿using postMortem.Data.Model;
 using postMortem.Data.Repository;
+using postMortem.Data.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace postMortem.Data
     /// </summary>
     internal interface IpostMortemWorker : IWorker<postMortemContext>
     {
-        EfRepository<postMortemContext, User> Users { get; set; }
-        EfRepository<postMortemContext, BannedUser> BannedUsers { get; set; }
-        EfRepository<postMortemContext, Post> Posts { get; set; }
-        EfRepository<postMortemContext, Comment> Comments { get; set; }
-        EfRepository<postMortemContext, Report> Reports { get; set; }
-        EfRepository<postMortemContext, Award> Awards { get; set; }
-        EfRepository<postMortemContext, Vote> Votes { get; set; }
+        IUserRepository Users { get; set; }
+        IBannedUserRepository BannedUsers { get; set; }
+        IPostRepository Posts { get; set; }
+        ICommentRepository Comments { get; set; }
+        ITagRepository Tags { get; set; }
+        IReportRepository Reports { get; set; }
+        IAwardRepository Awards { get; set; }
+        ISubscriptionRepository Subscriptions { get; set; }
+        IVoteRepository Votes { get; set; }
     }
 }

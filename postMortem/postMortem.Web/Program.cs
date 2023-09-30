@@ -8,6 +8,7 @@ using postMortem.Data;
 using postMortem.Web.Areas.Identity;
 using postMortem.Web.Data;
 using BlazorBootstrap;
+using postMortem.Data.Model;
 
 namespace postMortem.Web
 {
@@ -17,22 +18,17 @@ namespace postMortem.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
             builder.Services.AddDbContext<postMortemContext>(options => options.UseLazyLoadingProxies()
                 .UseSqlServer(builder.Configuration.GetConnectionString("postMortemContext")
                 ?? throw new InvalidOperationException("Connection string 'postMortemContext' not found.")));
 
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<postMortemContext>();
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<User>>();
+            builder.Services.AddScoped<postMortemWorker>(x => new postMortemWorker(x.GetRequiredService<postMortemContext>()));
 
             // Add Blazor Bootstrap
             builder.Services.AddBlazorBootstrap();

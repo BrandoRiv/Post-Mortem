@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository
 {
-    public class PostRepository : EfRepository<postMortemContext, Post>, IPostRepository
+    public class PostRepository : postMortemRepository<Post>, IPostRepository
     {
         public PostRepository(postMortemContext context) : base(context)
         {
@@ -15,7 +15,7 @@ namespace postMortem.Data.Repository
 
         public List<Post> GetPostsByUser(User user)
         {
-            return base.Find(p => p.Poster == user).ToList();
+            return base.Find(p => p.Owner == user).ToList();
         }
     }
 }

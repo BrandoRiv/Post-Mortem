@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace postMortem.Data.Repository
 {
+    public interface IRepository<TEntity> : IRepository<TEntity, int>
+        where TEntity : IEntity<int>
+    {
+
+    }
+
     /// <summary>
     /// Defines the required properties for creating a repository object. Requires a child element type that derives <see cref="IEntity"/> interface.
     /// </summary>
     /// <typeparam name="TEntity">Type of child element that is derived from <see cref="IEntity"/></typeparam>
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity, TKey> where TEntity : IEntity<TKey>
     {
-        TEntity Get(int ID);
+        TEntity Get(TKey ID);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Func<TEntity, bool> predicate);
 
