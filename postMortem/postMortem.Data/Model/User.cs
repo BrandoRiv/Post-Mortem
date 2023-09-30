@@ -78,6 +78,11 @@ namespace postMortem.Data.Model
         public virtual List<Subscription> ActiveSubscriptions { get; set; }
 
         /// <summary>
+        /// Referenced votes.
+        /// </summary>
+        public virtual List<Vote> Votes { get; set; }
+
+        /// <summary>
         /// Date the user account was created.
         /// </summary>
         public DateTime CreatedAt

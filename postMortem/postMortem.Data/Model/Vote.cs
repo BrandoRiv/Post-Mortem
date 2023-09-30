@@ -25,11 +25,17 @@ namespace postMortem.Data.Model
         /// </summary>
         /// <param name="recipient">Entity receiving the vote.</param>
         /// <param name="voteType">Type of vote, good or bad. Use 0 for bad, or 1 for good.</param>
-        public Vote(InteractiveEntity recipient, int voteType)
+        public Vote(User user, InteractiveEntity recipient, int voteType)
         {
+            Giver = user;
             Recipient = recipient;
             VoteType = voteType;
         }
+        
+        /// <summary>
+        /// User who gave the vote.
+        /// </summary>
+        public virtual User Giver { get; set; } 
 
         /// <summary>
         /// Entity the vote is applied to.
