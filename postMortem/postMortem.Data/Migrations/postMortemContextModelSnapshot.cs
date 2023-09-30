@@ -405,7 +405,16 @@ namespace postMortem.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Tags");
                 });
@@ -610,6 +619,13 @@ namespace postMortem.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("postMortem.Data.Model.Tag", b =>
+                {
+                    b.HasOne("postMortem.Data.Model.Post", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("PostId");
+                });
+
             modelBuilder.Entity("postMortem.Data.Model.Vote", b =>
                 {
                     b.HasOne("postMortem.Data.Model.InteractiveEntity", "Recipient")
@@ -667,6 +683,11 @@ namespace postMortem.Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.Post", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

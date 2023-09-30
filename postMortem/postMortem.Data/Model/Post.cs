@@ -47,6 +47,11 @@ namespace postMortem.Data.Model
         public string Message { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of related tags.
+        /// </summary>
+        public virtual List<Tag> Tags { get; set; }
+
+        /// <summary>
         /// Internally determine what type of entity this is by it's type.
         /// </summary>
         public override string EntityType => "Post";

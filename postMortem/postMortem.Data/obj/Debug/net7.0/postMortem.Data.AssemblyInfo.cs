@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("postMortem.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e64ba492edd49b51022d5437124988f0fafb66f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdaa24845ebc19c323ac39201ae68fc9b5be0257")]
 [assembly: System.Reflection.AssemblyProductAttribute("postMortem.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("postMortem.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

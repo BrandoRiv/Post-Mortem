@@ -1,0 +1,44 @@
+﻿@page "/Posts/View/{ID}";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+
+<Card Style="width:50%;">
+    <CardBody>
+        <CardText>Posted by <a href="/Profile/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
+        <CardTitle>@Post.Title</CardTitle>
+        <CardText>@Post.Message</CardText>
+        <div class="row">
+            <div class="col">
+                <Button class="btn btn-small" Color="ButtonColor.Danger" To="#" Type="ButtonType.Link"><Icon Name="IconName.Heart" /> 1</Button>
+                <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Messenger" /> @Post.Comments.Count Comments</Button>
+                <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Share" /> Share</Button>
+                <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Save" /> Save</Button>
+            </div>
+        </div>
+    </CardBody>
+</Card>
+
+<h2>Comments:</h2>
+
+@foreach (Comment comment in Post.Comments)
+{
+    <postMortem.Web.Components.CommentCard Comment="comment"/>
+}
+
+<postMortem.Web.Components.CommentEditorWindow Parent="Post"/>
+
+
+@code
+{
+    [Parameter]
+    public string ID { get; set; }
+
+    [Parameter]
+    public Post? Post { get; set; } = new Post();
+
+    protected override void OnInitialized()
+    {
+        Post = Worker.Posts.Get(Int32.Parse(ID));
+        base.OnInitialized();
+    }
+}
