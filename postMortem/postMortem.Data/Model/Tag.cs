@@ -9,5 +9,6 @@ namespace postMortem.Data.Model
     public class Tag : Entity
     {
         public override string EntityType => "Tag";
+        public string Name { get; set; }
     }
 }

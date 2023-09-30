@@ -1,0 +1,27 @@
+﻿
+<Card Style="width:40rem;">
+    <CardBody>
+        <CardText>Posted by <a href="/Profile/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
+        <CardTitle>@Post.Title</CardTitle>
+        <CardText>@Post.Message</CardText>
+        <div class="row">
+            <div class="col">
+                <Button class="btn btn-small" Color="ButtonColor.Danger" To="#" Type="ButtonType.Link"><Icon Name="IconName.Heart" /> 1</Button>
+                <Button class="btn btn-small" Color="ButtonColor.None" To="@ViewURL" Type="ButtonType.Link"><Icon Name="IconName.Messenger" /> 0 Comments</Button>
+                <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Share" /> 0 Shares</Button>
+                <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Save" /> Save</Button>
+            </div>
+        </div>
+    </CardBody>
+</Card>
+
+@code 
+{
+    public string ViewURL
+    {
+        get { return "/Posts/View/" + Post.Id; }
+    }
+
+    [Parameter]
+    public Post? Post { get; set; } = new Post();
+}

@@ -1,0 +1,85 @@
+﻿@page "/Posts/New";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+@inject UserManager<User> Users
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Create a new post!</h3>
+
+<EditForm Model=@Post OnSubmit=@FormSubmitted>
+    <DataAnnotationsValidator />
+    <ServerSideValidator @ref=validator/>
+    <div class="form-group">
+        <label class="label-primary">Title</label>
+        <InputText @bind-Value=Post.Title class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="label-primary">Body</label>
+        <InputTextArea @bind-Value=Post.Message class="form-control" />
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label>Add a tag</label>
+        <select class="form-control" @onchange="@OnTagChange">
+            @foreach (var item in Worker.Tags.GetAll())
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+    <ValidationSummary />
+    <input type="submit" class="btn btn-primary" value="Submit!" />
+    <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
+</EditForm>
+
+@code 
+{
+    ServerSideValidator validator;
+    private Tag chosenTag = null;
+
+    [Parameter]
+    public Post? Post { get; set; } = new Post();
+
+    protected override void OnInitialized()
+    {
+        this.Post = new Post();
+    }
+
+    private async void FormSubmitted(EditContext editContext)
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        User user = Worker.Users.FirstOrDefault(r => r.UserName == authState.User.Identity.Name);
+
+        Post.Owner = user;
+
+        if (!editContext.Validate())
+        {
+            return;
+        }
+
+        // Make sure the user has a confirmed email before allowing them to post.
+        if (user.EmailConfirmed == false)
+        {
+            validator.DisplayError("Body", "Your email must be confirmed before posting.");
+        }
+
+        // Add the tag.
+        if (chosenTag != null)
+        {
+            Post.Tags.Add(chosenTag);
+        }
+
+
+        Worker.Posts.Add(Post);
+        Worker.SaveChanges();
+
+        // We're done here.
+        Navigation.NavigateTo("/Post/View/" + Post.Id);
+    }
+
+    private void OnTagChange(ChangeEventArgs e)
+    {
+        chosenTag = Worker.Tags.Get(Int32.Parse((string)e.Value));
+    }
+}

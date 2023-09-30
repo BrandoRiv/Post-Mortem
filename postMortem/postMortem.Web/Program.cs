@@ -8,6 +8,7 @@ using postMortem.Data;
 using postMortem.Web.Areas.Identity;
 using postMortem.Web.Data;
 using BlazorBootstrap;
+using postMortem.Data.Model;
 
 namespace postMortem.Web
 {
@@ -22,11 +23,11 @@ namespace postMortem.Web
                 ?? throw new InvalidOperationException("Connection string 'postMortemContext' not found.")));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<postMortemContext>();
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<User>>();
             builder.Services.AddScoped<postMortemWorker>(x => new postMortemWorker(x.GetRequiredService<postMortemContext>()));
 
             // Add Blazor Bootstrap
