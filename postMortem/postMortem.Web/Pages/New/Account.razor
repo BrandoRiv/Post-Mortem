@@ -1,0 +1,73 @@
+@page "/Account"
+@inject UserManager<User> Users
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+
+<h3>Account Details</h3>
+
+@if (CurrentUser != null)
+{
+    <p>Logged in as @CurrentUser.UserName.</p>
+}
+else
+{
+    <p>You are not logged in.</p>
+}
+
+@code 
+{
+    List<Post> PostItems = new List<Post>();
+    List<Post> CommentItems = new List<Post>();
+    List<Post> UpvoteItems = new List<Post>();
+    List<Post> DownvoteItems = new List<Post>();
+
+    private User CurrentUser;
+
+    protected override void OnInitialized()
+    {
+        PostItems = Worker.Posts.GetAll().ToList();
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        CurrentUser = await Users.FindByNameAsync(authState.User.Identity.Name);
+    }
+}
+
+<Tabs>
+    <Tab Title="Posts" IsActive="true">
+        <Content>
+            @if (PostItems.Any())
+            {
+                @foreach (Post post in PostItems)
+                    {
+                        <br/>
+                        <postMortem.Web.Components.PostCard Post="post"/>
+                    }
+            
+            }
+            else
+            {
+                <p>It's quiet in here... too quiet.</p>
+            }
+        </Content>
+    </Tab>
+    <Tab Title="Comments">
+        <Content>
+            <p>It's quiet in here... too quiet.</p>
+        </Content>
+    </Tab>
+    <Tab Title="Upvotes">
+        <Content>
+            <p>It's quiet in here... too quiet.</p>
+        </Content>
+    </Tab>
+    <Tab Title="Downvotes">
+        <Content>
+                <p>It's quiet in here... too quiet.</p>
+        </Content>
+    </Tab>
+</Tabs>
