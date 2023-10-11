@@ -1,6 +1,7 @@
 ﻿@page "/Posts/View/{ID}";
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
+@inject IRefreshService RefreshService;
 
 <Card Style="width:50%;">
     <CardBody>
@@ -18,7 +19,9 @@
     </CardBody>
 </Card>
 
+<br/>
 <h2>Comments:</h2>
+<br />
 
 @foreach (Comment comment in Post.Comments)
 {
@@ -38,7 +41,13 @@
 
     protected override void OnInitialized()
     {
+        RefreshService.RefreshRequested += OnRefreshRequest;
         Post = Worker.Posts.Get(Int32.Parse(ID));
         base.OnInitialized();
+    }
+
+    private void OnRefreshRequest()
+    {
+        this.StateHasChanged();
     }
 }

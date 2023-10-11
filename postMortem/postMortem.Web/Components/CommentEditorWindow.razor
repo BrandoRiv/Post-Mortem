@@ -2,6 +2,7 @@
 @inject NavigationManager Navigation
 @inject UserManager<User> Users
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IRefreshService RefreshService;
 
 <EditForm Model=@Comment OnSubmit=@FormSubmitted>
     <DataAnnotationsValidator />
@@ -45,9 +46,12 @@
     [Parameter]
     public EventCallback OnCancel { get; set; }
 
+    [Parameter]
+    public EventCallback OnComplete { get; set; }
+
     protected override void OnInitialized()
     {
-        this.Comment = new Comment();
+        this.RefreshService.RefreshRequested += OnRefresh;
     }
 
     private async void FormSubmitted(EditContext editContext)
@@ -67,11 +71,24 @@
         Worker.Comments.Add(Comment);
         Worker.SaveChanges();
 
-        StateHasChanged();
+        RefreshService.CallRequestRefresh();
+
+        await OnCompleteClick();
+    }
+
+    protected virtual void OnRefresh()
+    {
+        this.Comment = new Comment();
+        this.StateHasChanged();
     }
 
     private async Task OnCancelClick()
     {
         await OnCancel.InvokeAsync();
+    }
+
+    private async Task OnCompleteClick()
+    {
+        await OnComplete.InvokeAsync();
     }
 }

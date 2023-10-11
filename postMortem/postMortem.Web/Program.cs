@@ -29,6 +29,7 @@ namespace postMortem.Web
             builder.Services.AddServerSideBlazor();
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<User>>();
             builder.Services.AddScoped<postMortemWorker>(x => new postMortemWorker(x.GetRequiredService<postMortemContext>()));
+            builder.Services.AddScoped<IRefreshService, RefreshService>();
 
             // Add Blazor Bootstrap
             builder.Services.AddBlazorBootstrap();

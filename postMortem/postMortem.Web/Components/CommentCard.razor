@@ -12,7 +12,7 @@
 
         @if (ShowEditor)
         {
-            <CommentEditorWindow @ref=EditorWindow Parent="Comment" OnCancel="OnCancelClick"/>
+            <CommentEditorWindow @ref=EditorWindow Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick"/>
         }
 
         @foreach(Comment child in Comment.Comments)
@@ -38,6 +38,16 @@
     }
 
     private void OnCancelClick()
+    {
+        this.Dispose();
+    }
+
+    private void OnCompleteClick()
+    {
+        this.Dispose();
+    }
+
+    private void Dispose()
     {
         this.ShowEditor = false;
         this.EditorWindow = null;

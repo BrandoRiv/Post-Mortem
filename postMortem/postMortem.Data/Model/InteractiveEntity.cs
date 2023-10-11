@@ -20,7 +20,6 @@ namespace postMortem.Data.Model
         public InteractiveEntity()
         {
             Status = PostStatus.Active;
-
             Comments = new List<Comment>();
             Reports = new List<Report>();
             AwardsGiven = new List<Award>();
