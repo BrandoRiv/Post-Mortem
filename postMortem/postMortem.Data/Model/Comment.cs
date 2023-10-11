@@ -46,6 +46,11 @@ namespace postMortem.Data.Model
         public string Message { get; set; }
 
         /// <summary>
+        /// Returns the total weight of this item.
+        /// </summary>
+        protected override int CommentWeight { get => 1; }
+
+        /// <summary>
         /// Internally determine what type of entity this is by it's type.
         /// </summary>
         public override string EntityType => "Comment";

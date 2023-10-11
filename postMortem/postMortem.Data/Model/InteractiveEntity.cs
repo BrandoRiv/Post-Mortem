@@ -87,6 +87,14 @@ namespace postMortem.Data.Model
         public virtual List<Vote> VotesGiven { get; set; }
 
         /// <summary>
+        /// Total amount of weight this comment is given. 
+        /// 0 for post
+        /// 1 for comment
+        /// </summary>
+        [NotMapped]
+        protected virtual int CommentWeight { get; } = 0;
+
+        /// <summary>
         /// Gets the total amount of votes for this post given.
         /// </summary>
         /// <returns></returns>
@@ -98,6 +106,19 @@ namespace postMortem.Data.Model
             VotesGiven.ForEach(v => totalVotes += v.VoteType);
 
             return totalVotes;
+        }
+
+        /// <summary>
+        /// Gets the total amount of comments and it's children.
+        /// </summary>
+        public virtual int GetCommentWeight
+        {
+            get 
+            {
+                int totalComments = CommentWeight;
+                Comments.ForEach(c => totalComments += c.GetCommentWeight);
+                return totalComments; 
+            }
         }
     }
 }
