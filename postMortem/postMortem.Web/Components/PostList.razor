@@ -1,0 +1,127 @@
+﻿@inject postMortemWorker Worker
+
+@foreach (Post post in _PostsInView)
+{
+    <postMortem.Web.Components.PostCard Post="post" />
+}
+
+<br />
+<Pagination TotalPages="@TotalPages" PageChanged="OnPageChanged" />
+
+@code
+{
+    /// <summary>
+    /// Total amount of pages that should be shown on a page.
+    /// </summary>
+    private const int PostsPerPage = 15;
+
+    /// <summary>
+    /// This value will change based on the amount of posts there is.
+    /// </summary>
+    private int TotalPages = -1;
+
+    /// <summary>
+    /// We keep a list of all posts, then we keep a list of pages that should be in the user view.
+    /// </summary>
+    private List<Post> _Posts = new List<Post>();
+    private List<Post> _PostsInView = new List<Post>();
+
+    /// <summary>
+    /// Set the owner of posts we'd like to display.
+    /// </summary>
+    [Parameter]
+    public User Owner { get; set; } = null;
+
+    /// <summary>
+    /// Set the tag and only show posts that contain these tags.
+    /// </summary>
+    [Parameter]
+    public List<Tag> Tags { get; set; } = new List<Tag>();
+
+    /// <summary>
+    /// We override the initializer to invoke our own providers.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        PostDateProvider();
+        PostPageDataProvider(0);
+        base.OnInitialized();
+    }
+
+    /// <summary>
+    /// Import all of the posts for the page and set the amount of pages.
+    /// </summary>
+    /// <returns></returns>
+    private async Task PostDateProvider()
+    {
+        if (Owner == null)
+        {
+            this._Posts = Worker.Posts.GetAll().ToList();
+        }
+        else
+        {
+            this._Posts = Worker.Posts.Find(r => r.Owner == Owner).ToList();
+        }
+
+        if (Tags != null && Tags.Count != 0)
+        {
+            List<Post> remainder = new List<Post>();
+
+            foreach (Post post in this._Posts)
+            {
+                // Post has no tags.
+                if (post.Tags.Count != 0)
+                {
+                    continue;
+                }
+
+                foreach (Tag tag in Tags)
+                {
+                    if (post.Tags.Contains(tag))
+                    {
+                        // We found a match. Keep the post!
+                        remainder.Add(post);
+                        break;
+                    }
+                }
+            }
+
+            this._Posts = remainder;
+        }
+
+        this.TotalPages = Math.Abs(this._Posts.Count / PostsPerPage);
+    }
+
+    /// <summary>
+    /// Grab a bunch of posts that should be displayed on the page.
+    /// </summary>
+    /// <param name="startIndex">Starting position of posts to grab from the list. You can figure this number out by doing (pageNumber * PostsPerPage)</param>
+    /// <returns></returns>
+    private async Task PostPageDataProvider(int startIndex)
+    {
+        if (_PostsInView.Count != 0)
+            _PostsInView.Clear();
+
+        for (int i = startIndex; i < startIndex + PostsPerPage; i++)
+        {
+            if (i > _Posts.Count)
+            {
+                break;
+            }
+
+            _PostsInView.Add(_Posts[i]);
+        }
+
+        this.StateHasChanged();
+    }
+
+    /// <summary>
+    /// Invoked when the page has been changed. This way we can change our lists of posts.
+    /// </summary>
+    /// <param name="newPageNumber"></param>
+    /// <returns></returns>
+    private async Task OnPageChanged(int newPageNumber)
+    {
+        this.PostPageDataProvider(PostsPerPage * newPageNumber);
+    }
+}
