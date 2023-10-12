@@ -1,7 +1,6 @@
 ﻿@inject postMortemWorker Worker
 @inject NavigationManager Navigation
 @inject UserManager<User> Users
-@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IRefreshService RefreshService;
 
 <EditForm Model=@Comment OnSubmit=@FormSubmitted>
@@ -37,58 +36,106 @@
 
 @code
 {
-    [Parameter]
-    public InteractiveEntity Parent { get; set; }
+    /// <summary>
+    /// Is this element disabled?
+    /// </summary>
+    private bool IsDisabled = false;
 
-    [Parameter]
-    public Comment? Comment { get; set; } = new Comment();
+    /// <summary>
+    /// Set the parent this comment will belong to.
+    /// </summary>
+    [Parameter] public InteractiveEntity Parent { get; set; }
 
-    [Parameter]
-    public EventCallback OnCancel { get; set; }
+    /// <summary>
+    /// Gets or sets the comment. Keep this null unless you're wanting to modify a comment.
+    /// </summary>
+    [Parameter] public Comment? Comment { get; set; } = new Comment();
 
-    [Parameter]
-    public EventCallback OnComplete { get; set; }
+    /// <summary>
+    /// Event called when the click button is called.
+    /// </summary>
+    [Parameter] public EventCallback OnCancel { get; set; }
 
+    /// <summary>
+    /// Event called when the element is complete.
+    /// </summary>
+    [Parameter] public EventCallback OnComplete { get; set; }
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
     protected override void OnInitialized()
     {
         this.RefreshService.RefreshRequested += OnRefresh;
     }
 
+    /// <summary>
+    /// The user has asked to submit the form.
+    /// </summary>
+    /// <param name="editContext"></param>
     private async void FormSubmitted(EditContext editContext)
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        User user = Worker.Users.FirstOrDefault(r => r.UserName == authState.User.Identity.Name);
+        var user = (await AuthStat).User;
+        User User = Worker.Users.FirstOrDefault(r => r.UserName == user.Identity.Name);
+
+        // Make sure we can grab the user.
+        if (user == null)
+        {
+            return;
+        }
 
         // Set properties.
-        Comment.Owner = user;
+        Comment.Owner = User;
         Comment.Parent = Parent;
 
+        // We have to set some properties so we can validate.
         if (!editContext.Validate())
         {
             return;
         }
 
+        // Add the comment.
         Worker.Comments.Add(Comment);
         Worker.SaveChanges();
 
+        // Request the parent refreshes to stop any issues we may see 
+        // with EntityFramework trying to add duplicate entries.
         RefreshService.CallRequestRefresh();
 
         await OnCompleteClick();
     }
 
+    /// <summary>
+    /// Refresh the component. Delete the existing component.
+    /// </summary>
     protected virtual void OnRefresh()
     {
         this.Comment = new Comment();
         this.StateHasChanged();
     }
 
+    /// <summary>
+    /// Cancel has been clicked.
+    /// </summary>
+    /// <returns></returns>
     private async Task OnCancelClick()
     {
         await OnCancel.InvokeAsync();
+        OnRefresh();
     }
 
+    /// <summary>
+    /// Complete has been clicked.
+    /// </summary>
+    /// <returns></returns>
     private async Task OnCompleteClick()
     {
         await OnComplete.InvokeAsync();
+        OnRefresh();
     }
 }

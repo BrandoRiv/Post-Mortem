@@ -11,23 +11,22 @@
                 <div class="col">
                     <Button class="btn btn-small" Color="ButtonColor.None" To="@ViewURL" Type="ButtonType.Link"><Icon Name="IconName.Messenger" /> @Post.GetCommentWeight Comments</Button>
             </div>
-            <div class="col">
-                <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Share" /> 0 Shares</Button>
-            </div>
-            <div class="col">
-                <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Save" /> Save</Button>
-            </div>
         </div>
     </CardBody>
 </Card>
 
 @code 
 {
-    public string ViewURL
+    /// <summary>
+    /// Gets or sets the post for this element to display.
+    /// </summary>
+    [Parameter] public Post? Post { get; set; } = new Post();
+
+    /// <summary>
+    /// Gets the URL of the post. Using the razor page it likes to act up.
+    /// </summary>
+    private string ViewURL
     {
         get { return "/Posts/View/" + Post.Id; }
     }
-
-    [Parameter]
-    public Post? Post { get; set; } = new Post();
 }

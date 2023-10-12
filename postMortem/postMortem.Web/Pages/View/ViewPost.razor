@@ -10,7 +10,7 @@
         <CardText>@Post.Message</CardText>
         <div class="row">
             <div class="col">
-                <postMortem.Web.Components.VoteCard Entity="Post"/>
+                <VoteElement Entity="Post"/>
                 <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Messenger" /> @Post.GetCommentWeight Comments</Button>
                 <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Share" /> Share</Button>
                 <Button class="btn btn-small" Color="ButtonColor.None" To="#" Type="ButtonType.Link"><Icon Name="IconName.Save" /> Save</Button>
@@ -25,10 +25,10 @@
 
 @foreach (Comment comment in Post.Comments)
 {
-    <postMortem.Web.Components.CommentCard Comment="comment"/>
+    <CommentElement Comment="comment"/>
 }
 
-<postMortem.Web.Components.CommentEditorWindow Parent="Post"/>
+<CommentEditorElement Parent="Post"/>
 
 
 @code
