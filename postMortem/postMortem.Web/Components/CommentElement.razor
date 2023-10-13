@@ -1,0 +1,110 @@
+﻿<Card Style="width:40rem;">
+    <CardBody>
+        <CardText>Posted by <a href="/Profile/@Comment.Owner.UserName">@Comment.Owner.UserName</a> at @Comment.CreatedAt.ToShortTimeString()</CardText>
+        <CardText>@Comment.Message</CardText>
+        <div class="row" style="max-width:30rem;">
+            <div class="col">
+                <VoteElement Entity="Comment" />
+             </div>
+             <div class="col">
+                 <Button @onclick="OnShowEditor" class="btn btn-small" Color="ButtonColor.None" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.Messenger" /> Reply</Button>
+             </div>
+         </div>
+         
+         @if (ShowEditor)
+         {
+             <CommentEditorElement @ref=EditorWindow Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
+         }
+         
+         @if (ShowChildren)
+         {
+            @foreach (Comment child in Comment.Comments)
+            {
+                <br />
+                <CommentElement Comment="child" />
+            }
+         }
+    </CardBody>
+</Card>
+<br />
+
+@code 
+{
+    /// <summary>
+    /// Is this element enabled? Do not allow the element to be enabled if the user is not signed in.
+    /// </summary>
+    private bool IsDisabled = false;
+
+    /// <summary>
+    /// Show the editor for this element.
+    /// </summary>
+    private bool ShowEditor = false;
+
+    /// <summary>
+    /// Reference for the editor.
+    /// </summary>
+    private CommentEditorElement EditorWindow;
+
+    /// <summary>
+    /// The comment we should display using this comment.
+    /// </summary>
+    [Parameter] public Comment? Comment { get; set; } = new Comment();
+
+    /// <summary>
+    /// Should we show the children of this comment along with the comment?
+    /// </summary>
+    [Parameter] public bool ShowChildren { get; set; } = true;
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// Initialize the element.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthStat).User;
+        if (user.Identity == null)
+        {
+            IsDisabled = true;
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+    /// <summary>
+    /// Show the editor for this comment.
+    /// </summary>
+    protected void OnShowEditor()
+    {
+        ShowEditor = true;
+    }
+
+    /// <summary>
+    /// The editor cancel button has been clicked.
+    /// </summary>
+    private void OnCancelClick()
+    {
+        this.Dispose();
+    }
+
+    /// <summary>
+    /// The editor complete has been clicked.
+    /// </summary>
+    private void OnCompleteClick()
+    {
+        this.Dispose();
+    }
+
+    /// <summary>
+    /// Hide the editor and dipose of the editor for best measures.
+    /// </summary>
+    private void Dispose()
+    {
+        this.ShowEditor = false;
+        this.EditorWindow = null;
+    }
+}

@@ -1,0 +1,167 @@
+﻿@inject postMortemWorker Worker
+
+<div class="row">
+    <div class="col" style="margin-top:7px; max-width:20px;">
+        @Entity.GetVotes()
+    </div>
+    <div class="col" style="max-width:50px;">
+        <Button class="btn btn-small" onclick="@OnUpClick" Color="@UpColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowUp" /></Button>
+    </div>    
+    <div class="col" style="max-width:40px;">
+        <Button class="btn btn-small" onclick="@OnDownClick" Color="@DownColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowDown" /></Button>
+    </div>
+</div>
+
+@code 
+{
+    /// <summary>
+    /// Default colors for background of up buttons.
+    /// </summary>
+    private const ButtonColor Up = ButtonColor.None;
+    private const ButtonColor UpSelected = ButtonColor.Danger;
+
+    /// <summary>
+    /// Default colors for background of down button.
+    /// </summary>
+    private const ButtonColor Down = ButtonColor.None;
+    private const ButtonColor DownSelected = ButtonColor.Info;
+
+    /// <summary>
+    /// Current color of the upvote.
+    /// </summary>
+    private ButtonColor UpColor = Up;
+
+    /// <summary>
+    /// Current color of the downvote.
+    /// </summary>
+    private ButtonColor DownColor = Down;
+
+    /// <summary>
+    /// Tells whether this entity is disabled because the user is not signed in.
+    /// </summary>
+    private bool IsDisabled = false;
+
+    /// <summary>
+    /// Returns the user object this component represents.
+    /// </summary>
+    private User SelectedUser = null;
+
+    /// <summary>
+    /// Represents the entity this vote should go towards.
+    /// </summary>
+    [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthStat).User;
+        if (user.Identity.Name == null)
+        {
+            IsDisabled = true;
+        }
+
+        // Grab the user.
+        Worker.Users.Get(user.Identity.Name);
+
+        // Update the vote.
+        UpdateVoteType();
+
+        await base.OnInitializedAsync();
+    }
+
+    /// <summary>
+    /// Update the screen with the chosen vote type of the user.
+    /// </summary>
+    /// <returns></returns>
+    protected virtual async Task UpdateVoteType()
+    {
+        Vote voteGiven = GetUsersVote();
+
+        // User has no vote.
+        if (voteGiven == null)
+        {
+            UpColor = Up;
+            DownColor = Down;
+        }
+        else
+        {
+            // User likes it.
+            if (voteGiven.VoteType == 1)
+            {
+                UpColor = UpSelected;
+                DownColor = Down;
+            }
+
+            // User does not like it.
+            if (voteGiven.VoteType == 0)
+            {
+                UpColor = Up;
+                DownColor = DownSelected;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Called when the user clicks on the upvote button.
+    /// </summary>
+    protected virtual async void OnUpClick()
+    {
+        HandleClick(1);
+    }
+
+    /// <summary>
+    /// Called when the user clicks on the downvote button.
+    /// </summary>
+    protected virtual async void OnDownClick()
+    {
+        HandleClick(0);
+    }
+
+    /// <summary>
+    /// Handle the user clicking one of the vote buttons.
+    /// </summary>
+    /// <param name="voteType"></param>
+    private void HandleClick(int voteType)
+    {
+        Vote voteGiven = GetUsersVote();
+
+        // User would like to remove their vote.
+        if (voteGiven != null && voteGiven.VoteType == voteType)
+        {
+            Worker.Votes.Remove(voteGiven);
+        }
+        // User would like to change their vote.
+        else if (voteGiven != null)
+        {
+            voteGiven.VoteType = voteType;
+        }
+        // User is creating first vote.
+        else
+        {
+            voteGiven = new Vote(SelectedUser, Entity, voteType);
+            Worker.Votes.Add(voteGiven);
+        }
+
+        // Update votes.
+        Worker.SaveChanges();
+
+        // Update screen.
+        UpdateVoteType();
+    }
+
+    /// <summary>
+    /// Get the current users vote, or return null if none found.
+    /// </summary>
+    /// <returns></returns>
+    private Vote GetUsersVote()
+    {
+        if (IsDisabled)
+            return null;
+
+        return Entity.VotesGiven.FirstOrDefault(r => r.Giver == SelectedUser); ;
+    }
+}
