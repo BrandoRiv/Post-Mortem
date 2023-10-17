@@ -27,12 +27,20 @@
     <Switch @bind-Value="Post.MarkedNSFW" Label="NSFW" />
 
     <ValidationSummary />
-    <input type="submit" class="btn btn-primary" value="Submit!" />
+    <BannedUserElement @ref=bannedUser/>
+
+    @if (!bannedUser.IsBanned)
+    {
+        <input type="submit" class="btn btn-primary" value="Submit!" />
+    }
+
     <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
 </EditForm>
 
 @code 
 {
+    private BannedUserElement bannedUser = new BannedUserElement();
+
     ServerSideValidator validator;
     private string tagsUnsorted = "";
 
