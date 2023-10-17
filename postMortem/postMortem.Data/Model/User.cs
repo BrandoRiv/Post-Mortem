@@ -65,6 +65,17 @@ namespace postMortem.Data.Model
         }
 
         /// <summary>
+        /// Returns the first banned reason if there is one.
+        /// </summary>
+        public virtual BannedUser? IsBanned
+        {
+            get
+            {
+                return Bans.FirstOrDefault(r => r.IsActive);
+            }
+        }
+
+        /// <summary>
         /// References posts.
         /// </summary>
         public virtual List<Post> Posts { get; set; }
@@ -83,6 +94,11 @@ namespace postMortem.Data.Model
         /// Referenced subscriptions
         /// </summary>
         public virtual List<Subscription> ActiveSubscriptions { get; set; }
+
+        /// <summary>
+        /// Referenced bans;
+        /// </summary>
+        public virtual List<BannedUser> Bans { get; set; }
 
         /// <summary>
         /// Referenced votes.
