@@ -1,4 +1,6 @@
-﻿<Card Style="width:40rem;">
+﻿@inject IAuthenticationProvider Auth;
+
+<Card Style="width:40rem;">
     <CardBody>
         <AuthorizeView>
             <div class="post-heart">
@@ -13,7 +15,11 @@
              </div>
              <div class="col">
                  <Button @onclick="OnShowEditor" class="btn btn-small" Color="ButtonColor.None" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.Messenger" /> Reply</Button>
-             </div>
+                 @if (ShowBanMessage)
+                 {
+                    <BannedUserElement />
+                 }
+            </div>
          </div>
          
          @if (ShowEditor)
@@ -46,6 +52,11 @@
     private bool ShowEditor = false;
 
     /// <summary>
+    /// Should we show the ban message?
+    /// </summary>
+    private bool ShowBanMessage = false;
+
+    /// <summary>
     /// Reference for the editor.
     /// </summary>
     private CommentEditorElement EditorWindow;
@@ -61,18 +72,13 @@
     [Parameter] public bool ShowChildren { get; set; } = true;
 
     /// <summary>
-    /// Provides the authentication state of the user.
-    /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
-
-    /// <summary>
     /// Initialize the element.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        var user = (await AuthStat).User;
-        if (user.Identity == null)
+        var user = await Auth.GetUser();
+        if (user == null)
         {
             IsDisabled = true;
         }
@@ -83,9 +89,17 @@
     /// <summary>
     /// Show the editor for this comment.
     /// </summary>
-    protected void OnShowEditor()
+    protected async void OnShowEditor()
     {
-        ShowEditor = true;
+        User user = await Auth.GetUser();
+        if (user.IsBanned != null)
+        {
+            ShowBanMessage = true;
+        }
+        else
+        {
+            ShowEditor = true;
+        }
     }
 
     /// <summary>
