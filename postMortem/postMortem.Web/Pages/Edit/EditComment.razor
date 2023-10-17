@@ -3,8 +3,15 @@
 @inject NavigationManager Navigation
 @inject IAuthenticationProvider Auth;
 
-<h3>Edit your comment</h3>
-<CommentEditorElement IsEditing="true" Comment="Comment" Parent="Comment.Parent" OnComplete="OnCompleteCalled"/>
+@if (Comment.Owner.IsBanned != null)
+{
+    <BannedUserElement />
+}
+else
+{
+    <h3>Edit your comment</h3>
+    <CommentEditorElement IsEditing="true" Comment="Comment" Parent="Comment.Parent" OnComplete="OnCompleteCalled"/>
+}
 
 @code 
 {
