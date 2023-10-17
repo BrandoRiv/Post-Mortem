@@ -1,4 +1,5 @@
 @page "/Account"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject UserManager<User> Users
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
@@ -8,10 +9,6 @@
 @if (CurrentUser != null)
 {
     <p>Logged in as @CurrentUser.UserName.</p>
-}
-else
-{
-    <p>You are not logged in.</p>
 }
 
 @code 

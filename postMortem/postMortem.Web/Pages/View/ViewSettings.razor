@@ -1,4 +1,5 @@
 ﻿@page "/Settings";
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject postMortemWorker Worker
 @inject UserManager<User> Users
 @inject AuthenticationStateProvider AuthenticationStateProvider
