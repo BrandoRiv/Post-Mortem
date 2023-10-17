@@ -48,6 +48,11 @@ namespace postMortem.Data.Model
         public string Message { get; set; }
 
         /// <summary>
+        /// Is this post marked as NSFW?
+        /// </summary>
+        public bool MarkedNSFW { get; set; }
+
+        /// <summary>
         /// Gets or sets a list of related tags.
         /// </summary>
         public virtual List<Tag> Tags { get; set; }

@@ -24,6 +24,8 @@
         <InputText @bind-Value=tagsUnsorted class="form-control" />
     </div>
 
+    <Switch @bind-Value="Post.MarkedNSFW" Label="NSFW" />
+
     <ValidationSummary />
     <input type="submit" class="btn btn-primary" value="Submit!" />
     <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
