@@ -1,0 +1,58 @@
+﻿@page "/Settings";
+@inject postMortemWorker Worker
+@inject UserManager<User> Users
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Account settings</h3>
+
+<EditForm Model=@Settings OnSubmit=@FormSubmitted>
+    <DataAnnotationsValidator />
+    <ServerSideValidator @ref=validator />
+
+    <Switch @bind-Value="Settings.UseDarkMode" Label="Use dark mode" />
+    <Switch @bind-Value="Settings.ShowNSFWContent" Label="Show NSFW content" />
+    <Switch @bind-Value="Settings.PrivateAccount" Label="Private account" />
+    <ValidationSummary />
+
+    <br/>
+    <input type="submit" class="btn btn-primary" value="Save" />
+</EditForm>
+
+@code
+{
+    ServerSideValidator validator;
+
+    /// <summary>
+    /// The current user object.
+    /// </summary>
+    private User CurrentUser { get; set; }
+    private UserSettings Settings { get; set; } = new UserSettings();
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthStat).User;
+        CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
+        Settings = CurrentUser.Settings;
+
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Save the page changes.
+    /// </summary>
+    /// <param name="editContext"></param>
+    private async void FormSubmitted(EditContext editContext)
+    {
+        CurrentUser.Settings = Settings;
+        Worker.SaveChanges();
+    }
+}
