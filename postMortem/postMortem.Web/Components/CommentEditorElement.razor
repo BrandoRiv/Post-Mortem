@@ -1,7 +1,7 @@
 ﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
-@inject UserManager<User> Users
+@inject IAuthenticationProvider Auth;
 @inject IRefreshService RefreshService;
 
 <EditForm Model=@Comment OnSubmit=@FormSubmitted>
@@ -43,6 +43,11 @@
     private bool IsDisabled = false;
 
     /// <summary>
+    /// Are we modifying an element?
+    /// </summary>
+    [Parameter] public bool IsEditing { get; set; }
+
+    /// <summary>
     /// Set the parent this comment will belong to.
     /// </summary>
     [Parameter] public InteractiveEntity Parent { get; set; }
@@ -63,11 +68,6 @@
     [Parameter] public EventCallback OnComplete { get; set; }
 
     /// <summary>
-    /// Provides the authentication state of the user.
-    /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
-
-    /// <summary>
     /// Initialize the component.
     /// </summary>
     protected override void OnInitialized()
@@ -81,11 +81,10 @@
     /// <param name="editContext"></param>
     private async void FormSubmitted(EditContext editContext)
     {
-        var user = (await AuthStat).User;
-        User User = Worker.Users.FirstOrDefault(r => r.UserName == user.Identity.Name);
+        User User = await Auth.GetUser();
 
         // Make sure we can grab the user.
-        if (user == null)
+        if (User == null)
         {
             return;
         }
@@ -100,8 +99,16 @@
             return;
         }
 
-        // Add the comment.
-        Worker.Comments.Add(Comment);
+        if (!IsEditing)
+        {
+            // Add the comment.
+            Worker.Comments.Add(Comment);
+        }
+        else
+        {
+            Comment.ModifiedAt = DateTime.Now;
+        }
+
         Worker.SaveChanges();
 
         // Request the parent refreshes to stop any issues we may see 

@@ -1,8 +1,7 @@
 ﻿@page "/Settings";
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject postMortemWorker Worker
-@inject UserManager<User> Users
-@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAuthenticationProvider Auth;
 
 <h3>Account settings</h3>
 
@@ -30,18 +29,12 @@
     private UserSettings Settings { get; set; } = new UserSettings();
 
     /// <summary>
-    /// Provides the authentication state of the user.
-    /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
-
-    /// <summary>
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        var user = (await AuthStat).User;
-        CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
+        CurrentUser = await Auth.GetUser();
         Settings = CurrentUser.Settings;
 
         StateHasChanged();

@@ -1,6 +1,11 @@
 ﻿<Card Style="width:40rem;">
     <CardBody>
-        <CardText>Posted by <a href="/Profile/@Comment.Owner.UserName">@Comment.Owner.UserName</a> at @Comment.CreatedAt.ToShortTimeString()</CardText>
+        <AuthorizeView>
+            <div class="post-heart">
+                <InteractiveEntityOptionsElement Entity="Comment" />
+            </div>
+        </AuthorizeView>
+        <CardText>Posted by <a href="/Profile/@Comment.Owner.UserName">@Comment.Owner.UserName</a> at @Comment.CreatedAt.ToShortTimeString() @IsModified()</CardText>
         <CardText>@Comment.Message</CardText>
         <div class="row" style="max-width:30rem;">
             <div class="col">
@@ -106,5 +111,19 @@
     {
         this.ShowEditor = false;
         this.EditorWindow = null;
+    }
+
+    /// <summary>
+    /// Gets a string telling whether the post has been modified.
+    /// </summary>
+    /// <returns></returns>
+    private string IsModified()
+    {
+        if (Comment.CreatedAt != Comment.ModifiedAt)
+        {
+            return "(Edited, " + Comment.ModifiedAt.ToShortDateString() + ")";
+        }
+
+        return "";
     }
 }

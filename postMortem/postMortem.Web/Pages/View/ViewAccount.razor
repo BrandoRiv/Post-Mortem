@@ -1,6 +1,7 @@
 @page "/Account/{AccountName}";
 @inject UserManager<User> Users
 @inject postMortemWorker Worker
+@inject IAuthenticationProvider Auth;
 
 @if (CurrentUser == null)
 {
@@ -52,11 +53,6 @@ else
     public string AccountName { get; set; }
 
     /// <summary>
-    /// Provides the authentication state of the user.
-    /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
-
-    /// <summary>
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
@@ -64,8 +60,7 @@ else
     {
         if (AccountName == null)
         {
-            var user = (await AuthStat).User;
-            CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
+            CurrentUser = await Auth.GetUser();
         }
         else
         {

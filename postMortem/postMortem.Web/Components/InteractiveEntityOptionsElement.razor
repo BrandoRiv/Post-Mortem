@@ -1,0 +1,40 @@
+﻿@inject postMortemWorker Worker
+@inject IAuthenticationProvider Auth;
+
+<Dropdown Size="Size.Small">
+    <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.Gear" /></DropdownToggleButton>
+    <DropdownMenu>
+        @if (Entity.Owner == Viewer)
+        {
+            <DropdownItem To="@GetEditUrl()" Type="ButtonType.Link">Edit</DropdownItem>
+            <DropdownItem To="#" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
+        }
+
+        @if (Entity.Owner != Viewer)
+        {
+            <DropdownItem To="#" Type="ButtonType.Link">Report</DropdownItem>
+        }
+
+        <AuthorizeView Roles="Moderator">
+            <DropdownDivider />
+            <DropdownItem To="#" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
+        </AuthorizeView>
+    </DropdownMenu>
+</Dropdown>
+
+@code 
+{
+    [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
+    private User Viewer = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Viewer = await Auth.GetUser();
+        await base.OnInitializedAsync();
+    }
+
+    private string GetEditUrl()
+    {
+        return string.Format("/{0}/Edit/{1}", Entity.EntityType, Entity.Id);
+    }
+}

@@ -2,8 +2,7 @@
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
-@inject UserManager<User> Users
-@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAuthenticationProvider Auth;
 
 <h3>Create a new post!</h3>
 
@@ -47,9 +46,7 @@
 
     private async void FormSubmitted(EditContext editContext)
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        User user = Worker.Users.FirstOrDefault(r => r.UserName == authState.User.Identity.Name);
-
+        User user = await Auth.GetUser();
         Post.Owner = user;
 
         if (!editContext.Validate())

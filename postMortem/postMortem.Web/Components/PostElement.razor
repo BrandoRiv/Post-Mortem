@@ -1,13 +1,15 @@
 ﻿@inject postMortemWorker Worker
+@inject IAuthenticationProvider Auth;
 
 <Card Style="width:40rem;">
     <CardBody>
         <AuthorizeView>
             <div class="post-heart">
                 <Button class="btn btn-small" Color="ButtonColor.Danger" @onclick="OnFavoriteClick" Type="ButtonType.Button"><Icon Name="@IsFavorited" /></Button>
+                <InteractiveEntityOptionsElement Entity="Post"/>
             </div>
         </AuthorizeView>
-        <CardText>Posted by <a href="/Profile/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
+        <CardText>Posted by <a href="/Account/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString() @IsModified()</CardText>
             <CardTitle>@Post.Title</CardTitle>
             <CardText>@Post.Message</CardText>
             <CardText>
@@ -41,11 +43,6 @@
     [Parameter] public Post? Post { get; set; } = new Post();
 
     /// <summary>
-    /// Provides the authentication state of the user.
-    /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
-
-    /// <summary>
     /// Initialize the element.
     /// </summary>
     /// <returns></returns>
@@ -60,8 +57,7 @@
     /// </summary>
     protected async Task UpdateFavoriteStatus(bool change = false)
     {
-        var user = (await AuthStat).User;
-        User User = Worker.Users.GetByUsername(user.Identity.Name);
+        User User = await Auth.GetUser();
 
         FavoritePost favorited = Worker.Favorites.FirstOrDefault
             (r => r.User == User && r.Post.Id == Post.Id);
@@ -100,6 +96,20 @@
     private string ViewURL
     {
         get { return "/Posts/View/" + Post.Id; }
+    }
+
+    /// <summary>
+    /// Gets a string telling whether the post has been modified.
+    /// </summary>
+    /// <returns></returns>
+    private string IsModified()
+    {
+        if (Post.CreatedAt != Post.ModifiedAt)
+        {
+            return "(Edited, " + Post.ModifiedAt.ToShortDateString() + ")";
+        }
+
+        return "";
     }
 
     /// <summary>

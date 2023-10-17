@@ -1,0 +1,48 @@
+﻿@page "/Comment/Edit/{ID}";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+@inject IAuthenticationProvider Auth;
+
+<h3>Edit your comment</h3>
+<CommentEditorElement IsEditing="true" Comment="Comment" Parent="Comment.Parent" OnComplete="OnCompleteCalled"/>
+
+@code 
+{
+    /// <summary>
+    /// Has a user besides the creator tried modifying the post?
+    /// </summary>
+    private bool InvalidUser = false;
+
+    [Parameter]
+    public string ID { get; set; }
+
+    [Parameter]
+    public Comment? Comment { get; set; } = new Comment();
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        User viewer = await Auth.GetUser();
+        Comment = Worker.Comments.Get(Int32.Parse(ID));
+
+        // Do not let anyone but the owner modify.
+        if (Comment.Owner != viewer)
+        {
+            Comment = null;
+            InvalidUser = true;
+            return;
+        }
+    }
+
+    /// <summary>
+    /// Leave.
+    /// </summary>
+    private async void OnCompleteCalled()
+    {
+        // We're done here.
+        Navigation.NavigateTo("");
+    }
+}
