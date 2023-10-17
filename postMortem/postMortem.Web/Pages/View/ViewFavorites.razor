@@ -1,0 +1,35 @@
+﻿@page "/Favorite";
+@inject postMortemWorker Worker
+
+<h3>Your Favorites</h3>
+
+<PostList _Posts="_favorites" />
+
+@code 
+{
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// List of favorite posts.
+    /// </summary>
+    private List<Post> _favorites = new List<Post>();
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthStat).User;
+
+        foreach (FavoritePost post in Worker.Users.GetByUsername(user.Identity.Name).Favorites)
+        {
+            _favorites.Add(post.Post);
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

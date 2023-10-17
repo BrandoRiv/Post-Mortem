@@ -24,8 +24,9 @@
     /// <summary>
     /// We keep a list of all posts, then we keep a list of pages that should be in the user view.
     /// </summary>
-    private List<Post> _Posts = new List<Post>();
-    private List<Post> _PostsInView = new List<Post>();
+    [Parameter]
+    public List<Post> _Posts { get; set; } = new List<Post>();
+    protected List<Post> _PostsInView = new List<Post>();
 
     /// <summary>
     /// Set the owner of posts we'd like to display.
@@ -55,6 +56,12 @@
     /// <returns></returns>
     private async Task PostDataProvider()
     {
+        // We have provided a list.
+        if (this._Posts.Count() != 0)
+        {
+            return;
+        }
+
         if (Owner == null)
         {
             this._Posts = Worker.Posts.GetAll().ToList();

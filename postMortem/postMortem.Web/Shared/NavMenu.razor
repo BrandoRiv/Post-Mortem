@@ -48,12 +48,13 @@
         {
             new NavItem { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Home"},
             new NavItem { Id = "2", IconName = IconName.LayoutSidebarInset, Text = "Me", IconColor = IconColor.Primary },
-            new NavItem { Id = "3", Href = "/Account/" + user.Identity.Name, IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},
-            new NavItem { Id = "4", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"},
+            new NavItem { Id = "3", Href = "/Account/" + user.Identity.Name, IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},            
+            new NavItem { Id = "4", Href = "/Favorite", IconName = IconName.HeartFill, Text = "Favorites", ParentId="2"},
+            new NavItem { Id = "5", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"},
 
-            new NavItem { Id = "5", IconName = IconName.Lock, Text = "Admin", IconColor = IconColor.Danger },
-            new NavItem { Id = "6", Href = "/Reports", IconName = IconName.EnvelopePaperFill, Text = "Reports", ParentId="6"},
-            new NavItem { Id = "7", Href = "/Admins", IconName = IconName.PersonAdd, Text = "Admins", ParentId="6"},
+            new NavItem { Id = "6", IconName = IconName.Lock, Text = "Admin", IconColor = IconColor.Danger },
+            new NavItem { Id = "7", Href = "/Reports", IconName = IconName.EnvelopePaperFill, Text = "Reports", ParentId="6"},
+            new NavItem { Id = "8", Href = "/Admins", IconName = IconName.PersonAdd, Text = "Admins", ParentId="6"},
         };
 
         return navItems;
