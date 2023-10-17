@@ -1,4 +1,5 @@
-﻿@inject postMortemWorker Worker
+﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@inject postMortemWorker Worker
 @inject NavigationManager Navigation
 @inject UserManager<User> Users
 @inject IRefreshService RefreshService;

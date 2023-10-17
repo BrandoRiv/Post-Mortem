@@ -43,7 +43,7 @@ namespace postMortem.Data.Model
         public virtual InteractiveEntity? Recipient { get; set; }
 
         /// <summary>
-        /// What type of vote is being applied. Use 0 for bad, or 1 for good.
+        /// What type of vote is being applied. Use -1 for bad, or 1 for good.
         /// </summary>
         public int VoteType { get; set; }
 
