@@ -305,6 +305,32 @@ namespace postMortem.Data.Migrations
                     b.ToTable("BannedUsers");
                 });
 
+            modelBuilder.Entity("postMortem.Data.Model.FavoritePost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("postMortem.Data.Model.InteractiveEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -631,6 +657,23 @@ namespace postMortem.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("postMortem.Data.Model.FavoritePost", b =>
+                {
+                    b.HasOne("postMortem.Data.Model.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("postMortem.Data.Model.User", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("postMortem.Data.Model.Report", b =>
                 {
                     b.HasOne("postMortem.Data.Model.InteractiveEntity", "Entity")
@@ -740,6 +783,8 @@ namespace postMortem.Data.Migrations
                     b.Navigation("ActiveSubscriptions");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Favorites");
 
                     b.Navigation("Posts");
 

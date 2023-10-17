@@ -12,7 +12,7 @@ using postMortem.Data;
 namespace postMortem.Data.Migrations
 {
     [DbContext(typeof(postMortemContext))]
-    [Migration("20231017031259_initial")]
+    [Migration("20231017042056_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -306,6 +306,32 @@ namespace postMortem.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("BannedUsers");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.FavoritePost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("postMortem.Data.Model.InteractiveEntity", b =>
@@ -634,6 +660,23 @@ namespace postMortem.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("postMortem.Data.Model.FavoritePost", b =>
+                {
+                    b.HasOne("postMortem.Data.Model.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("postMortem.Data.Model.User", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("postMortem.Data.Model.Report", b =>
                 {
                     b.HasOne("postMortem.Data.Model.InteractiveEntity", "Entity")
@@ -743,6 +786,8 @@ namespace postMortem.Data.Migrations
                     b.Navigation("ActiveSubscriptions");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Favorites");
 
                     b.Navigation("Posts");
 

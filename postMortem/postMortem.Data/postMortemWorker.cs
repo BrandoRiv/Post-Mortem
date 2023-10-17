@@ -60,6 +60,12 @@ namespace postMortem.Data
         private IPostRepository _Posts;
 
         /// <summary>
+        /// Retrieves a list of posts.
+        /// </summary>
+        public IFavoritesRepository Favorites { get => _Favorites; set => _Favorites = value; }
+        private IFavoritesRepository _Favorites;
+
+        /// <summary>
         /// Retrieves a list of comments
         /// </summary>
         public ICommentRepository Comments { get => _Comments; set => _Comments = value; }
@@ -120,6 +126,7 @@ namespace postMortem.Data
         {
             _Users = new UserRepository(_Context);
             _Posts = new PostRepository(_Context);
+            _Favorites = new FavoritesRepository(_Context);
             _Comments = new CommentRepository(_Context);
             _Tags = new TagRepository(_Context);
             _Reports = new ReportRepository(_Context);

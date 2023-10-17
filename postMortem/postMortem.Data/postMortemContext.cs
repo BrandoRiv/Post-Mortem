@@ -28,6 +28,7 @@ namespace postMortem.Data
         public DbSet<User> Users { get; set; }
         public DbSet<BannedUser> BannedUsers { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<FavoritePost> Favorites { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Report> Reports { get; set; }
@@ -37,6 +38,7 @@ namespace postMortem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
         }
     }

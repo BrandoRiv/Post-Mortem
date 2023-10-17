@@ -23,8 +23,8 @@ namespace postMortem.Data.Model
             Posts = new List<Post>();
             Comments = new List<Comment>();
             CreatedAt = DateTime.Now;
-            Votes = new List<Vote>();
             Settings = new UserSettings();
+            Favorites = new List<FavoritePost>();
         }
 
         /// <summary>
@@ -68,6 +68,11 @@ namespace postMortem.Data.Model
         /// References posts.
         /// </summary>
         public virtual List<Post> Posts { get; set; }
+
+        /// <summary>
+        /// References a list of posts the user sees as their favorite.
+        /// </summary>
+        public virtual List<FavoritePost> Favorites { get; set; } 
 
         /// <summary>
         /// Referenced comments.

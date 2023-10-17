@@ -1,6 +1,12 @@
-﻿
+﻿@inject postMortemWorker Worker
+
 <Card Style="width:40rem;">
     <CardBody>
+        <AuthorizeView>
+            <div class="post-heart">
+                <Button class="btn btn-small" Color="ButtonColor.Danger" @onclick="OnFavoriteClick" Type="ButtonType.Button"><Icon Name="@IsFavorited" /></Button>
+            </div>
+        </AuthorizeView>
         <CardText>Posted by <a href="/Profile/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
             <CardTitle>@Post.Title</CardTitle>
             <CardText>@Post.Message</CardText>
@@ -25,9 +31,68 @@
 @code 
 {
     /// <summary>
+    /// Tells whether the post is favorited.
+    /// </summary>
+    private IconName IsFavorited = IconName.Heart;
+
+    /// <summary>
     /// Gets or sets the post for this element to display.
     /// </summary>
     [Parameter] public Post? Post { get; set; } = new Post();
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// Initialize the element.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateFavoriteStatus();
+        await base.OnInitializedAsync();
+    }
+
+    /// <summary>
+    /// Update the favorite status for the user on this element.
+    /// </summary>
+    protected async Task UpdateFavoriteStatus(bool change = false)
+    {
+        var user = (await AuthStat).User;
+        User User = Worker.Users.GetByUsername(user.Identity.Name);
+
+        FavoritePost favorited = Worker.Favorites.FirstOrDefault
+            (r => r.User == User && r.Post.Id == Post.Id);
+
+        if (change)
+        {
+            if (favorited != null)
+            {
+                Worker.Favorites.Remove(favorited);
+                favorited = null;
+            }
+            else
+            {
+                favorited = new FavoritePost(User, Post);
+                Worker.Favorites.Add(favorited);
+            }
+
+            Worker.SaveChanges();
+        }
+
+        if (favorited != null)
+        {
+            IsFavorited = IconName.HeartFill;
+        }
+        else
+        {
+            IsFavorited = IconName.Heart;
+        }
+
+        StateHasChanged();
+    }
 
     /// <summary>
     /// Gets the URL of the post. Using the razor page it likes to act up.
@@ -35,5 +100,14 @@
     private string ViewURL
     {
         get { return "/Posts/View/" + Post.Id; }
+    }
+
+    /// <summary>
+    /// Update the favorite status.
+    /// </summary>
+    /// <returns></returns>
+    private async Task OnFavoriteClick()
+    {
+        await UpdateFavoriteStatus(true);
     }
 }

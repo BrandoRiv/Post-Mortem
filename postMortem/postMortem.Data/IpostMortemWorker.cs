@@ -17,6 +17,7 @@ namespace postMortem.Data
         IUserRepository Users { get; set; }
         IBannedUserRepository BannedUsers { get; set; }
         IPostRepository Posts { get; set; }
+        IFavoritesRepository Favorites { get; set; }
         ICommentRepository Comments { get; set; }
         ITagRepository Tags { get; set; }
         IReportRepository Reports { get; set; }
