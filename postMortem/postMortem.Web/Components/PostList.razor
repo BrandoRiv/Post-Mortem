@@ -42,10 +42,10 @@
     /// <summary>
     /// We override the initializer to invoke our own providers.
     /// </summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        PostDateProvider();
-        PostPageDataProvider(0);
+        await PostDataProvider();
+        await PostPageDataProvider(0);
         base.OnInitialized();
     }
 
@@ -53,7 +53,7 @@
     /// Import all of the posts for the page and set the amount of pages.
     /// </summary>
     /// <returns></returns>
-    private async Task PostDateProvider()
+    private async Task PostDataProvider()
     {
         if (Owner == null)
         {
@@ -105,7 +105,7 @@
 
         for (int i = startIndex; i < startIndex + PostsPerPage; i++)
         {
-            if (i > _Posts.Count)
+            if (i >= _Posts.Count)
             {
                 break;
             }

@@ -1,64 +1,18 @@
-@page "/Account"
-@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@page "/Account/{AccountName}";
 @inject UserManager<User> Users
 @inject postMortemWorker Worker
-@inject NavigationManager Navigation
 
 <h3>Account Details</h3>
-
-@if (CurrentUser != null)
-{
-    <p>Logged in as @CurrentUser.UserName.</p>
-}
-
-@code 
-{
-    List<Post> PostItems = new List<Post>();
-    List<Post> CommentItems = new List<Post>();
-    List<Post> UpvoteItems = new List<Post>();
-    List<Post> DownvoteItems = new List<Post>();
-
-    private User CurrentUser;
-
-    /// <summary>
-    /// Provides the authentication state of the user.
-    /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
-
-    protected override void OnInitialized()
-    {
-        PostItems = Worker.Posts.GetAll().ToList();
-        base.OnInitialized();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var user = (await AuthStat).User;
-        CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
-    }
-}
 
 <Tabs>
     <Tab Title="Posts" IsActive="true">
         <Content>
-            @if (PostItems.Any())
-            {
-                @foreach (Post post in PostItems)
-                    {
-                        <br/>
-                        <postMortem.Web.Components.PostElement Post="post"/>
-                    }
-            
-            }
-            else
-            {
-                <p>It's quiet in here... too quiet.</p>
-            }
+            <PostList Owner="@CurrentUser"/>
         </Content>
     </Tab>
     <Tab Title="Comments">
         <Content>
-            <p>It's quiet in here... too quiet.</p>
+            <CommentList Owner="@CurrentUser"/>
         </Content>
     </Tab>
     <Tab Title="Upvotes">
@@ -68,7 +22,23 @@
     </Tab>
     <Tab Title="Downvotes">
         <Content>
-                <p>It's quiet in here... too quiet.</p>
+            <p>It's quiet in here... too quiet.</p>
         </Content>
     </Tab>
 </Tabs>
+
+@code 
+{
+    private User CurrentUser;
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthStat).User;
+        CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
+    }
+}

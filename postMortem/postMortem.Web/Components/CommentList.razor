@@ -1,0 +1,96 @@
+﻿@inject postMortemWorker Worker
+
+@foreach (Comment comment in _CommentsInView)
+{
+    <CommentElement Comment="comment" />
+    <br />
+}
+
+<br />
+<Pagination TotalPages="@TotalPages" PageChanged="OnPageChanged" />
+
+
+@code 
+{
+    /// <summary>
+    /// Total amount of pages that should be shown on a page.
+    /// </summary>
+    private const int CommentsPerPage = 15;
+
+    /// <summary>
+    /// This value will change based on the amount of posts there is.
+    /// </summary>
+    private int TotalPages = -1;
+
+    /// <summary>
+    /// We keep a list of all posts, then we keep a list of pages that should be in the user view.
+    /// </summary>
+    private List<Comment> _Comments = new List<Comment>();
+    private List<Comment> _CommentsInView = new List<Comment>();
+
+    /// <summary>
+    /// Set the owner of posts we'd like to display.
+    /// </summary>
+    [Parameter]
+    public User Owner { get; set; } = null;
+
+    /// <summary>
+    /// We override the initializer to invoke our own providers.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await CommentDataProvider();
+        await CommentPageDataProvider(0);
+        base.OnInitialized();
+    }
+
+    /// <summary>
+    /// Import all of the posts for the page and set the amount of pages.
+    /// </summary>
+    /// <returns></returns>
+    private async Task CommentDataProvider()
+    {
+        if (Owner == null)
+        {
+            this._Comments = Worker.Comments.GetAll().ToList();
+        }
+        else
+        {
+            this._Comments = Worker.Comments.Find(r => r.Owner == Owner).ToList();
+        }
+
+    }
+
+    /// <summary>
+    /// Grab a bunch of posts that should be displayed on the page.
+    /// </summary>
+    /// <param name="startIndex">Starting position of posts to grab from the list. You can figure this number out by doing (pageNumber * PostsPerPage)</param>
+    /// <returns></returns>
+    private async Task CommentPageDataProvider(int startIndex)
+    {
+        if (_CommentsInView.Count != 0)
+            _CommentsInView.Clear();
+
+        for (int i = startIndex; i < startIndex + CommentsPerPage; i++)
+        {
+            if (i > _Comments.Count)
+            {
+                break;
+            }
+
+            _CommentsInView.Add(_Comments[i]);
+        }
+
+        this.StateHasChanged();
+    }
+
+    /// <summary>
+    /// Invoked when the page has been changed. This way we can change our lists of posts.
+    /// </summary>
+    /// <param name="newPageNumber"></param>
+    /// <returns></returns>
+    private async Task OnPageChanged(int newPageNumber)
+    {
+        this.CommentPageDataProvider(CommentsPerPage * newPageNumber);
+    }
+}

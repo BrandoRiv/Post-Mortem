@@ -30,6 +30,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDb21tZW50RWxlbWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Components/CommentList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDb21tZW50TGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/austi/Source/Repos/2023_F_Brandon/postMortem/postMortem.Web/Components/PostElement.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQb3N0RWxlbWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
