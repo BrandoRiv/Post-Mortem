@@ -43,6 +43,11 @@
     private bool IsDisabled = false;
 
     /// <summary>
+    /// Are we modifying an element?
+    /// </summary>
+    [Parameter] public bool IsEditing { get; set; }
+
+    /// <summary>
     /// Set the parent this comment will belong to.
     /// </summary>
     [Parameter] public InteractiveEntity Parent { get; set; }
@@ -94,8 +99,16 @@
             return;
         }
 
-        // Add the comment.
-        Worker.Comments.Add(Comment);
+        if (!IsEditing)
+        {
+            // Add the comment.
+            Worker.Comments.Add(Comment);
+        }
+        else
+        {
+            Comment.ModifiedAt = DateTime.Now;
+        }
+
         Worker.SaveChanges();
 
         // Request the parent refreshes to stop any issues we may see 

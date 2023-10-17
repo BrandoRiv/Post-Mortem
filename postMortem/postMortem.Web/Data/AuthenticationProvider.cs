@@ -17,6 +17,7 @@ namespace postMortem.Web.Data
 
         public async Task<User> GetUser()
         {
+            // Grab the user authentication then grab the user account.
             var authState = await _provider.GetAuthenticationStateAsync();
             return _worker.Users.FirstOrDefault(r => r.UserName == authState.User.Identity.Name);
         }

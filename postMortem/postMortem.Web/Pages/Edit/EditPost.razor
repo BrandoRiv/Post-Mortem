@@ -1,0 +1,127 @@
+﻿@page "/Post/Edit/{ID}";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+@inject IAuthenticationProvider Auth;
+
+@if (InvalidUser)
+{
+    <p>Illegal post edit. You can't modify a post that is not yours.'</p>
+}
+else if (Post == null)
+{
+    <p>Unable to find said post. Maybe it's been deleted?'</p>
+}
+else
+{
+<EditForm Model=@Post OnSubmit=@FormSubmitted>
+    <DataAnnotationsValidator />
+    <ServerSideValidator @ref=validator />
+    <div class="form-group">
+        <label class="label-primary">Title</label>
+        <InputText @bind-Value=Post.Title class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="label-primary">Body</label>
+        <InputTextArea @bind-Value=Post.Message class="form-control" />
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label class="label-primary">Tags (Seperate by a space)</label>
+        <InputText @bind-Value=tagsUnsorted class="form-control" />
+    </div>
+
+    <Switch @bind-Value="Post.MarkedNSFW" Label="NSFW" />
+
+    <ValidationSummary />
+    <input type="submit" class="btn btn-primary" value="Save" />
+    <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
+</EditForm>
+}
+
+@code
+{
+    /// <summary>
+    /// Has a user besides the creator tried modifying the post?
+    /// </summary>
+    private bool InvalidUser = false;
+    private string tagsUnsorted = "";
+    ServerSideValidator validator;
+
+    [Parameter]
+    public string ID { get; set; }
+
+    [Parameter]
+    public Post? Post { get; set; } = new Post();
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        User viewer = await Auth.GetUser();
+        Post = Worker.Posts.Get(Int32.Parse(ID));
+
+        // Do not let anyone but the owner modify.
+        if (Post.Owner != viewer)
+        {
+            Post = null;
+            InvalidUser = true;
+            return;
+        }
+
+        // Unsort the tags.
+        foreach (Tag t in Post.Tags)
+        {
+            tagsUnsorted += t.Name + " ";
+        }
+    }
+
+    /// <summary>
+    /// Submit the form.
+    /// </summary>
+    /// <param name="editContext"></param>
+    private async void FormSubmitted(EditContext editContext)
+    {
+        if (!editContext.Validate())
+        {
+            return;
+        }
+
+        List<Tag> newTags = new List<Tag>();
+        List<Tag> oldTags = Post.Tags;
+
+        // Add the tag.
+        string[] tags = tagsUnsorted.Split(' ');
+        foreach (string tag in tags)
+        {
+            Tag chosenTag = Worker.Tags.Get(tag);
+            if (chosenTag == null)
+            {
+                chosenTag = new Tag(tag, "");
+                Worker.Tags.Add(chosenTag);
+            }
+
+            newTags.Add(chosenTag);
+        }
+
+        // Get the tags that don't exist.
+        List<Tag> toRemove = oldTags.Where(r => newTags.Contains(r) == false).ToList();
+
+        // Remove.
+        foreach (Tag remove in toRemove)
+        {
+            Post.Tags.Remove(remove);
+        }
+
+        // Set post to modified.
+        Post.ModifiedAt = DateTime.Now;
+
+        // Save
+        Worker.SaveChanges();
+
+        // We're done here.
+        Navigation.NavigateTo("/Post/View/" + Post.Id);
+    }
+}

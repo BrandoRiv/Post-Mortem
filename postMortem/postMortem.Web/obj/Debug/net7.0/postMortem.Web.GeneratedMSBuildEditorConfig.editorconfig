@@ -54,6 +54,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xWb3RlTGlzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/austi/source/repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/Edit/EditComment.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFxFZGl0Q29tbWVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/austi/source/repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/Edit/EditPost.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFxFZGl0UG9zdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/austi/source/repos/2023_F_Brandon/postMortem/postMortem.Web/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

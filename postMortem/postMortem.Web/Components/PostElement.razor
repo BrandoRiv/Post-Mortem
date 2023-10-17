@@ -9,7 +9,7 @@
                 <InteractiveEntityOptionsElement Entity="Post"/>
             </div>
         </AuthorizeView>
-        <CardText>Posted by <a href="/Account/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
+        <CardText>Posted by <a href="/Account/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString() @IsModified()</CardText>
             <CardTitle>@Post.Title</CardTitle>
             <CardText>@Post.Message</CardText>
             <CardText>
@@ -96,6 +96,20 @@
     private string ViewURL
     {
         get { return "/Posts/View/" + Post.Id; }
+    }
+
+    /// <summary>
+    /// Gets a string telling whether the post has been modified.
+    /// </summary>
+    /// <returns></returns>
+    private string IsModified()
+    {
+        if (Post.CreatedAt != Post.ModifiedAt)
+        {
+            return "(Edited, " + Post.ModifiedAt.ToShortDateString() + ")";
+        }
+
+        return "";
     }
 
     /// <summary>
