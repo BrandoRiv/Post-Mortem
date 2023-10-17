@@ -1,0 +1,33 @@
+﻿@page "/Tags";
+@inject postMortemWorker Worker
+
+<h3>Viewing posts with tags </h3>
+<PostList Tags="ChosenTags" />
+
+@code 
+{
+    private List<Tag> ChosenTags = new List<Tag>();
+    private PostList postList { get; set;  }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "Name")]
+    public string[] Name { get; set; }
+
+    /// <summary>
+    /// We override the initializer to invoke our own providers.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        foreach (var item in Name)
+        {
+            Tag tag = Worker.Tags.Get(item);
+            if (tag != null)
+            {
+                ChosenTags.Add(tag);
+            }
+        }
+
+        base.OnInitialized();
+    }
+
+}

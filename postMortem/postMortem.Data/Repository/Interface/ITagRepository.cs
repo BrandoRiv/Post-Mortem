@@ -9,5 +9,6 @@ namespace postMortem.Data.Repository.Interface
 {
     public interface ITagRepository : IRepository<Tag>
     {
+        public Tag Get(string name);
     }
 }
