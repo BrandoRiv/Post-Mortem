@@ -8,7 +8,7 @@
 }
 else
 {
-    <h3>Account Details</h3>
+    <h3>Account Details for @CurrentUser.UserName</h3>
 
     <Tabs>
         <Tab Title="Posts" IsActive="true">
@@ -25,12 +25,12 @@ else
         </Tab>
         <Tab Title="Upvotes">
             <Content>
-                <p>It's quiet in here... too quiet.</p>
+                <VoteList Owner="@CurrentUser" VoteType="1"/>
             </Content>
         </Tab>
         <Tab Title="Downvotes">
             <Content>
-                <p>It's quiet in here... too quiet.</p>
+                <VoteList Owner="@CurrentUser" VoteType="-1" />
             </Content>
         </Tab>
     </Tabs>

@@ -65,7 +65,7 @@
         }
 
         // Grab the user.
-        Worker.Users.Get(user.Identity.Name);
+        SelectedUser = Worker.Users.GetByUsername(user.Identity.Name);
 
         // Update the vote.
         await UpdateVoteType();

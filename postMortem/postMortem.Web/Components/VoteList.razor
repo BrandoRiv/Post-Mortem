@@ -1,0 +1,139 @@
+﻿@inject postMortemWorker Worker
+
+@foreach (Post post in _PostsInView)
+{
+    <postMortem.Web.Components.PostElement Post="post" />
+    <br />
+}
+
+@foreach (Comment comment in _CommentsInView)
+{
+    <CommentElement Comment="comment" />
+    <br />
+}
+
+<br />
+<Pagination TotalPages="@TotalPages" PageChanged="OnPageChanged" />
+
+@code
+{
+    /// <summary>
+    /// Total amount of pages that should be shown on a page.
+    /// </summary>
+    private const int EntitiesPerPage = 7;
+
+    /// <summary>
+    /// This value will change based on the amount of posts there is.
+    /// </summary>
+    private int TotalPages = -1;
+
+    /// <summary>
+    /// We keep a list of all posts, then we keep a list of pages that should be in the user view.
+    /// </summary>
+    private List<Post> _Posts = new List<Post>();
+    private List<Post> _PostsInView = new List<Post>();
+    private List<Comment> _Comments = new List<Comment>();
+    private List<Comment> _CommentsInView = new List<Comment>();
+
+    /// <summary>
+    /// Set the owner of posts we'd like to display.
+    /// </summary>
+    [EditorRequired, Parameter]
+    public User Owner { get; set; } = null;
+
+    /// <summary>
+    /// Gets or sets the vote type to search by.
+    /// </summary>
+    [EditorRequired, Parameter]
+    public int VoteType { get; set; } = 1;
+
+    /// <summary>
+    /// We override the initializer to invoke our own providers.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await VoteDataProvider();
+        await VotePageDataProvider(0);
+        base.OnInitialized();
+    }
+
+    /// <summary>
+    /// Import all of the posts for the page and set the amount of pages.
+    /// </summary>
+    /// <returns></returns>
+    private async Task VoteDataProvider()
+    {
+        foreach (Vote v in Owner.Votes)
+        {
+            if (VoteType == 1 && v.VoteType == 1)
+            {
+                if (v.Recipient.EntityType == "Post")
+                {
+                    _Posts.Add((Post)v.Recipient);
+                }
+                else
+                {
+                    _Comments.Add((Comment)v.Recipient);
+                }
+            }
+
+            if (VoteType == -1 && v.VoteType == -1)
+            {
+                if (v.Recipient.EntityType == "Post")
+                {
+                    _Posts.Add((Post)v.Recipient);
+                }
+                else
+                {
+                    _Comments.Add((Comment)v.Recipient);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Grab a bunch of posts that should be displayed on the page.
+    /// </summary>
+    /// <param name="startIndex">Starting position of posts to grab from the list. You can figure this number out by doing (pageNumber * PostsPerPage)</param>
+    /// <returns></returns>
+    private async Task VotePageDataProvider(int startIndex)
+    {
+        if (_PostsInView.Count != 0)
+            _PostsInView.Clear();
+
+        if (_CommentsInView.Count != 0)
+            _CommentsInView.Clear();
+
+        for (int i = startIndex; i < startIndex + EntitiesPerPage; i++)
+        {
+            if (i >= _Posts.Count)
+            {
+                break;
+            }
+
+            _PostsInView.Add(_Posts[i]);
+        }
+
+        for (int i = startIndex; i < startIndex + EntitiesPerPage; i++)
+        {
+            if (i >= _Comments.Count)
+            {
+                break;
+            }
+
+            _CommentsInView.Add(_Comments[i]);
+        }
+
+        this.StateHasChanged();
+    }
+
+    /// <summary>
+    /// Invoked when the page has been changed. This way we can change our lists of posts.
+    /// </summary>
+    /// <param name="newPageNumber"></param>
+    /// <returns></returns>
+    private async Task OnPageChanged(int newPageNumber)
+    {
+        this.VotePageDataProvider(EntitiesPerPage * newPageNumber);
+    }
+}
