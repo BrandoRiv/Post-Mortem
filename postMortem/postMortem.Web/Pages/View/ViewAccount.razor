@@ -1,0 +1,75 @@
+@page "/Account/{AccountName}";
+@inject UserManager<User> Users
+@inject postMortemWorker Worker
+
+@if (CurrentUser == null)
+{
+    <p>User not found.</p>
+}
+else
+{
+    <h3>Account Details for @CurrentUser.UserName</h3>
+
+    <Tabs>
+        <Tab Title="Posts" IsActive="true">
+            <Content>
+                <br />
+                <PostList Owner="@CurrentUser" />
+            </Content>
+        </Tab>
+        <Tab Title="Comments">
+            <Content>
+                <br />
+                <CommentList Owner="@CurrentUser" />
+            </Content>
+        </Tab>
+        <Tab Title="Upvotes">
+            <Content>
+                <br />
+                <VoteList Owner="@CurrentUser" VoteType="1"/>
+            </Content>
+        </Tab>
+        <Tab Title="Downvotes">
+            <Content>
+                <br />
+                <VoteList Owner="@CurrentUser" VoteType="-1" />
+            </Content>
+        </Tab>
+    </Tabs>
+}
+
+@code 
+{
+    /// <summary>
+    /// The current user account.
+    /// </summary>
+    private User CurrentUser;
+
+    /// <summary>
+    /// Allow the user to provide an account name.
+    /// </summary>
+    [Parameter]
+    public string AccountName { get; set; }
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        if (AccountName == null)
+        {
+            var user = (await AuthStat).User;
+            CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
+        }
+        else
+        {
+            CurrentUser = Worker.Users.GetByUsername(AccountName);
+        }
+    }
+}

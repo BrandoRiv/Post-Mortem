@@ -32,23 +32,28 @@
 </style>
 
 @code {
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
     private Sidebar sidebar;
     private IEnumerable<NavItem> navItems = null;
 
-    private IEnumerable<NavItem> GetNavItems()
+    private async Task<IEnumerable<NavItem>> GetNavItems()
     {
+        var user = (await AuthStat).User;
+
         navItems = new List<NavItem>
         {
             new NavItem { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Home"},
             new NavItem { Id = "2", IconName = IconName.LayoutSidebarInset, Text = "Me", IconColor = IconColor.Primary },
-            new NavItem { Id = "3", Href = "/Posts", IconName = IconName.Postage, Text = "My posts", ParentId="2"},
-            new NavItem { Id = "4", Href = "/Comments", IconName = IconName.Chat, Text = "My comments", ParentId = "2" },
-            new NavItem { Id = "5", Href = "/Account", IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},
-            new NavItem { Id = "6", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"},
+            new NavItem { Id = "3", Href = "/Account/" + user.Identity.Name, IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},
+            new NavItem { Id = "4", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"},
 
-            new NavItem { Id = "7", IconName = IconName.Lock, Text = "Admin", IconColor = IconColor.Danger },
-            new NavItem { Id = "8", Href = "/Reports", IconName = IconName.EnvelopePaperFill, Text = "Reports", ParentId="6"},
-            new NavItem { Id = "9", Href = "/Admins", IconName = IconName.PersonAdd, Text = "Admins", ParentId="6"},
+            new NavItem { Id = "5", IconName = IconName.Lock, Text = "Admin", IconColor = IconColor.Danger },
+            new NavItem { Id = "6", Href = "/Reports", IconName = IconName.EnvelopePaperFill, Text = "Reports", ParentId="6"},
+            new NavItem { Id = "7", Href = "/Admins", IconName = IconName.PersonAdd, Text = "Admins", ParentId="6"},
         };
 
         return navItems;
@@ -57,7 +62,7 @@
     private async Task<SidebarDataProviderResult> SidebarDataProvider(SidebarDataProviderRequest request)
     {
         if (navItems is null)
-            navItems = GetNavItems();
+            navItems = await GetNavItems();
         return await Task.FromResult(request.ApplyTo(navItems));
     }
     private void ToogleSidebar() => sidebar.ToggleSidebar();

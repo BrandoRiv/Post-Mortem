@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace postMortem.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,31 +26,19 @@ namespace postMortem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
+                name: "UserSettings",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UseDarkMode = table.Column<bool>(type: "bit", nullable: false),
+                    ShowNSFWContent = table.Column<bool>(type: "bit", nullable: false),
+                    PrivateAccount = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_UserSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,6 +58,41 @@ namespace postMortem.Data.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SettingsId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_UserSettings_SettingsId",
+                        column: x => x.SettingsId,
+                        principalTable: "UserSettings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -163,80 +186,102 @@ namespace postMortem.Data.Migrations
                 name: "BannedUsers",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BanReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UntilDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BanUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BannedUsers", x => x.ID);
+                    table.PrimaryKey("PK_BannedUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BannedUsers_AspNetUsers_BanUserId",
-                        column: x => x.BanUserId,
+                        name: "FK_BannedUsers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InteractiveEntity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
+                    Post_Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MarkedNSFW = table.Column<bool>(type: "bit", nullable: true),
+                    Post_OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InteractiveEntity", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InteractiveEntity_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_InteractiveEntity_AspNetUsers_Post_OwnerId",
+                        column: x => x.Post_OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_InteractiveEntity_InteractiveEntity_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "InteractiveEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subscriptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Tier = table.Column<int>(type: "int", nullable: false),
+                    Until = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subscriptions_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "VoteableEntity",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Archived = table.Column<bool>(type: "bit", nullable: false),
-                    Deleted = table.Column<bool>(type: "bit", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Comment_Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntityID = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PosterId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VoteableEntity", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_VoteableEntity_AspNetUsers_PosterId",
-                        column: x => x.PosterId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_VoteableEntity_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_VoteableEntity_VoteableEntity_EntityID",
-                        column: x => x.EntityID,
-                        principalTable: "VoteableEntity",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Awards",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToID = table.Column<int>(type: "int", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecipientNotified = table.Column<bool>(type: "bit", nullable: false),
+                    RecipientId = table.Column<int>(type: "int", nullable: false),
                     FromId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Awards", x => x.ID);
+                    table.PrimaryKey("PK_Awards", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Awards_AspNetUsers_FromId",
                         column: x => x.FromId,
@@ -244,10 +289,10 @@ namespace postMortem.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Awards_VoteableEntity_ToID",
-                        column: x => x.ToID,
-                        principalTable: "VoteableEntity",
-                        principalColumn: "ID",
+                        name: "FK_Awards_InteractiveEntity_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "InteractiveEntity",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -255,58 +300,76 @@ namespace postMortem.Data.Migrations
                 name: "Reports",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EntityID = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Archived = table.Column<bool>(type: "bit", nullable: false),
-                    Deleted = table.Column<bool>(type: "bit", nullable: false),
+                    ReporterId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EntityId = table.Column<int>(type: "int", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reports", x => x.ID);
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reports_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Reports_AspNetUsers_ReporterId",
+                        column: x => x.ReporterId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reports_VoteableEntity_EntityID",
-                        column: x => x.EntityID,
-                        principalTable: "VoteableEntity",
-                        principalColumn: "ID",
+                        name: "FK_Reports_InteractiveEntity_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "InteractiveEntity",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tags_InteractiveEntity_PostId",
+                        column: x => x.PostId,
+                        principalTable: "InteractiveEntity",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Votes",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EntityID = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    GiverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    RecipientId = table.Column<int>(type: "int", nullable: true),
                     VoteType = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Votes", x => x.ID);
+                    table.PrimaryKey("PK_Votes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Votes_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Votes_AspNetUsers_GiverId",
+                        column: x => x.GiverId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Votes_VoteableEntity_EntityID",
-                        column: x => x.EntityID,
-                        principalTable: "VoteableEntity",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Votes_InteractiveEntity_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "InteractiveEntity",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -342,6 +405,11 @@ namespace postMortem.Data.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_SettingsId",
+                table: "AspNetUsers",
+                column: "SettingsId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -354,49 +422,59 @@ namespace postMortem.Data.Migrations
                 column: "FromId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Awards_ToID",
+                name: "IX_Awards_RecipientId",
                 table: "Awards",
-                column: "ToID");
+                column: "RecipientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BannedUsers_BanUserId",
+                name: "IX_BannedUsers_UserId",
                 table: "BannedUsers",
-                column: "BanUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_EntityID",
+                name: "IX_InteractiveEntity_OwnerId",
+                table: "InteractiveEntity",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InteractiveEntity_ParentId",
+                table: "InteractiveEntity",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InteractiveEntity_Post_OwnerId",
+                table: "InteractiveEntity",
+                column: "Post_OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_EntityId",
                 table: "Reports",
-                column: "EntityID");
+                column: "EntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_UserId",
+                name: "IX_Reports_ReporterId",
                 table: "Reports",
+                column: "ReporterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscriptions_UserId",
+                table: "Subscriptions",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VoteableEntity_EntityID",
-                table: "VoteableEntity",
-                column: "EntityID");
+                name: "IX_Tags_PostId",
+                table: "Tags",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VoteableEntity_PosterId",
-                table: "VoteableEntity",
-                column: "PosterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VoteableEntity_UserId",
-                table: "VoteableEntity",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Votes_EntityID",
+                name: "IX_Votes_GiverId",
                 table: "Votes",
-                column: "EntityID");
+                column: "GiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votes_UserId",
+                name: "IX_Votes_RecipientId",
                 table: "Votes",
-                column: "UserId");
+                column: "RecipientId");
         }
 
         /// <inheritdoc />
@@ -427,16 +505,25 @@ namespace postMortem.Data.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
+                name: "Subscriptions");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
+
+            migrationBuilder.DropTable(
                 name: "Votes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "VoteableEntity");
+                name: "InteractiveEntity");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "UserSettings");
         }
     }
 }

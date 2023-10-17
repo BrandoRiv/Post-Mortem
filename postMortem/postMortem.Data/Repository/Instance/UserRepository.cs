@@ -12,5 +12,10 @@ namespace postMortem.Data.Repository
         public UserRepository(postMortemContext context) : base(context)
         {
         }
+
+        public User GetByUsername(string username)
+        {
+            return base.FirstOrDefault(u => u.UserName == username);
+        }
     }
 }

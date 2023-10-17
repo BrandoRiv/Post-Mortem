@@ -12,8 +12,8 @@ using postMortem.Data;
 namespace postMortem.Data.Migrations
 {
     [DbContext(typeof(postMortemContext))]
-    [Migration("20230924183610_entityNameChange")]
-    partial class entityNameChange
+    [Migration("20231017031259_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,11 +240,11 @@ namespace postMortem.Data.Migrations
 
             modelBuilder.Entity("postMortem.Data.Model.Award", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -265,28 +265,28 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RecipientID")
+                    b.Property<int>("RecipientId")
                         .HasColumnType("int");
 
                     b.Property<bool>("RecipientNotified")
                         .HasColumnType("bit");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("FromId");
 
-                    b.HasIndex("RecipientID");
+                    b.HasIndex("RecipientId");
 
                     b.ToTable("Awards");
                 });
 
             modelBuilder.Entity("postMortem.Data.Model.BannedUser", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BanReason")
                         .IsRequired()
@@ -301,7 +301,7 @@ namespace postMortem.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -310,11 +310,11 @@ namespace postMortem.Data.Migrations
 
             modelBuilder.Entity("postMortem.Data.Model.InteractiveEntity", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -326,7 +326,7 @@ namespace postMortem.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("InteractiveEntity");
 
@@ -337,16 +337,16 @@ namespace postMortem.Data.Migrations
 
             modelBuilder.Entity("postMortem.Data.Model.Report", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EntityID")
+                    b.Property<int>("EntityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Message")
@@ -360,35 +360,122 @@ namespace postMortem.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("EntityID");
+                    b.HasIndex("EntityId");
 
                     b.HasIndex("ReporterId");
 
                     b.ToTable("Reports");
                 });
 
-            modelBuilder.Entity("postMortem.Data.Model.Vote", b =>
+            modelBuilder.Entity("postMortem.Data.Model.Subscription", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RecipientID")
+                    b.Property<int>("Tier")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Until")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.UserSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("PrivateAccount")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowNSFWContent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("UseDarkMode")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserSettings");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GiverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("RecipientId")
                         .HasColumnType("int");
 
                     b.Property<int>("VoteType")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("RecipientID");
+                    b.HasIndex("GiverId");
+
+                    b.HasIndex("RecipientId");
 
                     b.ToTable("Votes");
                 });
@@ -403,6 +490,11 @@ namespace postMortem.Data.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("SettingsId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("SettingsId");
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -419,12 +511,12 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ParentID")
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("ParentID");
+                    b.HasIndex("ParentId");
 
                     b.HasDiscriminator().HasValue("Comment");
                 });
@@ -432,6 +524,9 @@ namespace postMortem.Data.Migrations
             modelBuilder.Entity("postMortem.Data.Model.Post", b =>
                 {
                     b.HasBaseType("postMortem.Data.Model.InteractiveEntity");
+
+                    b.Property<bool>("MarkedNSFW")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -443,7 +538,8 @@ namespace postMortem.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.HasIndex("OwnerId");
 
@@ -520,7 +616,7 @@ namespace postMortem.Data.Migrations
 
                     b.HasOne("postMortem.Data.Model.InteractiveEntity", "Recipient")
                         .WithMany("AwardsGiven")
-                        .HasForeignKey("RecipientID")
+                        .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -542,7 +638,7 @@ namespace postMortem.Data.Migrations
                 {
                     b.HasOne("postMortem.Data.Model.InteractiveEntity", "Entity")
                         .WithMany("Reports")
-                        .HasForeignKey("EntityID")
+                        .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -557,13 +653,48 @@ namespace postMortem.Data.Migrations
                     b.Navigation("Reporter");
                 });
 
+            modelBuilder.Entity("postMortem.Data.Model.Subscription", b =>
+                {
+                    b.HasOne("postMortem.Data.Model.User", "User")
+                        .WithMany("ActiveSubscriptions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.Tag", b =>
+                {
+                    b.HasOne("postMortem.Data.Model.Post", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("PostId");
+                });
+
             modelBuilder.Entity("postMortem.Data.Model.Vote", b =>
                 {
+                    b.HasOne("postMortem.Data.Model.User", "Giver")
+                        .WithMany("Votes")
+                        .HasForeignKey("GiverId");
+
                     b.HasOne("postMortem.Data.Model.InteractiveEntity", "Recipient")
                         .WithMany("VotesGiven")
-                        .HasForeignKey("RecipientID");
+                        .HasForeignKey("RecipientId");
+
+                    b.Navigation("Giver");
 
                     b.Navigation("Recipient");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.User", b =>
+                {
+                    b.HasOne("postMortem.Data.Model.UserSettings", "Settings")
+                        .WithMany()
+                        .HasForeignKey("SettingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Settings");
                 });
 
             modelBuilder.Entity("postMortem.Data.Model.Comment", b =>
@@ -576,7 +707,7 @@ namespace postMortem.Data.Migrations
 
                     b.HasOne("postMortem.Data.Model.InteractiveEntity", "Parent")
                         .WithMany("Comments")
-                        .HasForeignKey("ParentID")
+                        .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -609,9 +740,18 @@ namespace postMortem.Data.Migrations
 
             modelBuilder.Entity("postMortem.Data.Model.User", b =>
                 {
+                    b.Navigation("ActiveSubscriptions");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("Votes");
+                });
+
+            modelBuilder.Entity("postMortem.Data.Model.Post", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

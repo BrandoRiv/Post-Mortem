@@ -3,7 +3,13 @@
 @foreach (Post post in _PostsInView)
 {
     <postMortem.Web.Components.PostElement Post="post" />
-    <br/>
+    <br />
+}
+
+@foreach (Comment comment in _CommentsInView)
+{
+    <CommentElement Comment="comment" />
+    <br />
 }
 
 <br />
@@ -14,7 +20,7 @@
     /// <summary>
     /// Total amount of pages that should be shown on a page.
     /// </summary>
-    private const int PostsPerPage = 15;
+    private const int EntitiesPerPage = 7;
 
     /// <summary>
     /// This value will change based on the amount of posts there is.
@@ -26,26 +32,28 @@
     /// </summary>
     private List<Post> _Posts = new List<Post>();
     private List<Post> _PostsInView = new List<Post>();
+    private List<Comment> _Comments = new List<Comment>();
+    private List<Comment> _CommentsInView = new List<Comment>();
 
     /// <summary>
     /// Set the owner of posts we'd like to display.
     /// </summary>
-    [Parameter]
+    [EditorRequired, Parameter]
     public User Owner { get; set; } = null;
 
     /// <summary>
-    /// Set the tag and only show posts that contain these tags.
+    /// Gets or sets the vote type to search by.
     /// </summary>
-    [Parameter]
-    public List<Tag> Tags { get; set; } = new List<Tag>();
+    [EditorRequired, Parameter]
+    public int VoteType { get; set; } = 1;
 
     /// <summary>
     /// We override the initializer to invoke our own providers.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        await PostDataProvider();
-        await PostPageDataProvider(0);
+        await VoteDataProvider();
+        await VotePageDataProvider(0);
         base.OnInitialized();
     }
 
@@ -53,44 +61,34 @@
     /// Import all of the posts for the page and set the amount of pages.
     /// </summary>
     /// <returns></returns>
-    private async Task PostDataProvider()
+    private async Task VoteDataProvider()
     {
-        if (Owner == null)
+        foreach (Vote v in Owner.Votes)
         {
-            this._Posts = Worker.Posts.GetAll().ToList();
-        }
-        else
-        {
-            this._Posts = Worker.Posts.Find(r => r.Owner == Owner).ToList();
-        }
-
-        if (Tags != null && Tags.Count != 0)
-        {
-            List<Post> remainder = new List<Post>();
-
-            foreach (Post post in this._Posts)
+            if (VoteType == 1 && v.VoteType == 1)
             {
-                // Post has no tags.
-                if (post.Tags.Count == 0)
+                if (v.Recipient.EntityType == "Post")
                 {
-                    continue;
+                    _Posts.Add((Post)v.Recipient);
                 }
-
-                foreach (Tag tag in Tags)
+                else
                 {
-                    if (post.Tags.Contains(tag))
-                    {
-                        // We found a match. Keep the post!
-                        remainder.Add(post);
-                        break;
-                    }
+                    _Comments.Add((Comment)v.Recipient);
                 }
             }
 
-            this._Posts = remainder;
+            if (VoteType == -1 && v.VoteType == -1)
+            {
+                if (v.Recipient.EntityType == "Post")
+                {
+                    _Posts.Add((Post)v.Recipient);
+                }
+                else
+                {
+                    _Comments.Add((Comment)v.Recipient);
+                }
+            }
         }
-
-        this.TotalPages = Math.Abs(this._Posts.Count / PostsPerPage);
     }
 
     /// <summary>
@@ -98,12 +96,15 @@
     /// </summary>
     /// <param name="startIndex">Starting position of posts to grab from the list. You can figure this number out by doing (pageNumber * PostsPerPage)</param>
     /// <returns></returns>
-    private async Task PostPageDataProvider(int startIndex)
+    private async Task VotePageDataProvider(int startIndex)
     {
         if (_PostsInView.Count != 0)
             _PostsInView.Clear();
 
-        for (int i = startIndex; i < startIndex + PostsPerPage; i++)
+        if (_CommentsInView.Count != 0)
+            _CommentsInView.Clear();
+
+        for (int i = startIndex; i < startIndex + EntitiesPerPage; i++)
         {
             if (i >= _Posts.Count)
             {
@@ -111,6 +112,16 @@
             }
 
             _PostsInView.Add(_Posts[i]);
+        }
+
+        for (int i = startIndex; i < startIndex + EntitiesPerPage; i++)
+        {
+            if (i >= _Comments.Count)
+            {
+                break;
+            }
+
+            _CommentsInView.Add(_Comments[i]);
         }
 
         this.StateHasChanged();
@@ -123,6 +134,6 @@
     /// <returns></returns>
     private async Task OnPageChanged(int newPageNumber)
     {
-        this.PostPageDataProvider(PostsPerPage * newPageNumber);
+        this.VotePageDataProvider(EntitiesPerPage * newPageNumber);
     }
 }

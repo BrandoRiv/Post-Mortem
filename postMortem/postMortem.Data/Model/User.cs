@@ -23,6 +23,7 @@ namespace postMortem.Data.Model
             Posts = new List<Post>();
             Comments = new List<Comment>();
             CreatedAt = DateTime.Now;
+            Votes = new List<Vote>();
             Settings = new UserSettings();
         }
 

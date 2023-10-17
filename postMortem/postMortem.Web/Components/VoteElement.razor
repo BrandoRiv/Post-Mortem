@@ -1,7 +1,7 @@
 ﻿@inject postMortemWorker Worker
 
 <div class="row">
-    <div class="col" style="margin-top:7px; max-width:20px;">
+    <div class="col" style="margin-top:7px; max-width:@(Entity.GetVotes().ToString().Count() * 20)px;">
         @Entity.GetVotes()
     </div>
     <div class="col" style="max-width:50px;">
@@ -65,10 +65,10 @@
         }
 
         // Grab the user.
-        Worker.Users.Get(user.Identity.Name);
+        SelectedUser = Worker.Users.GetByUsername(user.Identity.Name);
 
         // Update the vote.
-        UpdateVoteType();
+        await UpdateVoteType();
 
         await base.OnInitializedAsync();
     }
@@ -97,7 +97,7 @@
             }
 
             // User does not like it.
-            if (voteGiven.VoteType == 0)
+            if (voteGiven.VoteType == -1)
             {
                 UpColor = Up;
                 DownColor = DownSelected;
@@ -118,7 +118,7 @@
     /// </summary>
     protected virtual async void OnDownClick()
     {
-        HandleClick(0);
+        HandleClick(-1);
     }
 
     /// <summary>

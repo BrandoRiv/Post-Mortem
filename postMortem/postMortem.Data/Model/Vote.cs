@@ -1,6 +1,7 @@
 ﻿using postMortem.Data.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,11 +32,11 @@ namespace postMortem.Data.Model
             Recipient = recipient;
             VoteType = voteType;
         }
-        
+
         /// <summary>
         /// User who gave the vote.
         /// </summary>
-        public virtual User Giver { get; set; } 
+        public virtual User Giver { get; set; }
 
         /// <summary>
         /// Entity the vote is applied to.
@@ -43,7 +44,7 @@ namespace postMortem.Data.Model
         public virtual InteractiveEntity? Recipient { get; set; }
 
         /// <summary>
-        /// What type of vote is being applied. Use 0 for bad, or 1 for good.
+        /// What type of vote is being applied. Use -1 for bad, or 1 for good.
         /// </summary>
         public int VoteType { get; set; }
 

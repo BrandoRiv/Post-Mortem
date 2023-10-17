@@ -8,6 +8,13 @@
         <CardText>Posted by <a href="/Profile/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
         <CardTitle>@Post.Title</CardTitle>
         <CardText>@Post.Message</CardText>
+         <CardText>
+                @foreach (Tag tag in Post.Tags)
+            {
+                <a href="/Tags?Name=@tag.Name"><Badge Color="BadgeColor.Primary">@tag.Name</Badge></a>
+                <div class="divider" />
+            }
+        </CardText>
         <div class="row">
             <div class="col">
                 <VoteElement Entity="Post"/>
