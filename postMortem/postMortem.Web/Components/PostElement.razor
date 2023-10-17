@@ -5,6 +5,7 @@
         <AuthorizeView>
             <div class="post-heart">
                 <Button class="btn btn-small" Color="ButtonColor.Danger" @onclick="OnFavoriteClick" Type="ButtonType.Button"><Icon Name="@IsFavorited" /></Button>
+                <InteractiveEntityOptionsElement Entity="Post"/>
             </div>
         </AuthorizeView>
         <CardText>Posted by <a href="/Profile/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>

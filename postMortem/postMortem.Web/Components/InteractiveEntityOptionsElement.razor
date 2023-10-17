@@ -1,0 +1,37 @@
+﻿@inject postMortemWorker Worker
+
+<Dropdown Size="Size.Small">
+    <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.Gear" /></DropdownToggleButton>
+    <DropdownMenu>
+        @if (Entity.Owner == Viewer)
+        {
+            <DropdownItem To="#" Type="ButtonType.Link">Edit</DropdownItem>
+            <DropdownItem To="#" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
+        }
+
+        @if (Entity.Owner != Viewer)
+        {
+            <DropdownItem To="#" Type="ButtonType.Link">Report</DropdownItem>
+        }
+
+        <AuthorizeView Roles="Moderator">
+            <DropdownDivider />
+            <DropdownItem To="#" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
+        </AuthorizeView>
+    </DropdownMenu>
+</Dropdown>
+
+@code 
+{
+    [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+    private User Viewer = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthStat);
+        Viewer = Worker.Users.GetByUsername(user.User.Identity.Name);
+
+        await base.OnInitializedAsync();
+    }
+}
