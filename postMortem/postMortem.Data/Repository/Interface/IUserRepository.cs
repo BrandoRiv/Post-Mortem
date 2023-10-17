@@ -9,5 +9,6 @@ namespace postMortem.Data.Repository
 {
     public interface IUserRepository : IRepository<User, string>
     {
+        User GetByUsername(string username);
     }
 }

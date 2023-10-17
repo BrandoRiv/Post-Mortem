@@ -68,7 +68,7 @@
         Worker.Users.Get(user.Identity.Name);
 
         // Update the vote.
-        UpdateVoteType();
+        await UpdateVoteType();
 
         await base.OnInitializedAsync();
     }
@@ -97,7 +97,7 @@
             }
 
             // User does not like it.
-            if (voteGiven.VoteType == 0)
+            if (voteGiven.VoteType == -1)
             {
                 UpColor = Up;
                 DownColor = DownSelected;
