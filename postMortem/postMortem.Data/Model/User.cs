@@ -23,6 +23,7 @@ namespace postMortem.Data.Model
             Posts = new List<Post>();
             Comments = new List<Comment>();
             CreatedAt = DateTime.Now;
+            Settings = new UserSettings();
         }
 
         /// <summary>
@@ -81,6 +82,11 @@ namespace postMortem.Data.Model
         /// Referenced votes.
         /// </summary>
         public virtual List<Vote> Votes { get; set; }
+
+        /// <summary>
+        /// A group of options for the user.
+        /// </summary>
+        public virtual UserSettings Settings { get; set; }
 
         /// <summary>
         /// Date the user account was created.

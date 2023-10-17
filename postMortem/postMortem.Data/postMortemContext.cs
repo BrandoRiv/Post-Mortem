@@ -38,13 +38,6 @@ namespace postMortem.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<IdentityUser>().ToTable("user");
-
-            modelBuilder.Entity<IdentityRole>().ToTable("role");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("userrole");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("userclaim");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("userlogin");
-
             base.OnModelCreating(modelBuilder);
         }
     }

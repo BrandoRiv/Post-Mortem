@@ -1,0 +1,26 @@
+﻿@inject postMortemWorker Worker
+@inject UserManager<User> Users
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Account settings</h3>
+
+
+<Switch @bind-Value="CurrentUser.Settings.UseDarkMode" Label="Use dark mode" />
+<Switch @bind-Value="CurrentUser.Settings.ShowNSFWContent" Label="Show NSFW content" />
+<Switch @bind-Value="CurrentUser.Settings.PrivateAccount" Label="Private account" />
+
+@code
+{
+    private User CurrentUser;
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthStat).User;
+        CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
+    }
+}
