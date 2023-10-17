@@ -32,9 +32,14 @@ else
     </div>
 
     <Switch @bind-Value="Post.MarkedNSFW" Label="NSFW" />
-
     <ValidationSummary />
-    <input type="submit" class="btn btn-primary" value="Save" />
+    
+    <BannedUserElement @ref=bannedUser />
+    
+    @if (!bannedUser.IsBanned)
+    {
+        <input type="submit" class="btn btn-primary" value="Submit!" />
+    }
     <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
 </EditForm>
 }
@@ -44,7 +49,8 @@ else
     /// <summary>
     /// Has a user besides the creator tried modifying the post?
     /// </summary>
-    private bool InvalidUser = false;
+    private bool InvalidUser = false; 
+    private BannedUserElement bannedUser = new BannedUserElement();
     private string tagsUnsorted = "";
     ServerSideValidator validator;
 
