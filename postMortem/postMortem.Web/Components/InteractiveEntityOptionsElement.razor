@@ -1,11 +1,12 @@
 ﻿@inject postMortemWorker Worker
+@inject IAuthenticationProvider Auth;
 
 <Dropdown Size="Size.Small">
     <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.Gear" /></DropdownToggleButton>
     <DropdownMenu>
         @if (Entity.Owner == Viewer)
         {
-            <DropdownItem To="#" Type="ButtonType.Link">Edit</DropdownItem>
+            <DropdownItem To="@GetEditUrl()" Type="ButtonType.Link">Edit</DropdownItem>
             <DropdownItem To="#" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
         }
 
@@ -24,14 +25,16 @@
 @code 
 {
     [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
     private User Viewer = null;
 
     protected override async Task OnInitializedAsync()
     {
-        var user = (await AuthStat);
-        Viewer = Worker.Users.GetByUsername(user.User.Identity.Name);
-
+        Viewer = await Auth.GetUser();
         await base.OnInitializedAsync();
+    }
+
+    private string GetEditUrl()
+    {
+        return string.Format("/{0}/Edit/{1}", Entity.EntityType, Entity.Id);
     }
 }

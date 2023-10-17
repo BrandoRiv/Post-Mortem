@@ -1,4 +1,5 @@
 ﻿@inject postMortemWorker Worker
+@inject IAuthenticationProvider Auth;
 
 <Card Style="width:40rem;">
     <CardBody>
@@ -8,7 +9,7 @@
                 <InteractiveEntityOptionsElement Entity="Post"/>
             </div>
         </AuthorizeView>
-        <CardText>Posted by <a href="/Profile/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
+        <CardText>Posted by <a href="/Account/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString()</CardText>
             <CardTitle>@Post.Title</CardTitle>
             <CardText>@Post.Message</CardText>
             <CardText>
@@ -42,11 +43,6 @@
     [Parameter] public Post? Post { get; set; } = new Post();
 
     /// <summary>
-    /// Provides the authentication state of the user.
-    /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
-
-    /// <summary>
     /// Initialize the element.
     /// </summary>
     /// <returns></returns>
@@ -61,8 +57,7 @@
     /// </summary>
     protected async Task UpdateFavoriteStatus(bool change = false)
     {
-        var user = (await AuthStat).User;
-        User User = Worker.Users.GetByUsername(user.Identity.Name);
+        User User = await Auth.GetUser();
 
         FavoritePost favorited = Worker.Favorites.FirstOrDefault
             (r => r.User == User && r.Post.Id == Post.Id);

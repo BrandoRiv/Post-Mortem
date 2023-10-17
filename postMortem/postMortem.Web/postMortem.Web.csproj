@@ -22,4 +22,8 @@
     <ProjectReference Include="..\postMortem.Data\postMortem.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Edit\" />
+  </ItemGroup>
+
 </Project>
