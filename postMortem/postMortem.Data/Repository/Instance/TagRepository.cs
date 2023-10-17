@@ -13,5 +13,10 @@ namespace postMortem.Data.Repository.Instance
         public TagRepository(postMortemContext context) : base(context)
         {
         }
+
+        public Tag Get(string name)
+        {
+            return base.FirstOrDefault(r => r.Name.ToLower() == name.ToLower());
+        }
     }
 }

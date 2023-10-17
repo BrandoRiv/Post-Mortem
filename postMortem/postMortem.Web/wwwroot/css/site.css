@@ -47,3 +47,9 @@
 .form-control {
     max-width: 60%;
 }
+
+.divider {
+    width: 5px;
+    height: auto;
+    display: inline-block;
+}

@@ -20,6 +20,7 @@ namespace postMortem.Data.Model
         {
             Title = "";
             Message = "";
+            Tags = new List<Tag>();
         }
 
         /// <summary>

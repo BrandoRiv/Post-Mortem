@@ -1,6 +1,5 @@
 @page "/Account"
 @inject UserManager<User> Users
-@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
 
@@ -24,6 +23,11 @@ else
 
     private User CurrentUser;
 
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
     protected override void OnInitialized()
     {
         PostItems = Worker.Posts.GetAll().ToList();
@@ -32,8 +36,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        CurrentUser = await Users.FindByNameAsync(authState.User.Identity.Name);
+        var user = (await AuthStat).User;
+        CurrentUser = await Users.FindByNameAsync(user.Identity.Name);
     }
 }
 
@@ -45,7 +49,7 @@ else
                 @foreach (Post post in PostItems)
                     {
                         <br/>
-                        <postMortem.Web.Components.PostCard Post="post"/>
+                        <postMortem.Web.Components.PostElement Post="post"/>
                     }
             
             }
