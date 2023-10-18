@@ -116,6 +116,19 @@ namespace postMortem.Data.Model
         }
 
         /// <summary>
+        /// Set this element to be archived.
+        /// </summary>
+        public void Archive()
+        {
+            foreach (var comment in Comments)
+            {
+                comment.Archive();
+            }
+
+            this.Status = PostStatus.Archive;
+        }
+
+        /// <summary>
         /// Gets the total amount of votes for this post given.
         /// </summary>
         /// <returns></returns>

@@ -5,7 +5,10 @@
 
 <PostElement Post="Post"/>
 
-<CommentEditorElement Owner="User.Viewer" Parent="Post" />
+@if (!Post.Archived)
+{
+    <CommentEditorElement Owner="User.Viewer" Parent="Post" />
+}
 
 <br/>
 <h2>Comments:</h2>
@@ -29,6 +32,9 @@
     /// </summary>
     [CascadingParameter] protected UserState User { get; set; }
 
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
     protected override void OnInitialized()
     {
         RefreshService.RefreshRequested += OnRefreshRequest;

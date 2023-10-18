@@ -20,12 +20,15 @@
             <div class="col">
                 <VoteElement Entity="Comment" />
              </div>
+            @if (!Comment.Archived)
+            {
              <div class="col">
                  <Button @onclick="OnShowEditor" class="btn btn-small" Color="ButtonColor.None" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.Messenger" /> Reply</Button>
-            </div>
+             </div>
+            }
          </div>
          
-         @if (ShowEditor)
+         @if (ShowEditor && !Comment.Archived)
          {
              <CommentEditorElement @ref=EditorWindow Owner="User.Viewer" Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
          }
