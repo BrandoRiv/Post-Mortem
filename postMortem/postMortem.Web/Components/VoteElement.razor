@@ -4,12 +4,16 @@
     <div class="col" style="margin-top:7px; max-width:@(Entity.GetVotes().ToString().Count() * 20)px;">
         @Entity.GetVotes()
     </div>
-    <div class="col" style="max-width:50px;">
-        <Button class="btn btn-small" onclick="@OnUpClick" Color="@UpColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowUp" /></Button>
-    </div>    
-    <div class="col" style="max-width:40px;">
-        <Button class="btn btn-small" onclick="@OnDownClick" Color="@DownColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowDown" /></Button>
-    </div>
+
+    @if (!Entity.Archived)
+    {
+        <div class="col" style="max-width:50px;">
+            <Button class="btn btn-small" onclick="@OnUpClick" Color="@UpColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowUp" /></Button>
+        </div>
+        <div class="col" style="max-width:40px;">
+            <Button class="btn btn-small" onclick="@OnDownClick" Color="@DownColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowDown" /></Button>
+        </div>
+    }
 </div>
 
 @code 
