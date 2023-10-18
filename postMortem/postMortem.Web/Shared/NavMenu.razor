@@ -47,11 +47,18 @@
         List<NavItem> navItems = new List<NavItem>
         {
             new NavItem { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Home"},
-            new NavItem { Id = "2", IconName = IconName.LayoutSidebarInset, Text = "Me", IconColor = IconColor.Primary },
-            new NavItem { Id = "3", Href = "/Account/" + "", IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},            
-            new NavItem { Id = "4", Href = "/Favorite", IconName = IconName.HeartFill, Text = "Favorites", ParentId="2"},
-            new NavItem { Id = "5", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"}
         };
+
+        if (User.Viewer != null)
+        {
+            navItems.AddRange
+            (new List<NavItem>{
+                new NavItem { Id = "2", IconName = IconName.LayoutSidebarInset, Text = "Me", IconColor = IconColor.Primary },
+                new NavItem { Id = "3", Href = "/Account/" + User.Viewer.UserName, IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},
+                new NavItem { Id = "4", Href = "/Favorite", IconName = IconName.HeartFill, Text = "Favorites", ParentId="2"},
+                new NavItem { Id = "5", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"}
+                });
+        }
 
         if (User.HasRole("Moderator", "Admin"))
         {
