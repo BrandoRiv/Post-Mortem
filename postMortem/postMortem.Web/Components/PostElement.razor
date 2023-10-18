@@ -52,8 +52,8 @@
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         await UpdateFavoriteStatus();
+        await base.OnInitializedAsync();
     }
 
     /// <summary>
@@ -61,24 +61,12 @@
     /// </summary>
     protected async Task UpdateFavoriteStatus(bool change = false)
     {
-        FavoritePost favorited = null;
-
         if (User.Viewer == null)
         {
             return;
         }
 
-        foreach (FavoritePost post in User.Viewer.Favorites)
-        {
-            if (post.Post != null)
-            {
-                if (post.Id == Post.Id)
-                {
-                    favorited = post;
-                    break;
-                }
-            }
-        }
+        FavoritePost favorited = Worker.Favorites.FirstOrDefault(r => r.User == User.Viewer && r.Post.Id == Post.Id);
 
         if (change)
         {
