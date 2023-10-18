@@ -34,10 +34,18 @@ namespace postMortem.Web.Data
             return result.ToList();
         }
 
-        public async Task<bool> HasRole(string roleName)
+        public async Task<bool> HasRole(params string[] roleName)
         {
             List<string> roles = await GetRoles();
-            return roles.Contains(roleName);
+            foreach (string role in roles)
+            {
+                if (roleName.Contains(role))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

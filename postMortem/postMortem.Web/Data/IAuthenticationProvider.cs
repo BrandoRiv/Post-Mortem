@@ -6,6 +6,6 @@ namespace postMortem.Web.Data
     {
         Task<User> GetUser();
         Task<List<string>> GetRoles();
-        Task<bool> HasRole(string roleName);
+        Task<bool> HasRole(params string[] roleName);
     }
 }
