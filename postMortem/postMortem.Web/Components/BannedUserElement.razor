@@ -1,7 +1,7 @@
 ﻿@if (IsBanned)
 {
-    <Callout Type="CalloutType.Danger">
-        <strong>You are banned.</strong>You are banned from posting, commenting, or existing until @(Ban.UntilDate.ToShortTimeString()) + for @(Ban.BanReason).
+    <Callout Type="CalloutType.Warning">
+        <strong>You are banned. </strong>You are banned from posting, commenting, or existing until @(Ban.UntilDate.ToShortDateString()) @(Ban.UntilDate.ToShortTimeString()) for @(Ban.BanReason).
     </Callout>
 }
 

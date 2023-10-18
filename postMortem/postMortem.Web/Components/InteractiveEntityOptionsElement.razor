@@ -18,7 +18,7 @@
         @if (HasAdminAccess)
         {
             <DropdownDivider />
-            <DropdownItem To="#" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
+            <DropdownItem To="@GetBanUrl()" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
         }
     </DropdownMenu>
 </Dropdown>
@@ -68,6 +68,15 @@
     private string GetEditUrl()
     {
         return string.Format("/{0}/Edit/{1}", Entity.EntityType, Entity.Id);
+    }
+
+    /// <summary>
+    /// Get the ban URL.
+    /// </summary>
+    /// <returns></returns>
+    private string GetBanUrl()
+    {
+        return "/Admin/Ban/" + Entity.EntityType + "/" + Entity.Id;
     }
 
     /// <summary>

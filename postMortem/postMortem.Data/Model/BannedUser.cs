@@ -62,7 +62,7 @@ namespace postMortem.Data.Model
         {
             get
             {
-                return UntilDate < DateTime.Now;
+                return UntilDate > DateTime.Now;
             }
         }
 

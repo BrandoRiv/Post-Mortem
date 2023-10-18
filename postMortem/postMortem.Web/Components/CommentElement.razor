@@ -9,16 +9,19 @@
         </AuthorizeView>
         <CardText>Posted by <a href="/Profile/@Comment.Owner.UserName">@Comment.Owner.UserName</a> at @Comment.CreatedAt.ToShortTimeString() @IsModified()</CardText>
         <CardText>@Comment.Message</CardText>
+
+        @if (ShowBanMessage)
+        {
+            <CardText>
+            <BannedUserElement User="User.Viewer" />
+            </CardText>
+        }
         <div class="row" style="max-width:30rem;">
             <div class="col">
                 <VoteElement Entity="Comment" />
              </div>
              <div class="col">
                  <Button @onclick="OnShowEditor" class="btn btn-small" Color="ButtonColor.None" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.Messenger" /> Reply</Button>
-                 @if (ShowBanMessage)
-                 {
-                    <BannedUserElement User="User.Viewer" />
-                 }
             </div>
          </div>
          

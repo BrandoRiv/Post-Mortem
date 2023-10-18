@@ -28,7 +28,7 @@
     <ValidationSummary />
     <BannedUserElement User="User.Viewer" @ref=bannedUser/>
 
-    @if (!bannedUser.IsBanned)
+    @if (bannedUser.IsBanned == null)
     {
         <input type="submit" class="btn btn-primary" value="Submit!" />
     }

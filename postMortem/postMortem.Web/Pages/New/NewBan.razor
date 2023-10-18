@@ -1,0 +1,159 @@
+﻿@page "/Admin/Ban/{Type}/{Id}";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+
+<h3>Are you sure you want to ban @Entity.Owner.UserName for the following: </h3>
+
+@if (Entity == null)
+{
+    <p>Failed to find item.</p>
+}
+else
+{
+    <br />
+
+    @if (Entity.EntityType == "Post")
+    {
+        <PostElement Post="(Post)Entity" />
+    }
+    else
+    {
+        <CommentElement Comment="(Comment)Entity" />
+    }
+
+    <br/>
+
+    <EditForm Model=@banned OnSubmit=@FormSubmitted>
+        <DataAnnotationsValidator />
+        <ServerSideValidator @ref=validator />
+
+        <div class="form-group">
+            <label class="label-primary">Reason for ban</label>
+            <InputTextArea @bind-Value=banned.BanReason class="form-control" />
+        </div>
+        <br />
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label>How long should the user be banned?</label>
+                    <div class="input-group">
+                        <NumberInput TValue="int" Style="max-width:95px;" @bind-Value=IntervalTime class="form-control" Placeholder="Enter amount" />
+                        <div class="divider" />
+                        <div class="input-group-append">
+                            <select class="form-control" Style="width:350px;" @bind="IntervalType">
+                                <option value="Minutes">Minutes</option>
+                                <option value="Hours">Hours</option>
+                                <option value="Days">Days</option>
+                                <option value="Months">Months</option>
+                                <option value="Years">Years</option>
+                                <option value="Years">Heat death of the universes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    <br />
+
+        <ValidationSummary />
+
+        <input type="submit" class="btn btn-danger" value="Ban" />
+        <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
+    </EditForm>
+}
+
+@code
+{
+    private BannedUser banned = new BannedUser();
+    private string IntervalType = "";
+    private int IntervalTime = 1;
+    private ServerSideValidator validator;
+
+    /// <summary>
+    /// The id of the entity.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; }
+
+    /// <summary>
+    /// The type of entity. Post or comment.
+    /// </summary>
+    [Parameter]
+    public string Type { get; set; }
+
+    /// <summary>
+    /// The entity that is for the ban.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public InteractiveEntity? Entity { get; set; }
+
+    /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        if (Type == "Post")
+        {
+            Entity = Worker.Posts.Get(Int32.Parse(Id));
+        }
+        else if (Type == "Comment")
+        {
+            Entity = Worker.Comments.Get(Int32.Parse(Id));
+        }
+    }
+
+    /// <summary>
+    /// The form has been submitted.
+    /// </summary>
+    /// <param name="editContext"></param>
+    private async void FormSubmitted(EditContext editContext)
+    {
+        if (!editContext.Validate())
+        {
+            return;
+        }
+
+        // Set the entity and user
+        banned.User = Entity.Owner;
+        banned.ReferencedEntity = Entity;
+
+        // Set the time.
+        banned.UntilDate = DateTime.Now + GetInterval();
+
+        Worker.BannedUsers.Add(banned);
+        Worker.SaveChanges();
+
+        // We're done here.
+        Navigation.NavigateTo("/");
+    }
+
+    /// <summary>
+    /// Get the interval for the ban.
+    /// </summary>
+    /// <returns></returns>
+    public TimeSpan GetInterval()
+    {
+        switch (IntervalType)
+        {
+            case "Seconds":
+                return TimeSpan.FromSeconds(IntervalTime);
+            case "Minutes":
+                return TimeSpan.FromMinutes(IntervalTime);
+            case "Hours":
+                return TimeSpan.FromHours(IntervalTime);
+            case "Days":
+                return TimeSpan.FromDays(IntervalTime);
+            case "Months":
+                return TimeSpan.FromDays(IntervalTime) * 30;
+            case "Years":
+                return TimeSpan.FromDays(IntervalTime) * 12;
+            default: return TimeSpan.Zero;
+        }
+    }
+}
