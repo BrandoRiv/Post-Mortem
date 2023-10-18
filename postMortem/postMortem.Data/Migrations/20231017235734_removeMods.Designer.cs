@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using postMortem.Data;
 
@@ -11,9 +12,11 @@ using postMortem.Data;
 namespace postMortem.Data.Migrations
 {
     [DbContext(typeof(postMortemContext))]
-    partial class postMortemContextModelSnapshot : ModelSnapshot
+    [Migration("20231017235734_removeMods")]
+    partial class removeMods
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,29 +53,6 @@ namespace postMortem.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "User",
-                            ConcurrencyStamp = "585c2dc7-3750-4570-bdf3-f4fec0284a86",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "Moderator",
-                            ConcurrencyStamp = "be72f1da-bb84-4a5d-81b9-c2d351b4da5d",
-                            Name = "Moderator",
-                            NormalizedName = "MODERATOR"
-                        },
-                        new
-                        {
-                            Id = "Admin",
-                            ConcurrencyStamp = "4fe45ab2-064a-451d-87fe-8656e09dec3a",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

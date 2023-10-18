@@ -1,0 +1,36 @@
+﻿@page "/Admin/Promote/{RoleName}";
+@inject postMortemWorker Worker
+@inject UserManager<User> UserMan;
+@inject IAuthenticationProvider Auth;
+
+@if (IsAdmin)
+{
+    <p>Only @RoleName can see this</p>
+}
+
+@code 
+{
+    /// <summary>
+    /// Tells whether the user is this role.
+    /// </summary>
+    private bool IsAdmin = false;
+
+    [Parameter]
+    public string RoleName { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        User user = await Auth.GetUser();
+        await UserMan.AddToRoleAsync(user, RoleName);
+
+        IsAdmin = await Auth.HasRole(RoleName);
+
+        Worker.SaveChanges();
+
+        await base.OnInitializedAsync();
+    }
+}

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using postMortem.Data;
 
@@ -11,9 +12,11 @@ using postMortem.Data;
 namespace postMortem.Data.Migrations
 {
     [DbContext(typeof(postMortemContext))]
-    partial class postMortemContextModelSnapshot : ModelSnapshot
+    [Migration("20231017233511_mods")]
+    partial class mods
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,22 +57,22 @@ namespace postMortem.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "User",
-                            ConcurrencyStamp = "585c2dc7-3750-4570-bdf3-f4fec0284a86",
+                            Id = "498bdbf3-6cfb-4dce-961d-a97561c86624",
+                            ConcurrencyStamp = "22accdf0-4424-44a7-afc7-f4a6cbc6561b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "Moderator",
-                            ConcurrencyStamp = "be72f1da-bb84-4a5d-81b9-c2d351b4da5d",
+                            Id = "79fcd6e2-cb00-4c91-a7b7-b8c639131d38",
+                            ConcurrencyStamp = "7403a026-2fd4-4628-a119-d427a55108be",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = "Admin",
-                            ConcurrencyStamp = "4fe45ab2-064a-451d-87fe-8656e09dec3a",
+                            Id = "74736d06-a48f-4aad-8c91-1d2efd3a2208",
+                            ConcurrencyStamp = "0169ae09-5e61-4618-938a-4c8212431af0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
