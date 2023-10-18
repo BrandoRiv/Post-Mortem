@@ -7,7 +7,7 @@
         @if (Entity.Owner == User.Viewer)
         {
             <DropdownItem To="@GetEditUrl()" Type="ButtonType.Link">Edit</DropdownItem>
-            <DropdownItem To="#" @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
+            <DropdownItem @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
         }
 
         @if (Entity.Owner != User.Viewer)
@@ -82,17 +82,19 @@
 
         if (confirmation)
         {
-            if (Entity.EntityType == "Post")
-            {
-                Worker.Posts.Remove((Post)Entity);
-            }
-            else if (Entity.EntityType == "Comment")
-            {
-                Worker.Comments.Remove((Comment)Entity);
-            }
-
             try
             {
+                if (Entity.EntityType == "Post")
+                {
+                    Entity.Delete(Worker);
+                    Worker.Posts.Remove((Post)Entity);
+                }
+                else if (Entity.EntityType == "Comment")
+                {
+                    Entity.Delete(Worker);
+                    Worker.Comments.Remove((Comment)Entity);
+                }
+
                 Worker.SaveChanges();
             }
             catch (Exception e)
