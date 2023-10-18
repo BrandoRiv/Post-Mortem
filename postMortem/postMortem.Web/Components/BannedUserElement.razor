@@ -1,0 +1,26 @@
+﻿@if (IsBanned)
+{
+    <Callout Type="CalloutType.Warning">
+        <strong>You are banned. </strong>You are banned from posting, commenting, or existing until @(Ban.UntilDate.ToShortDateString()) @(Ban.UntilDate.ToShortTimeString()) for @(Ban.BanReason).
+    </Callout>
+}
+
+@code 
+{
+    public bool IsBanned = false;
+    public BannedUser Ban = null;
+
+    [Parameter, EditorRequired]
+    public User User { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Ban = User.IsBanned;
+        if (Ban != null)
+        {
+            IsBanned = true;
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

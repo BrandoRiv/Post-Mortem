@@ -1,24 +1,33 @@
-﻿<Card Style="width:40rem;">
+﻿@inject postMortemWorker Worker
+
+<Card Style="width:40rem;">
     <CardBody>
         <AuthorizeView>
             <div class="post-heart">
-                <InteractiveEntityOptionsElement Entity="Comment" />
+                <InteractiveEntityOptionsElement Entity="Comment" />         
             </div>
         </AuthorizeView>
         <CardText>Posted by <a href="/Profile/@Comment.Owner.UserName">@Comment.Owner.UserName</a> at @Comment.CreatedAt.ToShortTimeString() @IsModified()</CardText>
         <CardText>@Comment.Message</CardText>
+
+        @if (ShowBanMessage)
+        {
+            <CardText>
+            <BannedUserElement User="User.Viewer" />
+            </CardText>
+        }
         <div class="row" style="max-width:30rem;">
             <div class="col">
                 <VoteElement Entity="Comment" />
              </div>
              <div class="col">
                  <Button @onclick="OnShowEditor" class="btn btn-small" Color="ButtonColor.None" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.Messenger" /> Reply</Button>
-             </div>
+            </div>
          </div>
          
          @if (ShowEditor)
          {
-             <CommentEditorElement @ref=EditorWindow Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
+             <CommentEditorElement @ref=EditorWindow Owner="User.Viewer" Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
          }
          
          @if (ShowChildren)
@@ -46,6 +55,11 @@
     private bool ShowEditor = false;
 
     /// <summary>
+    /// Should we show the ban message?
+    /// </summary>
+    private bool ShowBanMessage = false;
+
+    /// <summary>
     /// Reference for the editor.
     /// </summary>
     private CommentEditorElement EditorWindow;
@@ -61,9 +75,9 @@
     [Parameter] public bool ShowChildren { get; set; } = true;
 
     /// <summary>
-    /// Provides the authentication state of the user.
+    /// The currently signed in user.
     /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+    [CascadingParameter] protected UserState User { get; set; }
 
     /// <summary>
     /// Initialize the element.
@@ -71,8 +85,7 @@
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        var user = (await AuthStat).User;
-        if (user.Identity == null)
+        if (User == null)
         {
             IsDisabled = true;
         }
@@ -83,9 +96,16 @@
     /// <summary>
     /// Show the editor for this comment.
     /// </summary>
-    protected void OnShowEditor()
+    protected async void OnShowEditor()
     {
-        ShowEditor = true;
+        if (User.Viewer.IsBanned != null)
+        {
+            ShowBanMessage = true;
+        }
+        else
+        {
+            ShowEditor = true;
+        }
     }
 
     /// <summary>

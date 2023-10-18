@@ -94,6 +94,28 @@ namespace postMortem.Data.Model
         protected virtual int CommentWeight { get; } = 0;
 
         /// <summary>
+        /// Delete all of the children so this object can be deleted.
+        /// </summary>
+        /// <param name="worker"></param>
+        public void Delete(postMortemWorker worker)
+        {
+            /*
+             * NOTE:
+             * THIS IS NOT WHAT WE'D DO IN THE REAL WORLD.
+             * This is a problem I found ): That can't be fixed easily or well
+             * Our items are currently setup with the relationships of IdentityUser
+             * we cant use cascade delete. So instead to make sure we can delete this monster
+             * object we grab all the children and delete. We need to make sure ALL children are in memory
+             * any children not in memory will cause issues down the line turning into undeletable orphans.
+             */
+            worker.Votes.RemoveRange(VotesGiven);
+            worker.Comments.RemoveRange(Comments);
+            worker.Awards.RemoveRange(AwardsGiven);
+            worker.Reports.RemoveRange(Reports);
+            worker.SaveChanges();
+        }
+
+        /// <summary>
         /// Gets the total amount of votes for this post given.
         /// </summary>
         /// <returns></returns>

@@ -25,6 +25,7 @@ namespace postMortem.Data.Repository
         IEnumerable<TEntity> Find(Func<TEntity, bool> predicate);
 
         TEntity FirstOrDefault(Func<TEntity, bool> predicate);
+        Task<TEntity> FirstOrDefaultAsync(Func<TEntity, bool> predicate);
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);

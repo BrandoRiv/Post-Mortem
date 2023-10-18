@@ -105,6 +105,16 @@ namespace postMortem.Data.Repository
         }
 
         /// <summary>
+        /// Returns the first or default value of a <see cref="TEntity"/> based on a predicate function.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<TEntity> FirstOrDefaultAsync(Func<TEntity, bool> predicate)
+        {
+            return await Context.Set<TEntity>().FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         /// Returns one entity or default value based on a predicate function.
         /// </summary>
         /// <param name="predicate"></param>

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace postMortem.Data.Migrations
 {
     /// <inheritdoc />
@@ -34,7 +36,8 @@ namespace postMortem.Data.Migrations
                     UseDarkMode = table.Column<bool>(type: "bit", nullable: false),
                     ShowNSFWContent = table.Column<bool>(type: "bit", nullable: false),
                     PrivateAccount = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,27 +186,6 @@ namespace postMortem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BannedUsers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BanReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UntilDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BannedUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BannedUsers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "InteractiveEntity",
                 columns: table => new
                 {
@@ -218,7 +200,8 @@ namespace postMortem.Data.Migrations
                     Post_Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MarkedNSFW = table.Column<bool>(type: "bit", nullable: true),
                     Post_OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,7 +235,8 @@ namespace postMortem.Data.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Tier = table.Column<int>(type: "int", nullable: false),
                     Until = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -277,7 +261,8 @@ namespace postMortem.Data.Migrations
                     RecipientNotified = table.Column<bool>(type: "bit", nullable: false),
                     RecipientId = table.Column<int>(type: "int", nullable: false),
                     FromId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -297,6 +282,35 @@ namespace postMortem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BannedUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReferencedEntityId = table.Column<int>(type: "int", nullable: false),
+                    BanReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UntilDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BannedUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BannedUsers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_BannedUsers_InteractiveEntity_ReferencedEntityId",
+                        column: x => x.ReferencedEntityId,
+                        principalTable: "InteractiveEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Favorites",
                 columns: table => new
                 {
@@ -304,7 +318,8 @@ namespace postMortem.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PostId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -332,7 +347,8 @@ namespace postMortem.Data.Migrations
                     EntityId = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -360,7 +376,8 @@ namespace postMortem.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -381,7 +398,8 @@ namespace postMortem.Data.Migrations
                     GiverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     RecipientId = table.Column<int>(type: "int", nullable: true),
                     VoteType = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -396,6 +414,16 @@ namespace postMortem.Data.Migrations
                         column: x => x.RecipientId,
                         principalTable: "InteractiveEntity",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "Admin", "95211fb3-ea0e-4760-afaf-eca8a5c605dd", "Admin", "ADMIN" },
+                    { "Moderator", "55dcfec5-5eff-455c-b6a2-f0c73186a903", "Moderator", "MODERATOR" },
+                    { "User", "4153adf0-c07c-4f1e-812b-20f19c06ca16", "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -451,6 +479,11 @@ namespace postMortem.Data.Migrations
                 name: "IX_Awards_RecipientId",
                 table: "Awards",
                 column: "RecipientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BannedUsers_ReferencedEntityId",
+                table: "BannedUsers",
+                column: "ReferencedEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BannedUsers_UserId",

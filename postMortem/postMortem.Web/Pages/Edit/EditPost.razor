@@ -1,7 +1,6 @@
 ﻿@page "/Post/Edit/{ID}";
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
-@inject IAuthenticationProvider Auth;
 
 @if (InvalidUser)
 {
@@ -32,9 +31,14 @@ else
     </div>
 
     <Switch @bind-Value="Post.MarkedNSFW" Label="NSFW" />
-
     <ValidationSummary />
-    <input type="submit" class="btn btn-primary" value="Save" />
+    
+    <BannedUserElement User="User.Viewer" @ref=bannedUser />
+    
+    @if (!bannedUser.IsBanned)
+    {
+        <input type="submit" class="btn btn-primary" value="Submit!" />
+    }
     <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
 </EditForm>
 }
@@ -44,7 +48,8 @@ else
     /// <summary>
     /// Has a user besides the creator tried modifying the post?
     /// </summary>
-    private bool InvalidUser = false;
+    private bool InvalidUser = false; 
+    private BannedUserElement bannedUser = new BannedUserElement();
     private string tagsUnsorted = "";
     ServerSideValidator validator;
 
@@ -55,16 +60,20 @@ else
     public Post? Post { get; set; } = new Post();
 
     /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        User viewer = await Auth.GetUser();
         Post = Worker.Posts.Get(Int32.Parse(ID));
 
         // Do not let anyone but the owner modify.
-        if (Post.Owner != viewer)
+        if (Post.Owner != User.Viewer)
         {
             Post = null;
             InvalidUser = true;

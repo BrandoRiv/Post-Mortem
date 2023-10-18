@@ -18,6 +18,7 @@ namespace postMortem.Data
     /// </summary>
     public class postMortemWorker : IpostMortemWorker
     {
+
         /// <summary>
         /// Initializes a new instance of the <see cref="postMortemWorker"/> class.
         /// </summary>
@@ -125,6 +126,7 @@ namespace postMortem.Data
         private void InitializeRepository()
         {
             _Users = new UserRepository(_Context);
+            _BannedUsers = new BannedUserRepository(_Context);
             _Posts = new PostRepository(_Context);
             _Favorites = new FavoritesRepository(_Context);
             _Comments = new CommentRepository(_Context);

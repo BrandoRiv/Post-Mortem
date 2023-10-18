@@ -50,6 +50,29 @@ namespace postMortem.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "User",
+                            ConcurrencyStamp = "4153adf0-c07c-4f1e-812b-20f19c06ca16",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "Moderator",
+                            ConcurrencyStamp = "55dcfec5-5eff-455c-b6a2-f0c73186a903",
+                            Name = "Moderator",
+                            NormalizedName = "MODERATOR"
+                        },
+                        new
+                        {
+                            Id = "Admin",
+                            ConcurrencyStamp = "95211fb3-ea0e-4760-afaf-eca8a5c605dd",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -298,6 +321,9 @@ namespace postMortem.Data.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ReferencedEntityId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UntilDate")
                         .HasColumnType("datetime2");
 
@@ -305,6 +331,8 @@ namespace postMortem.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReferencedEntityId");
 
                     b.HasIndex("UserId");
 
@@ -677,9 +705,17 @@ namespace postMortem.Data.Migrations
 
             modelBuilder.Entity("postMortem.Data.Model.BannedUser", b =>
                 {
-                    b.HasOne("postMortem.Data.Model.User", "User")
+                    b.HasOne("postMortem.Data.Model.InteractiveEntity", "ReferencedEntity")
                         .WithMany()
+                        .HasForeignKey("ReferencedEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("postMortem.Data.Model.User", "User")
+                        .WithMany("Bans")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("ReferencedEntity");
 
                     b.Navigation("User");
                 });
@@ -808,6 +844,8 @@ namespace postMortem.Data.Migrations
             modelBuilder.Entity("postMortem.Data.Model.User", b =>
                 {
                     b.Navigation("ActiveSubscriptions");
+
+                    b.Navigation("Bans");
 
                     b.Navigation("Comments");
 

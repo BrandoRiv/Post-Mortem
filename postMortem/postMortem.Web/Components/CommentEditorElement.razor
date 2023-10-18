@@ -1,7 +1,6 @@
 ﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
-@inject IAuthenticationProvider Auth;
 @inject IRefreshService RefreshService;
 
 <EditForm Model=@Comment OnSubmit=@FormSubmitted>
@@ -48,6 +47,11 @@
     [Parameter] public bool IsEditing { get; set; }
 
     /// <summary>
+    /// The user creating the comment.
+    /// </summary>
+    [Parameter, EditorRequired] public User Owner { get; set; }
+
+    /// <summary>
     /// Set the parent this comment will belong to.
     /// </summary>
     [Parameter] public InteractiveEntity Parent { get; set; }
@@ -81,16 +85,14 @@
     /// <param name="editContext"></param>
     private async void FormSubmitted(EditContext editContext)
     {
-        User User = await Auth.GetUser();
-
         // Make sure we can grab the user.
-        if (User == null)
+        if (Owner == null)
         {
             return;
         }
 
         // Set properties.
-        Comment.Owner = User;
+        Comment.Owner = Owner;
         Comment.Parent = Parent;
 
         // We have to set some properties so we can validate.

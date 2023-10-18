@@ -12,7 +12,7 @@ using postMortem.Data;
 namespace postMortem.Data.Migrations
 {
     [DbContext(typeof(postMortemContext))]
-    [Migration("20231017042056_initial")]
+    [Migration("20231018030203_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -53,6 +53,29 @@ namespace postMortem.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "User",
+                            ConcurrencyStamp = "4153adf0-c07c-4f1e-812b-20f19c06ca16",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "Moderator",
+                            ConcurrencyStamp = "55dcfec5-5eff-455c-b6a2-f0c73186a903",
+                            Name = "Moderator",
+                            NormalizedName = "MODERATOR"
+                        },
+                        new
+                        {
+                            Id = "Admin",
+                            ConcurrencyStamp = "95211fb3-ea0e-4760-afaf-eca8a5c605dd",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -261,6 +284,9 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -295,6 +321,12 @@ namespace postMortem.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReferencedEntityId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UntilDate")
                         .HasColumnType("datetime2");
 
@@ -302,6 +334,8 @@ namespace postMortem.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReferencedEntityId");
 
                     b.HasIndex("UserId");
 
@@ -317,6 +351,9 @@ namespace postMortem.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PostId")
@@ -349,6 +386,9 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -379,6 +419,9 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ReporterId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -404,6 +447,9 @@ namespace postMortem.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Tier")
@@ -438,6 +484,9 @@ namespace postMortem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -461,6 +510,9 @@ namespace postMortem.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("PrivateAccount")
@@ -490,6 +542,9 @@ namespace postMortem.Data.Migrations
 
                     b.Property<string>("GiverId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("RecipientId")
                         .HasColumnType("int");
@@ -653,9 +708,17 @@ namespace postMortem.Data.Migrations
 
             modelBuilder.Entity("postMortem.Data.Model.BannedUser", b =>
                 {
-                    b.HasOne("postMortem.Data.Model.User", "User")
+                    b.HasOne("postMortem.Data.Model.InteractiveEntity", "ReferencedEntity")
                         .WithMany()
+                        .HasForeignKey("ReferencedEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("postMortem.Data.Model.User", "User")
+                        .WithMany("Bans")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("ReferencedEntity");
 
                     b.Navigation("User");
                 });
@@ -784,6 +847,8 @@ namespace postMortem.Data.Migrations
             modelBuilder.Entity("postMortem.Data.Model.User", b =>
                 {
                     b.Navigation("ActiveSubscriptions");
+
+                    b.Navigation("Bans");
 
                     b.Navigation("Comments");
 

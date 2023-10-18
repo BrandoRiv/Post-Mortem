@@ -28,11 +28,17 @@ namespace postMortem.Data.Model
         /// <param name="banReason">Reason for the ban.</param>
         /// <param name="untilDate">Date until the ban is lifted.</param>
         /// <param name="user">The user the ban is for.</param>
-        public BannedUser(string banReason, DateTime untilDate, User user)
+        public BannedUser(InteractiveEntity entiy, string banReason, DateTime untilDate, User user)
         {
+            ReferencedEntity = entiy;
             BanReason = banReason;
             UntilDate = untilDate;
         }
+
+        /// <summary>
+        /// Entity referenced with the ban.
+        /// </summary>
+        public virtual InteractiveEntity ReferencedEntity { get; set; }
 
         /// <summary>
         /// Reason why the user is banned.
@@ -48,6 +54,17 @@ namespace postMortem.Data.Model
         /// The user the ban is for.
         /// </summary>
         public virtual User? User { get; set; }
+
+        /// <summary>
+        /// Returns whether the ban is over.
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return UntilDate > DateTime.Now;
+            }
+        }
 
         /// <summary>
         /// Internally determine what type of entity this is by it's type.

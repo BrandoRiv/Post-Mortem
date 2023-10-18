@@ -1,20 +1,60 @@
 ﻿@inherits LayoutComponentBase
+@inject postMortemWorker Worker
+@inject UserManager<User> UserMan;
+
 
 <PageTitle>postMortem.Web</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4 auth">
-            <LoginDisplay  />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+    <CascadingValue Value="@CurrentUserState" IsFixed=false>
+        <div class="sidebar">
+            <NavMenu />
         </div>
+        <main>
+            <div class="top-row px-4 auth">
+                <LoginDisplay />
+                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </CascadingValue>
 </div>
+
+@code
+{
+    /// <summary>
+    /// The currently signed in user if anything.
+    /// </summary>
+    public UserState CurrentUserState { get; set; }
+
+    /// <summary>
+    /// Provides the authentication state of the user.
+    /// </summary>
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        var state = (await AuthStat).User;
+
+        CurrentUserState = new UserState();
+        CurrentUserState.Viewer = Worker.Users.GetByUsername(state.Identity.Name);
+
+        if (CurrentUserState.Viewer != null)
+        {
+            var roles = Worker.Context.UserRoles.Where(r => r.UserId == CurrentUserState.Viewer.Id).ToList();
+            foreach (var role in roles)
+            {
+                CurrentUserState.Roles.Add(Worker.Context.Roles.FirstOrDefault(r => r.Id == role.RoleId).Name);
+            }
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

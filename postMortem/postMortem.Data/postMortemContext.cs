@@ -38,6 +38,9 @@ namespace postMortem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = "User", ConcurrencyStamp = Guid.NewGuid().ToString() });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Moderator", NormalizedName = "MODERATOR", Id = "Moderator", ConcurrencyStamp = Guid.NewGuid().ToString() });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "Admin", ConcurrencyStamp = Guid.NewGuid().ToString() });
 
             base.OnModelCreating(modelBuilder);
         }

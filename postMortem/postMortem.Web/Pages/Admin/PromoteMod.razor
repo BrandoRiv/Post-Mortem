@@ -1,16 +1,21 @@
-﻿@page "/Favorite";
+﻿@page "/Admin/Promote/{RoleName}";
 @inject postMortemWorker Worker
+@inject UserManager<User> UserMan;
 
-<h3>Your Favorites</h3>
-
-<PostList _Posts="_favorites" />
+@if (IsAdmin)
+{
+    <p>Only @RoleName can see this</p>
+}
 
 @code 
 {
     /// <summary>
-    /// List of favorite posts.
+    /// Tells whether the user is this role.
     /// </summary>
-    private List<Post> _favorites = new List<Post>();
+    private bool IsAdmin = false;
+
+    [Parameter]
+    public string RoleName { get; set; }
 
     /// <summary>
     /// The currently signed in user.
@@ -23,10 +28,8 @@
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        foreach (FavoritePost post in User.Viewer.Favorites)
-        {
-            _favorites.Add(post.Post);
-        }
+        await UserMan.AddToRoleAsync(User.Viewer, RoleName);
+        Worker.SaveChanges();
 
         await base.OnInitializedAsync();
     }

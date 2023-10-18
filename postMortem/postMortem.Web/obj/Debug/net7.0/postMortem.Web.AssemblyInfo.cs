@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("postMortem.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+666d1ce396e4eb0c66dbfa4f64c21bc8a4570cfa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6888d9b69c56f8feb6a416e5228a4e1f4a79191")]
 [assembly: System.Reflection.AssemblyProductAttribute("postMortem.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("postMortem.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
