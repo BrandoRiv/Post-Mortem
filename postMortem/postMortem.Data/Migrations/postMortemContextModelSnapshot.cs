@@ -55,21 +55,21 @@ namespace postMortem.Data.Migrations
                         new
                         {
                             Id = "User",
-                            ConcurrencyStamp = "585c2dc7-3750-4570-bdf3-f4fec0284a86",
+                            ConcurrencyStamp = "4153adf0-c07c-4f1e-812b-20f19c06ca16",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "Moderator",
-                            ConcurrencyStamp = "be72f1da-bb84-4a5d-81b9-c2d351b4da5d",
+                            ConcurrencyStamp = "55dcfec5-5eff-455c-b6a2-f0c73186a903",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
                             Id = "Admin",
-                            ConcurrencyStamp = "4fe45ab2-064a-451d-87fe-8656e09dec3a",
+                            ConcurrencyStamp = "95211fb3-ea0e-4760-afaf-eca8a5c605dd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

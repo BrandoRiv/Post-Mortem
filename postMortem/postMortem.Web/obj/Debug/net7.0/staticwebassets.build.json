@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ixhzksmvxiCQNiu9WpDwM9NkBdZkBRhAvgw2D/SiZjA=",
+  "Hash": "a3Zve9fi3yhrgTRx8buiw/Kju/hvYuxhbam63CrcVCQ=",
   "Source": "postMortem.Web",
   "BasePath": "_content/postMortem.Web",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "postMortem.Web\\wwwroot",
       "Source": "postMortem.Web",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "Pattern": "**"
     }
@@ -1233,10 +1233,10 @@
       "OriginalItemSpec": "C:\\Users\\austi\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\7.0.11\\staticwebassets\\V5\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\postMortem.Web.styles.css",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\postMortem.Web.styles.css",
       "SourceId": "postMortem.Web",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "postMortem.Web.styles.css",
       "AssetKind": "All",
@@ -1249,13 +1249,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\postMortem.Web.styles.css"
+      "OriginalItemSpec": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\postMortem.Web.styles.css"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\postMortem.Web.bundle.scp.css",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\postMortem.Web.bundle.scp.css",
       "SourceId": "postMortem.Web",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "postMortem.Web.bundle.scp.css",
       "AssetKind": "All",
@@ -1268,13 +1268,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\postMortem.Web.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\postMortem.Web.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -1290,10 +1290,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -1309,10 +1309,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -1328,10 +1328,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -1347,10 +1347,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -1366,10 +1366,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -1385,10 +1385,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -1404,10 +1404,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -1423,10 +1423,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -1442,10 +1442,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -1461,10 +1461,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -1480,10 +1480,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\site.css",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -1499,10 +1499,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\favicon.png",
       "SourceId": "postMortem.Web",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Web\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\austi\\source\\repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\",
       "BasePath": "_content/postMortem.Web",
       "RelativePath": "favicon.png",
       "AssetKind": "All",
