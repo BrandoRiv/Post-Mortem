@@ -1,7 +1,5 @@
 @page "/Account/{AccountName}";
-@inject UserManager<User> Users
 @inject postMortemWorker Worker
-@inject IAuthenticationProvider Auth;
 
 @if (CurrentUser == null)
 {
@@ -53,6 +51,11 @@ else
     public string AccountName { get; set; }
 
     /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
@@ -60,7 +63,7 @@ else
     {
         if (AccountName == null)
         {
-            CurrentUser = await Auth.GetUser();
+            CurrentUser = User.Viewer;
         }
         else
         {

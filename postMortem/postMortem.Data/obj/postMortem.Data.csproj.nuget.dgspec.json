@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\austi\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Data\\postMortem.Data.csproj": {}
+    "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Data\\postMortem.Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\austi\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Data\\postMortem.Data.csproj": {
+    "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Data\\postMortem.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\austi\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Data\\postMortem.Data.csproj",
+        "projectUniqueName": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Data\\postMortem.Data.csproj",
         "projectName": "postMortem.Data",
-        "projectPath": "C:\\Users\\austi\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Data\\postMortem.Data.csproj",
+        "projectPath": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Data\\postMortem.Data.csproj",
         "packagesPath": "C:\\Users\\austi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\austi\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Data\\obj\\",
+        "outputPath": "C:\\Users\\austi\\source\\repos\\2023_F_Brandonc\\postMortem\\postMortem.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,6 +1,5 @@
 ﻿@page "/Favorite";
 @inject postMortemWorker Worker
-@inject IAuthenticationProvider Auth;
 
 <h3>Your Favorites</h3>
 
@@ -14,13 +13,17 @@
     private List<Post> _favorites = new List<Post>();
 
     /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        User user = await Auth.GetUser();
-        foreach (FavoritePost post in user.Favorites)
+        foreach (FavoritePost post in User.Viewer.Favorites)
         {
             _favorites.Add(post.Post);
         }

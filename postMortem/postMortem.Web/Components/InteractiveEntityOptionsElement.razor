@@ -1,40 +1,108 @@
 ﻿@inject postMortemWorker Worker
-@inject IAuthenticationProvider Auth;
+@inject IRefreshService RefreshService;
 
 <Dropdown Size="Size.Small">
     <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.Gear" /></DropdownToggleButton>
     <DropdownMenu>
-        @if (Entity.Owner == Viewer)
+        @if (Entity.Owner == User.Viewer)
         {
             <DropdownItem To="@GetEditUrl()" Type="ButtonType.Link">Edit</DropdownItem>
-            <DropdownItem To="#" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
+            <DropdownItem To="#" @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
         }
 
-        @if (Entity.Owner != Viewer)
+        @if (Entity.Owner != User.Viewer)
         {
             <DropdownItem To="#" Type="ButtonType.Link">Report</DropdownItem>
         }
 
-        <AuthorizeView Roles="Moderator">
+        @if (HasAdminAccess)
+        {
             <DropdownDivider />
             <DropdownItem To="#" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
-        </AuthorizeView>
+        }
     </DropdownMenu>
 </Dropdown>
 
+<ConfirmDialog @ref=deleteDialog />
+
 @code 
 {
-    [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
-    private User Viewer = null;
+    /// <summary>
+    /// Ban dialog for moderators.
+    /// </summary>
+    private ConfirmDialog deleteDialog { get; set; }
 
+    /// <summary>
+    /// Does this user have admin access?
+    /// </summary>
+    private bool HasAdminAccess = false;
+
+    /// <summary>
+    /// The entity to tie these elements to.
+    /// </summary>
+    [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
+
+    /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        Viewer = await Auth.GetUser();
+        if (User.HasRole("Moderator"))
+        {
+            HasAdminAccess = true;
+        }
+
         await base.OnInitializedAsync();
     }
 
+    /// <summary>
+    /// The edit URL changes depending on the component.
+    /// </summary>
+    /// <returns></returns>
     private string GetEditUrl()
     {
         return string.Format("/{0}/Edit/{1}", Entity.EntityType, Entity.Id);
+    }
+
+    /// <summary>
+    /// Show the delete button.
+    /// </summary>
+    /// <returns></returns>
+    private async Task ShowDeleteDialog()
+    {
+        var confirmation = await deleteDialog.ShowAsync(
+            title: "Are you sure you want to delete this post?",
+            message1: "This action cannot be reversed");
+
+        if (confirmation)
+        {
+            if (Entity.EntityType == "Post")
+            {
+                Worker.Posts.Remove((Post)Entity);
+            }
+            else if (Entity.EntityType == "Comment")
+            {
+                Worker.Comments.Remove((Comment)Entity);
+            }
+
+            try
+            {
+                Worker.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                string b = "";
+            }
+
+            // Request the parent refreshes to stop any issues we may see
+            // with EntityFramework trying to add duplicate entries.
+            RefreshService.CallRequestRefresh();
+        }
     }
 }

@@ -1,16 +1,15 @@
 ﻿@page "/Comment/Edit/{ID}";
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
-@inject IAuthenticationProvider Auth;
 
 @if (Comment.Owner.IsBanned != null)
 {
-    <BannedUserElement />
+    <BannedUserElement User="User.Viewer"  />
 }
 else
 {
     <h3>Edit your comment</h3>
-    <CommentEditorElement IsEditing="true" Comment="Comment" Parent="Comment.Parent" OnComplete="OnCompleteCalled"/>
+    <CommentEditorElement IsEditing="true" Owner="User.Viewer" Comment="Comment" Parent="Comment.Parent" OnComplete="OnCompleteCalled"/>
 }
 
 @code 
@@ -27,16 +26,20 @@ else
     public Comment? Comment { get; set; } = new Comment();
 
     /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        User viewer = await Auth.GetUser();
         Comment = Worker.Comments.Get(Int32.Parse(ID));
 
         // Do not let anyone but the owner modify.
-        if (Comment.Owner != viewer)
+        if (Comment.Owner != User.Viewer)
         {
             Comment = null;
             InvalidUser = true;

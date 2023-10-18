@@ -1,6 +1,4 @@
-﻿@inject IAuthenticationProvider Auth;
-
-@if (IsBanned)
+﻿@if (IsBanned)
 {
     <Callout Type="CalloutType.Danger">
         <strong>You are banned.</strong>You are banned from posting, commenting, or existing until @(Ban.UntilDate.ToShortTimeString()) + for @(Ban.BanReason).
@@ -12,11 +10,12 @@
     public bool IsBanned = false;
     public BannedUser Ban = null;
 
-    private User user = null;
+    [Parameter, EditorRequired]
+    public User User { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        user = await Auth.GetUser();
-        Ban = user.IsBanned;
+        Ban = User.IsBanned;
         if (Ban != null)
         {
             IsBanned = true;

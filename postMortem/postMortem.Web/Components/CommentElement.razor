@@ -1,10 +1,10 @@
-﻿@inject IAuthenticationProvider Auth;
+﻿@inject postMortemWorker Worker
 
 <Card Style="width:40rem;">
     <CardBody>
         <AuthorizeView>
             <div class="post-heart">
-                <InteractiveEntityOptionsElement Entity="Comment" />
+                <InteractiveEntityOptionsElement Entity="Comment" />         
             </div>
         </AuthorizeView>
         <CardText>Posted by <a href="/Profile/@Comment.Owner.UserName">@Comment.Owner.UserName</a> at @Comment.CreatedAt.ToShortTimeString() @IsModified()</CardText>
@@ -17,14 +17,14 @@
                  <Button @onclick="OnShowEditor" class="btn btn-small" Color="ButtonColor.None" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.Messenger" /> Reply</Button>
                  @if (ShowBanMessage)
                  {
-                    <BannedUserElement />
+                    <BannedUserElement User="User.Viewer" />
                  }
             </div>
          </div>
          
          @if (ShowEditor)
          {
-             <CommentEditorElement @ref=EditorWindow Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
+             <CommentEditorElement @ref=EditorWindow Owner="User.Viewer" Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
          }
          
          @if (ShowChildren)
@@ -72,13 +72,17 @@
     [Parameter] public bool ShowChildren { get; set; } = true;
 
     /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
     /// Initialize the element.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        var user = await Auth.GetUser();
-        if (user == null)
+        if (User == null)
         {
             IsDisabled = true;
         }
@@ -91,8 +95,7 @@
     /// </summary>
     protected async void OnShowEditor()
     {
-        User user = await Auth.GetUser();
-        if (user.IsBanned != null)
+        if (User.Viewer.IsBanned != null)
         {
             ShowBanMessage = true;
         }

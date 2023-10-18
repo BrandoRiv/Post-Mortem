@@ -1,5 +1,5 @@
 ﻿@using BlazorBootstrap;
-@inject IAuthenticationProvider Auth;
+
 
 <Sidebar @ref="sidebar"
          IconName="IconName.HeartFill"
@@ -32,29 +32,28 @@
     }
 </style>
 
-@code {
+@code 
+{
     /// <summary>
-    /// Provides the authentication state of the user.
+    /// The currently signed in user.
     /// </summary>
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+    [CascadingParameter] protected UserState User { get; set; }
 
     private Sidebar sidebar;
     private IEnumerable<NavItem> navItems = null;
 
     private async Task<IEnumerable<NavItem>> GetNavItems()
     {
-        var user = (await AuthStat).User;
-
         List<NavItem> navItems = new List<NavItem>
         {
             new NavItem { Id = "1", Href = "/", IconName = IconName.HouseDoorFill, Text = "Home"},
             new NavItem { Id = "2", IconName = IconName.LayoutSidebarInset, Text = "Me", IconColor = IconColor.Primary },
-            new NavItem { Id = "3", Href = "/Account/" + user.Identity.Name, IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},            
+            new NavItem { Id = "3", Href = "/Account/" + "", IconName = IconName.PersonBadge, Text = "My Account", ParentId="2"},            
             new NavItem { Id = "4", Href = "/Favorite", IconName = IconName.HeartFill, Text = "Favorites", ParentId="2"},
             new NavItem { Id = "5", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"}
         };
 
-        if (await Auth.HasRole("Moderator", "Admin"))
+        if (User.HasRole("Moderator", "Admin"))
         {
             navItems.AddRange
             (new List<NavItem>{

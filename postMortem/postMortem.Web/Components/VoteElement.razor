@@ -50,7 +50,7 @@
     /// Represents the entity this vote should go towards.
     /// </summary>
     [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
-    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+    [CascadingParameter] protected UserState User { get; set; }
 
     /// <summary>
     /// Initialize the component.
@@ -58,14 +58,10 @@
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        var user = (await AuthStat).User;
-        if (user.Identity.Name == null)
+        if (User.Viewer == null)
         {
             IsDisabled = true;
         }
-
-        // Grab the user.
-        SelectedUser = Worker.Users.GetByUsername(user.Identity.Name);
 
         // Update the vote.
         await UpdateVoteType();

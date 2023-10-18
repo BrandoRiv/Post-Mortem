@@ -1,12 +1,11 @@
 ﻿@inject postMortemWorker Worker
-@inject IAuthenticationProvider Auth;
 
 <Card Style="width:40rem;">
     <CardBody>
         <AuthorizeView>
             <div class="post-heart">
                 <Button class="btn btn-small" Color="ButtonColor.Danger" @onclick="OnFavoriteClick" Type="ButtonType.Button"><Icon Name="@IsFavorited" /></Button>
-                <InteractiveEntityOptionsElement Entity="Post"/>
+                <InteractiveEntityOptionsElement Entity="Post" />
             </div>
         </AuthorizeView>
         <CardText>Posted by <a href="/Account/@Post.Owner.UserName">@Post.Owner.UserName</a> at @Post.CreatedAt.ToShortTimeString() @IsModified()</CardText>
@@ -43,13 +42,18 @@
     [Parameter] public Post? Post { get; set; } = new Post();
 
     /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
     /// Initialize the element.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        await UpdateFavoriteStatus();
         await base.OnInitializedAsync();
+        await UpdateFavoriteStatus();
     }
 
     /// <summary>
@@ -57,10 +61,24 @@
     /// </summary>
     protected async Task UpdateFavoriteStatus(bool change = false)
     {
-        User User = await Auth.GetUser();
+        FavoritePost favorited = null;
 
-        FavoritePost favorited = Worker.Favorites.FirstOrDefault
-            (r => r.User == User && r.Post.Id == Post.Id);
+        if (User.Viewer == null)
+        {
+            return;
+        }
+
+        foreach (FavoritePost post in User.Viewer.Favorites)
+        {
+            if (post.Post != null)
+            {
+                if (post.Id == Post.Id)
+                {
+                    favorited = post;
+                    break;
+                }
+            }
+        }
 
         if (change)
         {
@@ -71,7 +89,7 @@
             }
             else
             {
-                favorited = new FavoritePost(User, Post);
+                favorited = new FavoritePost(User.Viewer, Post);
                 Worker.Favorites.Add(favorited);
             }
 

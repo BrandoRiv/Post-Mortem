@@ -1,7 +1,6 @@
 ﻿@page "/Admin/Promote/{RoleName}";
 @inject postMortemWorker Worker
 @inject UserManager<User> UserMan;
-@inject IAuthenticationProvider Auth;
 
 @if (IsAdmin)
 {
@@ -19,16 +18,17 @@
     public string RoleName { get; set; }
 
     /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        User user = await Auth.GetUser();
-        await UserMan.AddToRoleAsync(user, RoleName);
-
-        IsAdmin = await Auth.HasRole(RoleName);
-
+        await UserMan.AddToRoleAsync(User.Viewer, RoleName);
         Worker.SaveChanges();
 
         await base.OnInitializedAsync();

@@ -1,7 +1,6 @@
 ﻿@page "/Settings";
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject postMortemWorker Worker
-@inject IAuthenticationProvider Auth;
 
 <h3>Account settings</h3>
 
@@ -22,11 +21,12 @@
 {
     ServerSideValidator validator;
 
-    /// <summary>
-    /// The current user object.
-    /// </summary>
-    private User CurrentUser { get; set; }
     private UserSettings Settings { get; set; } = new UserSettings();
+
+    /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
 
     /// <summary>
     /// Initialize the component.
@@ -34,8 +34,7 @@
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        CurrentUser = await Auth.GetUser();
-        Settings = CurrentUser.Settings;
+        Settings = User.Viewer.Settings;
 
         StateHasChanged();
     }
@@ -46,7 +45,7 @@
     /// <param name="editContext"></param>
     private async void FormSubmitted(EditContext editContext)
     {
-        CurrentUser.Settings = Settings;
+        User.Viewer.Settings = Settings;
         Worker.SaveChanges();
     }
 }

@@ -18,6 +18,7 @@ namespace postMortem.Data
     /// </summary>
     public class postMortemWorker : IpostMortemWorker
     {
+
         /// <summary>
         /// Initializes a new instance of the <see cref="postMortemWorker"/> class.
         /// </summary>
