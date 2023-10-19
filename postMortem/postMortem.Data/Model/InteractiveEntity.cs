@@ -51,19 +51,25 @@ namespace postMortem.Data.Model
         /// Is this entity locked?
         /// </summary>
         [NotMapped]
-        public bool Locked { get => Status.Equals(PostStatus.Locked); }
+        public bool IsActive { get => Status.Equals(PostStatus.Active); }
+
+        /// <summary>
+        /// Is this entity locked?
+        /// </summary>
+        [NotMapped]
+        public bool IsLocked { get => Status.Equals(PostStatus.Locked); }
 
         /// <summary>
         /// Is this entity archived?
         /// </summary>
         [NotMapped]
-        public bool Archived { get => Status.Equals(PostStatus.Archive); }
+        public bool IsArchived { get => Status.Equals(PostStatus.Archive); }
 
         /// <summary>
         /// Is this entity deleted?
         /// </summary>
         [NotMapped]
-        public bool Deleted { get => Status.Equals(PostStatus.Deleted); }
+        public bool IsDeleted { get => Status.Equals(PostStatus.Deleted); }
 
         /// <summary>
         /// Gets or sets a list of referenced comments.

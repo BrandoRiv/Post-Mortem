@@ -1,6 +1,4 @@
-﻿@inject NavigationManager Navigation
-
-<Grid TItem="Report"
+﻿<Grid TItem="Report"
       AllowRowClick="true"
       AllowSorting="true"
       Class="table table-hover"
@@ -33,10 +31,5 @@
     private async Task<GridDataProviderResult<Report>> EntitiesDataProvider(GridDataProviderRequest<Report> request)
     {
         return await Task.FromResult(request.ApplyTo(Entities));
-    }
-
-    private void OnStatusChange()
-    {
-        
     }
 }

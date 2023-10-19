@@ -4,18 +4,18 @@
 <Dropdown Size="Size.Small">
     <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.Gear" /></DropdownToggleButton>
     <DropdownMenu>
-        @if (Entity.Owner == User.Viewer)
+        @if (Entity.Owner == User.Viewer && Entity.IsActive)
         {
             <DropdownItem To="@GetEditUrl()" Type="ButtonType.Link">Edit</DropdownItem>
             <DropdownItem @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
         }
 
-        @if (Entity.Owner != User.Viewer)
+        @if (Entity.Owner != User.Viewer && Entity.IsActive)
         {
             <DropdownItem To="@GetReportUrl()" Type="ButtonType.Link">Report</DropdownItem>
         }
 
-        @if (HasAdminAccess)
+        @if (HasAdminAccess && Entity.IsActive)
         {
             <DropdownDivider />
             <DropdownItem @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
