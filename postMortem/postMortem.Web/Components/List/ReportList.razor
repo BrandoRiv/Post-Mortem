@@ -1,0 +1,38 @@
+﻿@inject NavigationManager Navigation
+
+<Grid TItem="InteractiveEntity"
+      AllowRowClick="true"
+      AllowSorting="true"
+      Class="table table-hover"
+      DataProvider="EntitiesDataProvider"
+      HeaderRowCssClass="bg-primary text-white border-bottom-0"
+      OnRowClick="OnReportClick"
+      Responsive="true">
+
+    <GridColumn TItem="InteractiveEntity" HeaderText="Report Type">
+        @context.EntityType
+    </GridColumn>
+
+    <GridColumn TItem="InteractiveEntity" HeaderText="Number of reports">
+        @context.Reports.Count()
+    </GridColumn>
+
+    <GridColumn TItem="InteractiveEntity" HeaderText="Last report time.">
+        @context.Reports.Last().CreatedAt.ToShortDateString()
+    </GridColumn>
+</Grid>
+
+@code 
+{
+    [Parameter]
+    public List<InteractiveEntity> Entities { get; set; }
+
+    private async Task<GridDataProviderResult<InteractiveEntity>> EntitiesDataProvider(GridDataProviderRequest<InteractiveEntity> request)
+    {
+        return await Task.FromResult(request.ApplyTo(Entities));
+    }
+    private void OnReportClick(GridRowEventArgs<InteractiveEntity> args)
+    {
+        Navigation.NavigateTo("/Admin/Reports/" + args.Item.EntityType + "/" + args.Item.Id);
+    }
+}

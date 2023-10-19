@@ -76,6 +76,18 @@ namespace postMortem.Data.Model
         public virtual List<Report> Reports { get; set; }
 
         /// <summary>
+        /// List of reports to this entity that have not been decided.
+        /// </summary>
+        [NotMapped]
+        public List<Report> GetUndecidedReports
+        {
+            get
+            {
+                return Reports.Where(r => r.Status == ReportStatus.Undecided).ToList();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a list of referenced awards.
         /// </summary>
         public virtual List<Award> AwardsGiven { get; set; }

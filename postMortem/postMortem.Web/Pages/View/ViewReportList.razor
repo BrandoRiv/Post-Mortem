@@ -1,0 +1,18 @@
+﻿@page "/Admin/Reports/";
+@inject postMortemWorker Worker
+
+<h2>Moderator reports</h2>
+<p>Here you can see all of the active reports that have been undecided so far.</p>
+<ReportList Entities="Reports"/>
+
+@code 
+{
+    private List<InteractiveEntity> Reports = new List<InteractiveEntity>();
+
+    protected override Task OnInitializedAsync()
+    {
+        Reports.AddRange(Worker.Comments.Find(r => r.GetUndecidedReports.Count > 0));
+        Reports.AddRange(Worker.Posts.Find(r => r.GetUndecidedReports.Count > 0));
+        return base.OnInitializedAsync();
+    }
+}

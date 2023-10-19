@@ -1,4 +1,5 @@
-﻿using postMortem.Data.Model;
+﻿using postMortem.Data.Common;
+using postMortem.Data.Model;
 using postMortem.Data.Repository.Interface;
 using System;
 using System.Collections.Generic;

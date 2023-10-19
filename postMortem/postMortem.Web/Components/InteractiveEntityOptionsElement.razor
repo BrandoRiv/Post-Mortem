@@ -12,12 +12,13 @@
 
         @if (Entity.Owner != User.Viewer)
         {
-            <DropdownItem To="#" Type="ButtonType.Link">Report</DropdownItem>
+            <DropdownItem To="@GetReportUrl()" Type="ButtonType.Link">Report</DropdownItem>
         }
 
         @if (HasAdminAccess)
         {
             <DropdownDivider />
+            <DropdownItem @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
             <DropdownItem To="@GetBanUrl()" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
         }
     </DropdownMenu>
@@ -68,6 +69,15 @@
     private string GetEditUrl()
     {
         return string.Format("/{0}/Edit/{1}", Entity.EntityType, Entity.Id);
+    }
+
+    /// <summary>
+    /// The report URL to report the post/comment.
+    /// </summary>
+    /// <returns></returns>
+    private string GetReportUrl()
+    {
+        return "/Report/" + Entity.EntityType + "/" + Entity.Id;
     }
 
     /// <summary>
