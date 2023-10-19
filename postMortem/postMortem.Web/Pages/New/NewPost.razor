@@ -28,7 +28,7 @@
     <ValidationSummary />
     <BannedUserElement User="User.Viewer" @ref=bannedUser/>
 
-    @if (bannedUser.IsBanned == null)
+    @if (!bannedUser.IsBanned)
     {
         <input type="submit" class="btn btn-primary" value="Submit!" />
     }
@@ -84,7 +84,6 @@
 
             Post.Tags.Add(chosenTag);
         }
-
 
         Worker.Posts.Add(Post);
         Worker.SaveChanges();

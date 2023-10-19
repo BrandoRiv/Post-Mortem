@@ -12,18 +12,18 @@
             <CardTitle>@Post.Title</CardTitle>
             <CardText>@Post.Message</CardText>
             <CardText>
-            @foreach(Tag tag in Post.Tags)
+                @foreach (Tag tag in Post.Tags)
             {
                 <a href="/Tags?Name=@tag.Name"><Badge Color="BadgeColor.Primary">@tag.Name</Badge></a>
-                <div class="divider"/>
+                <div class="divider" />
             }
-            </CardText>
-            <div class="row">
-                <div class="col">
-                    <VoteElement Entity="Post" />
-                </div>
-                <div class="col">
-                    <Button class="btn btn-small" Color="ButtonColor.None" To="@ViewURL" Type="ButtonType.Link"><Icon Name="IconName.Messenger" /> @Post.GetCommentWeight Comments</Button>
+        </CardText>
+        <div class="row">
+            <div class="col">
+                <VoteElement Entity="Post" />
+            </div>
+            <div class="col">
+                <Button class="btn btn-small" Color="ButtonColor.None" To="@ViewURL" Type="ButtonType.Link"><Icon Name="IconName.Messenger" /> @Post.GetCommentWeight Comments</Button>
             </div>
         </div>
     </CardBody>

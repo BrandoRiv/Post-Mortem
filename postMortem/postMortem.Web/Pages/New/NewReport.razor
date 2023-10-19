@@ -1,0 +1,107 @@
+﻿@page "/Report/{Type}/{Id}";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+
+<h3>Are you sure you want to report @Entity.Owner.UserName for the following: </h3>
+
+@if (Entity == null)
+{
+    <p>Failed to find item.</p>
+}
+else
+{
+    <br />
+
+    @if (Entity.EntityType == "Post")
+    {
+        <PostElement Post="(Post)Entity" />
+    }
+    else
+    {
+        <CommentElement Comment="(Comment)Entity" />
+    }
+
+    <br />
+
+    <EditForm Model=@newReport OnSubmit=@FormSubmitted>
+        <DataAnnotationsValidator />
+        <ServerSideValidator @ref=validator />
+
+        <div class="form-group">
+            <label class="label-primary">Report Details:</label>
+            <InputTextArea @bind-Value=newReport.Message class="form-control" />
+        </div>
+        <br />
+
+        <ValidationSummary />
+
+        <input type="submit" class="btn btn-danger" value="Report" />
+        <a href="~/"><input type="submit" class="btn btn-primary" value="Cancel" /></a>
+    </EditForm>
+}
+
+@code
+{
+    private Report newReport = new Report();
+    private ServerSideValidator validator;
+
+    /// <summary>
+    /// The id of the entity.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; }
+
+    /// <summary>
+    /// The type of entity. Post or comment.
+    /// </summary>
+    [Parameter]
+    public string Type { get; set; }
+
+    /// <summary>
+    /// The entity that is for the ban.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public InteractiveEntity? Entity { get; set; }
+
+    /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        if (Type == "Post")
+        {
+            Entity = Worker.Posts.Get(Int32.Parse(Id));
+        }
+        else if (Type == "Comment")
+        {
+            Entity = Worker.Comments.Get(Int32.Parse(Id));
+        }
+    }
+
+    /// <summary>
+    /// The form has been submitted.
+    /// </summary>
+    /// <param name="editContext"></param>
+    private async void FormSubmitted(EditContext editContext)
+    {
+        newReport.Entity = Entity;
+        newReport.Reporter = User.Viewer;
+
+        if (!editContext.Validate())
+        {
+            return;
+        }
+
+        Worker.Reports.Add(newReport);
+        Worker.SaveChanges();
+
+        // We're done here.
+        Navigation.NavigateTo("/");
+    }
+}

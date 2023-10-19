@@ -1,0 +1,132 @@
+﻿@page "/Admin/Reports/{Type}/{Id}";
+@inject postMortemWorker Worker
+@inject NavigationManager Navigation
+
+@if (Entity == null)
+{
+    <p>Failed to find item.</p>
+}
+else
+{
+    <br />
+
+    @if (Entity.EntityType == "Post")
+    {
+        <PostElement Post="(Post)Entity" />
+    }
+    else
+    {
+        <CommentElement Comment="(Comment)Entity" />
+    }
+
+    <br/>
+}
+
+<h2>Reports</h2>
+<ReportItemList Entities="Entity.GetUndecidedReports"/>
+
+<br />
+<input @onclick=OnGuiltyClick type="submit" class="btn btn-danger" value="Guilty" />
+<input @onclick=OnInnocentClick type="submit" class="btn btn-primary" value="Innocent" />
+
+
+<ConfirmDialog @ref=confirmDialog />
+
+@code 
+{
+    private ConfirmDialog confirmDialog;
+
+    /// <summary>
+    /// The id of the entity.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; }
+
+    /// <summary>
+    /// The type of entity. Post or comment.
+    /// </summary>
+    [Parameter]
+    public string Type { get; set; }
+
+    /// <summary>
+    /// The entity that is for the ban.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public InteractiveEntity? Entity { get; set; }
+
+    /// <summary>
+    /// The currently signed in user.
+    /// </summary>
+    [CascadingParameter] protected UserState User { get; set; }
+
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        if (Type == "Post")
+        {
+            Entity = Worker.Posts.Get(Int32.Parse(Id));
+        }
+        else if (Type == "Comment")
+        {
+            Entity = Worker.Comments.Get(Int32.Parse(Id));
+        }
+    }
+
+    /// <summary>
+    /// Guilty, ban the user.
+    /// </summary>
+    private async void OnGuiltyClick()
+    {
+        var confirmation = await confirmDialog.ShowAsync(
+            title: "Guilty these reports?",
+            message1: "Are you sure you want to guilty these reports? If so you will be redirected to a ban screen.");
+
+        if (!confirmation)
+        {
+            return;
+        }
+
+        // Set reports to guilty.
+        foreach (Report report in Entity.GetUndecidedReports)
+        {
+            report.Status = ReportStatus.Guilty;
+        }
+
+        // Lock the entity.
+        Entity.Status = PostStatus.Locked;
+
+        Worker.SaveChanges();
+
+        // Redirect.
+        Navigation.NavigateTo("/Admin/Ban/" + Entity.EntityType + "/" + Entity.Id);
+    }
+
+    /// <summary>
+    /// Innocent, free the user.
+    /// </summary>
+    private async void OnInnocentClick()
+    {
+        var confirmation = await confirmDialog.ShowAsync(
+            title: "Are you sure you want to delete this post?",
+            message1: "This action cannot be reversed. All reports will be set as innocent and user will not be banned.");
+
+        if (!confirmation)
+        {
+            return;
+        }
+
+        // Set reports to innocent.
+        foreach (Report report in Entity.GetUndecidedReports)
+        {
+            report.Status = ReportStatus.Innocent;
+        }
+
+        Worker.SaveChanges();
+
+        // Redirect.
+        Navigation.NavigateTo("/Admin/Reports" + Entity.EntityType + "/" + Entity.Id);
+    }
+}

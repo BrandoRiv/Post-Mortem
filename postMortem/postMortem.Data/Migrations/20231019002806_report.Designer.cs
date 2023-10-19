@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using postMortem.Data;
 
@@ -11,9 +12,11 @@ using postMortem.Data;
 namespace postMortem.Data.Migrations
 {
     [DbContext(typeof(postMortemContext))]
-    partial class postMortemContextModelSnapshot : ModelSnapshot
+    [Migration("20231019002806_report")]
+    partial class report
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,21 +58,21 @@ namespace postMortem.Data.Migrations
                         new
                         {
                             Id = "User",
-                            ConcurrencyStamp = "e978810c-eaeb-4b10-9376-ed348be5a6b3",
+                            ConcurrencyStamp = "ee202775-4615-48f9-be6e-d955466623c0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "Moderator",
-                            ConcurrencyStamp = "1752a51c-768f-464c-8a1f-0de135bf413f",
+                            ConcurrencyStamp = "6a69efa4-9649-4a59-bd67-d760fbb8f2d1",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
                             Id = "Admin",
-                            ConcurrencyStamp = "1662877f-0306-4434-bf23-d9255359bd62",
+                            ConcurrencyStamp = "eb787c0e-d92e-40fe-bb51-225b971e6c43",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -418,6 +421,9 @@ namespace postMortem.Data.Migrations
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ReportReason")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReporterId")
                         .IsRequired()

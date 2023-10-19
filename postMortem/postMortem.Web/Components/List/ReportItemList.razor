@@ -1,0 +1,35 @@
+﻿<Grid TItem="Report"
+      AllowRowClick="true"
+      AllowSorting="true"
+      Class="table table-hover"
+      DataProvider="EntitiesDataProvider"
+      HeaderRowCssClass="bg-primary text-white border-bottom-0"
+      Responsive="true">
+
+    <GridColumn TItem="Report" HeaderText="Reporter">
+        @context.Reporter.UserName
+    </GridColumn>
+
+    <GridColumn TItem="Report" HeaderText="Message">
+        @context.Message
+    </GridColumn>
+
+    <GridColumn TItem="Report" HeaderText="Report date">
+        @context.CreatedAt.ToShortDateString() @context.CreatedAt.ToShortTimeString()
+    </GridColumn>
+
+    <GridColumn TItem="Report" HeaderText="Status">
+        @context.Status
+    </GridColumn>
+</Grid>
+
+@code 
+{
+    [Parameter]
+    public List<Report> Entities { get; set; }
+
+    private async Task<GridDataProviderResult<Report>> EntitiesDataProvider(GridDataProviderRequest<Report> request)
+    {
+        return await Task.FromResult(request.ApplyTo(Entities));
+    }
+}

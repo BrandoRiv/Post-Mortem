@@ -4,25 +4,21 @@
 <Dropdown Size="Size.Small">
     <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.Gear" /></DropdownToggleButton>
     <DropdownMenu>
-        @if (Entity.Owner == User.Viewer && !Entity.Archived)
+        @if (Entity.Owner == User.Viewer && Entity.IsActive)
         {
             <DropdownItem To="@GetEditUrl()" Type="ButtonType.Link">Edit</DropdownItem>
             <DropdownItem @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
         }
 
-        @if (Entity.Owner != User.Viewer)
+        @if (Entity.Owner != User.Viewer && Entity.IsActive)
         {
-            <DropdownItem To="#" Type="ButtonType.Link">Report</DropdownItem>
+            <DropdownItem To="@GetReportUrl()" Type="ButtonType.Link">Report</DropdownItem>
         }
 
-        @if (HasAdminAccess)
+        @if (HasAdminAccess && Entity.IsActive)
         {
             <DropdownDivider />
-            @if (Entity.EntityType == "Post")
-            {
-                <DropdownItem @onclick=ShowArchiveDialog Type="ButtonType.Link">Archive</DropdownItem>
-            }
-
+            <DropdownItem @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
             <DropdownItem To="@GetBanUrl()" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
         }
     </DropdownMenu>
@@ -76,6 +72,15 @@
     }
 
     /// <summary>
+    /// The report URL to report the post/comment.
+    /// </summary>
+    /// <returns></returns>
+    private string GetReportUrl()
+    {
+        return "/Report/" + Entity.EntityType + "/" + Entity.Id;
+    }
+
+    /// <summary>
     /// Get the ban URL.
     /// </summary>
     /// <returns></returns>
@@ -120,23 +125,5 @@
             // with EntityFramework trying to add duplicate entries.
             RefreshService.CallRequestRefresh();
         }
-    }
-
-    /// <summary>
-    /// Ask the moderator if they'd like to archive the post
-    /// </summary>
-    /// <returns></returns>
-    private async Task ShowArchiveDialog()
-    {
-        var confirmation = await deleteDialog.ShowAsync(
-            title: "Are you sure you want to archive this post?",
-            message1: "This action cannot be reversed");
-
-        if (confirmation)
-        {
-            Entity.Archive();
-        }
-
-        Worker.SaveChanges();
     }
 }

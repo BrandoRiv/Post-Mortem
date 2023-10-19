@@ -5,7 +5,7 @@
 
 <PostElement Post="Post"/>
 
-@if (!Post.Archived)
+@if (Post.IsActive)
 {
     <CommentEditorElement Owner="User.Viewer" Parent="Post" />
 }
@@ -42,6 +42,9 @@
         base.OnInitialized();
     }
 
+    /// <summary>
+    /// Has a refresh been requested? Should we refresh this element.
+    /// </summary>
     private void OnRefreshRequest()
     {
         this.StateHasChanged();

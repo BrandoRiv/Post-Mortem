@@ -5,14 +5,28 @@
     </Callout>
 }
 
-@code 
+@code
 {
+    /// <summary>
+    /// Does the user have an active ban?
+    /// </summary>
     public bool IsBanned = false;
+
+    /// <summary>
+    /// Instance of the current ban.
+    /// </summary>
     public BannedUser Ban = null;
 
+    /// <summary>
+    /// User the ban element applies to.
+    /// </summary>
     [Parameter, EditorRequired]
     public User User { get; set; }
 
+    /// <summary>
+    /// Initialize the component.
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         Ban = User.IsBanned;
