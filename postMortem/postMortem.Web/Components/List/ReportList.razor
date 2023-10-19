@@ -14,7 +14,7 @@
     </GridColumn>
 
     <GridColumn TItem="InteractiveEntity" HeaderText="Number of reports">
-        @context.Reports.Count()
+        @context.GetUndecidedReports.Count()
     </GridColumn>
 
     <GridColumn TItem="InteractiveEntity" HeaderText="Last report time.">
