@@ -1,5 +1,106 @@
 ﻿@page "/"
-<PageTitle>Welcome to postMortem!</PageTitle>
+@using postMortem.Data.Model
+@inject postMortemWorker Worker
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<User> UserManager
 
-<PostList />
+<PageTitle>Index</PageTitle>
 
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row">
+        <div class="col">
+            <h1>Welcome to Post Mortem!</h1>
+
+            <!-- Display existing posts -->
+            @if (posts != null && posts.Count > 0)
+            {
+                @foreach (Post post in posts)
+                {
+                    <br />
+                    <PostElement Post="post" />
+                }
+            }
+            else
+            {
+                <div class="alert alert-info">No posts found.</div>
+            }
+            <br />
+            <!-- Add a button to create a new post -->
+            <button class="btn btn-primary" @onclick="CreateNewPost">Create New Post</button>
+
+            <!-- Render a card to create a new post -->
+            @if (showNewPostCard)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Create New Post</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Add a form to create a new post -->
+                        <form>
+                            <div class="form-group">
+                                <label for="newPostTitle">Title:</label>
+                                <input type="text" class="form-control" id="newPostTitle" @bind="newPostTitle" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newPostMessage">Message:</label>
+                                <textarea class="form-control" id="newPostMessage" @bind="newPostMessage"></textarea>
+                            </div>
+                            <button class="btn btn-success" @onclick="SaveNewPost">Save</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Post> posts;
+    private bool showNewPostCard = false;
+    private string newPostTitle = "";
+    private string newPostMessage = "";
+    private Post newlyCreatedPost; // Store the newly created post here
+
+    private User currentUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = Worker.Posts.GetAll().ToList();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        currentUser = await UserManager.GetUserAsync(authState.User);
+    }
+
+    private void CreateNewPost()
+    {
+        // Show the "Create New Post" card when the button is clicked
+        showNewPostCard = true;
+    }
+
+    private void SaveNewPost()
+    {
+        // Validate and save the new post
+        if (!string.IsNullOrWhiteSpace(newPostTitle) && !string.IsNullOrWhiteSpace(newPostMessage))
+        {
+            // Create a new Post object with the current user as the poster
+            var newPost = new Post(newPostTitle, newPostMessage, currentUser);
+            Worker.Posts.Add(newPost);
+            Worker.SaveChanges();
+
+            // Store the newly created post for rendering
+            newlyCreatedPost = newPost;
+
+            // Clear the form and hide the card
+            newPostTitle = "";
+            newPostMessage = "";
+            showNewPostCard = false;
+        }
+        else
+        {
+            // Handle validation errors or show a message to the user
+            // For example, you can display a validation message
+            // or prevent saving if required fields are empty
+            // You can also add more sophisticated validation logic here
+        }
+    }
+}
