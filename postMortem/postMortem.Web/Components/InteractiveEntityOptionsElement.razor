@@ -18,6 +18,7 @@
         @if (HasAdminAccess && Entity.IsActive)
         {
             <DropdownDivider />
+            <DropdownItem @onclick="ShowLockDialog" Type="ButtonType.Link">Archive</DropdownItem>
             <DropdownItem @onclick="ShowDeleteDialog" Type="ButtonType.Link" Style="color: red;">Delete</DropdownItem>
             <DropdownItem To="@GetBanUrl()" Type="ButtonType.Link" Style="color: red; font-weight:bold;">Ban</DropdownItem>
         }
@@ -114,6 +115,34 @@
                     Worker.Comments.Remove((Comment)Entity);
                 }
 
+                Worker.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                string b = "";
+            }
+
+            // Request the parent refreshes to stop any issues we may see
+            // with EntityFramework trying to add duplicate entries.
+            RefreshService.CallRequestRefresh();
+        }
+    }
+
+    /// <summary>
+    /// Show the delete button.
+    /// </summary>
+    /// <returns></returns>
+    private async Task ShowLockDialog()
+    {
+        var confirmation = await deleteDialog.ShowAsync(
+            title: "Are you sure you want to lock this element?",
+            message1: "This action cannot be reversed");
+
+        if (confirmation)
+        {
+            try
+            {
+                Entity.Archive();
                 Worker.SaveChanges();
             }
             catch (Exception e)

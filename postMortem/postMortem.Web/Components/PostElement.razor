@@ -31,9 +31,9 @@
 
 @code 
 {
-    /// <summary>
-    /// Tells whether the post is favorited.
-    /// </summary>
+        /// <summary>
+        /// Tells whether the post is favorited.
+        /// </summary>
     private IconName IsFavorited = IconName.Heart;
 
     /// <summary>
@@ -66,7 +66,8 @@
             return;
         }
 
-        FavoritePost favorited = Worker.Favorites.FirstOrDefault(r => r.User == User.Viewer && r.Post.Id == Post.Id);
+        //Worker.Favorites.FirstOrDefault(r => r.User == User.Viewer && r.Post.Id == Post.Id);
+        FavoritePost favorited = User.Viewer.Favorites.FirstOrDefault(r => r.Post.Id == Post.Id);
 
         if (change)
         {
