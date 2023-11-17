@@ -2,16 +2,20 @@
 
 <div class="row">
     <div class="col" style="margin-top:7px; max-width:@(Entity.GetVotes().ToString().Count() * 20)px;">
-        @Entity.GetVotes()
+       <b>@Entity.GetVotes()</b>
     </div>
     @if (Entity.IsActive)
     {
-        <div class="col" style="max-width:50px;">
-            <Button class="btn btn-small" onclick="@OnUpClick" Color="@UpColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowUp" /></Button>
-        </div>
-        <div class="col" style="max-width:40px;">
-            <Button class="btn btn-small" onclick="@OnDownClick" Color="@DownColor" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.ArrowDown" /></Button>
-        </div>
+        <div class="col" style="max-width:40px; margin-right: 20px;">
+    <Button class="btn btn-small" @onclick="@OnUpClick" Color="@UpColor" Type="ButtonType.Link" Disabled=@IsDisabled>
+        <img src="@UpvoteIcon" alt="Upvote" width="30" height="30"/>
+    </Button>
+    </div>
+    <div class="col" style="max-width:40px;">
+        <Button class="btn btn-small" @onclick="@OnDownClick" Color="@DownColor" Type="ButtonType.Link" Disabled=@IsDisabled>
+            <img src="@DownvoteIcon" alt="Downvote" width="30" height="30"/>
+        </Button>
+    </div>
     }
 </div>
 
@@ -21,23 +25,13 @@
     /// Default colors for background of up buttons.
     /// </summary>
     private const ButtonColor Up = ButtonColor.None;
-    private const ButtonColor UpSelected = ButtonColor.Danger;
+    private const ButtonColor UpSelected = ButtonColor.Info;
 
     /// <summary>
     /// Default colors for background of down button.
     /// </summary>
     private const ButtonColor Down = ButtonColor.None;
-    private const ButtonColor DownSelected = ButtonColor.Info;
-
-    /// <summary>
-    /// Current color of the upvote.
-    /// </summary>
-    private ButtonColor UpColor = Up;
-
-    /// <summary>
-    /// Current color of the downvote.
-    /// </summary>
-    private ButtonColor DownColor = Down;
+    private const ButtonColor DownSelected = ButtonColor.Danger;
 
     /// <summary>
     /// Tells whether this entity is disabled because the user is not signed in.
@@ -49,6 +43,11 @@
     /// </summary>
     [Parameter, EditorRequired] public InteractiveEntity Entity { get; set; }
     [CascadingParameter] protected UserState User { get; set; }
+    private string UpvoteIcon = "css/icons/Upvotev2nc.png";
+    private string DownvoteIcon = "css/icons/downvotev2nc.png"; // Replace with the initial downvote icon path
+    private ButtonColor UpColor = ButtonColor.None; // Default color
+    private ButtonColor DownColor = ButtonColor.None; // Default color
+
 
     /// <summary>
     /// Initialize the component.
@@ -72,38 +71,42 @@
     /// </summary>
     /// <returns></returns>
     protected virtual async Task UpdateVoteType()
-    {
-        Vote voteGiven = GetUsersVote();
+{
+    Vote voteGiven = GetUsersVote();
 
-        // User has no vote.
+    // User has no vote
         if (voteGiven == null)
         {
-            UpColor = Up;
-            DownColor = Down;
+            UpColor = Up; // Up is ButtonColor.None or another ButtonColor
+            DownColor = Down; // Down is ButtonColor.None or another ButtonColor
         }
         else
         {
-            // User likes it.
+            // User likes it
             if (voteGiven.VoteType == 1)
             {
-                UpColor = UpSelected;
-                DownColor = Down;
+                UpColor = UpSelected; // UpSelected is a ButtonColor
+                DownColor = Down; // Down is ButtonColor.None or another ButtonColor
             }
 
-            // User does not like it.
+            // User does not like it
             if (voteGiven.VoteType == -1)
             {
-                UpColor = Up;
-                DownColor = DownSelected;
+                UpColor = Up; // Up is ButtonColor.None or another ButtonColor
+                DownColor = DownSelected; // DownSelected is a ButtonColor
             }
         }
     }
+
 
     /// <summary>
     /// Called when the user clicks on the upvote button.
     /// </summary>
     protected virtual async void OnUpClick()
     {
+        // Change the Upvote icon to another image upon click
+        UpvoteIcon = "css/icons/Upvote.png";
+        DownvoteIcon = "css/icons/downvotev2nc.png";
         HandleClick(1);
     }
 
@@ -112,6 +115,9 @@
     /// </summary>
     protected virtual async void OnDownClick()
     {
+        // Change the Downvote icon to another image upon click
+        DownvoteIcon = "css/icons/Downvote.png";
+        UpvoteIcon = "css/icons/Upvotev2nc.png";
         HandleClick(-1);
     }
 

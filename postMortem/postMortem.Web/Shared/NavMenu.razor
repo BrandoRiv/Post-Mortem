@@ -58,6 +58,12 @@
                 new NavItem { Id = "4", Href = "/Favorite", IconName = IconName.HeartFill, Text = "Favorites", ParentId="2"},
                 new NavItem { Id = "5", Href = "/Settings", IconName = IconName.Gear, Text = "Settings", ParentId="2"}
                 });
+        } else {
+            navItems.AddRange
+            (new List<NavItem>{
+                new NavItem { Id = "3", Href = "/Login", IconName = IconName.PersonBadge, Text = "Login"},
+                new NavItem { Id = "4", Href = "/Register", IconName = IconName.PersonBadge, Text = "Register"}
+                }); 
         }
 
         if (User.HasRole("Moderator", "Admin"))

@@ -7,34 +7,40 @@
 }
 else
 {
-    <h3>Account Details for @CurrentUser.UserName</h3>
+    <div class="container d-flex justify-content-center align-items-center" style="height: 200%;">
+        <div class="row">
+        <div class="col">
+    <h3>@CurrentUser.UserName</h3>
 
-    <Tabs>
-        <Tab Title="Posts" IsActive="true">
-            <Content>
-                <br />
-                <PostList Owner="@CurrentUser" />
-            </Content>
-        </Tab>
-        <Tab Title="Comments">
-            <Content>
-                <br />
-                <CommentList Owner="@CurrentUser" />
-            </Content>
-        </Tab>
-        <Tab Title="Upvotes">
-            <Content>
-                <br />
-                <VoteList Owner="@CurrentUser" VoteType="1"/>
-            </Content>
-        </Tab>
-        <Tab Title="Downvotes">
-            <Content>
-                <br />
-                <VoteList Owner="@CurrentUser" VoteType="-1" />
-            </Content>
-        </Tab>
-    </Tabs>
+        <Tabs>
+            <Tab Title="Posts" IsActive="true">
+                <Content>
+                    <br />
+                    <PostList Owner="@CurrentUser" />
+                </Content>
+            </Tab>
+            <Tab Title="Comments">
+                <Content>
+                    <br />
+                    <CommentList Owner="@CurrentUser" />
+                </Content>
+            </Tab>
+            <Tab Title="Upvotes">
+                <Content>
+                    <br />
+                    <VoteList Owner="@CurrentUser" VoteType="1"/>
+                </Content>
+            </Tab>
+            <Tab Title="Downvotes">
+                <Content>
+                    <br />
+                    <VoteList Owner="@CurrentUser" VoteType="-1" />
+                </Content>
+            </Tab>
+        </Tabs>
+         </div>
+         </div>
+    </div>
 }
 
 @code 
