@@ -2,64 +2,34 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace postMortem.Data.Model
 {
-    /// <summary>
-    /// Represents a post from a user with a title and message.
-    /// </summary>
     public class Post : InteractiveEntity
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Post"/> class. This constructor is required for entity framework to include it.
-        /// </summary>
-        public Post() 
+        public Post()
         {
             Title = "";
             Message = "";
-            Tags = new List<Tag>();
+            Tags = new List<Tag>(); // Initialize the Tags list here
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Post"/> class. 
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="message"></param>
         public Post(string title, string message, User poster)
             : base(poster)
         {
             Title = title;
             Message = message;
+            Tags = new List<Tag>(); // Also initialize the Tags list here
         }
 
-        /// <summary>
-        /// Title of the post.
-        /// </summary>
         [Required]
         [StringLength(32, ErrorMessage = "Title too long (32 character limit).")]
         public string Title { get; set; }
 
-        /// <summary>
-        /// Message included with the post.
-        /// </summary>
         public string Message { get; set; }
-
-        /// <summary>
-        /// Is this post marked as NSFW?
-        /// </summary>
         public bool MarkedNSFW { get; set; }
+        public virtual List<Tag> Tags { get; private set; } // Tags list is initialized in constructors
 
-        /// <summary>
-        /// Gets or sets a list of related tags.
-        /// </summary>
-        public virtual List<Tag> Tags { get; set; }
-
-        /// <summary>
-        /// Internally determine what type of entity this is by it's type.
-        /// </summary>
         public override string EntityType => "Post";
     }
 }
