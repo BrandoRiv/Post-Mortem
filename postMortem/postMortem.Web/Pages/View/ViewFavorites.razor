@@ -1,12 +1,64 @@
-﻿@page "/Favorite";
+﻿@page "/Favorite"
 @inject postMortemWorker Worker
+@inject NavigationManager Navigation
 
-<h3>Your Favorites</h3>
+<style>
+    .favorites-header {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white; /* Assuming white color for contrast */
+        margin-bottom: 1rem;
+        padding: 0.5rem 0; /* Added padding for spacing */
+    }
 
-<PostList _Posts="_favorites" />
+    .favorites-container {
+        max-width: 75%; /* Adjust the width as needed */
+    }
 
-@code 
-{
+    .alert-custom {
+        background-color: #FAF0E6; /* Make background transparent */
+        border-left: 1px solid var(--bs-card-border-color);
+        border-top: 0;
+        border-right: 0;
+        border-bottom: 0;
+        border-radius: 5px; /* Remove border */
+        color: black; /* Adjust this color for better visibility if needed */
+    }
+
+    .home-button {
+        color: white; /* White text color for the button */
+        background-color: #6f42c1; /* Purple background color to match your theme */
+        border-color: #6f42c1; /* Purple border color to match the background */
+    }
+
+        .home-button:hover {
+            color: white; /* White text color for hover state */
+            background-color: #5c3799; /* Slightly darker purple on hover */
+            border-color: #5c3799; /* Slightly darker purple border on hover */
+        }
+</style>
+
+<div class="text-center">
+    <h3 class="favorites-header">Your Favorites</h3>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="favorites-container">
+        @if (_favorites.Any())
+        {
+            <PostList _Posts="_favorites" />
+        }
+        else
+        {
+            <div class="alert alert-custom text-center" role="alert">
+                You do not have any favorites. Go and favorite a post to see!
+                <button class="btn home-button" @onclick="GoToHomePage">Go to Home Page</button>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
     /// <summary>
     /// List of favorite posts.
     /// </summary>
@@ -20,12 +72,12 @@
     /// <summary>
     /// Initialize the component.
     /// </summary>
-    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
+
+
         try
         {
-
             foreach (FavoritePost post in User.Viewer.Favorites)
             {
                 _favorites.Add(post.Post);
@@ -37,5 +89,10 @@
         {
             // No catching allowed. Poachers will be shot.
         }
+    }
+
+    private void GoToHomePage()
+    {
+        Navigation.NavigateTo("/");
     }
 }

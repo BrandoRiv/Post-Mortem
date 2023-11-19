@@ -2,24 +2,33 @@
 @inject postMortemWorker Worker
 @inject NavigationManager Navigation
 @inject IRefreshService RefreshService;
+
+<style>
+    .bold-white-text {
+        font-weight: bold;
+        color: white;
+    }
+</style>
+
 <div class="container d-flex justify-content-center align-items-center">
     <div class="row">
         <div class="col">
-        <PostElement Post="Post"/>
+            <PostElement Post="Post" />
 
-        @if (Post.IsActive)
-        {
-            <h2>Reply: </h2>
-            <CommentEditorElement Owner="User.Viewer" Parent="Post" />
-        }
+            @if (Post.IsActive)
+            {
+                <h2 class="bold-white-text">Reply:</h2>
 
-        <br/>
-            <h2>Comments:</h2>
-        <br />
-        @foreach (Comment comment in Post.Comments)
-        {
-            <CommentElement Comment="comment"/>
-        }
+                <CommentEditorElement Owner="User.Viewer" Parent="Post" />
+            }
+
+            <br />
+            <h2 class="bold-white-text">Comments:</h2>
+            <br />
+            @foreach (Comment comment in Post.Comments)
+            {
+                <CommentElement Comment="comment" />
+            }
 
         </div>
     </div>
