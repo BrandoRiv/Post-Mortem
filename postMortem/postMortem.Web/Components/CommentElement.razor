@@ -1,10 +1,25 @@
 ﻿@inject postMortemWorker Worker
 
+<style>
+    .home-button {
+        color: white; /* White text color for the button */
+        background-color: #6f42c1; /* Purple background color to match your theme */
+        border-color: #6f42c1; /* Purple border color to match the background */
+        margin-top: 10px; /* Add some space above the button */
+    }
+
+        .home-button:hover {
+            color: white; /* White text color for hover state */
+            background-color: #5c3799; /* Slightly darker purple on hover */
+            border-color: #5c3799; /* Slightly darker purple border on hover */
+        }
+</style>
+
 <Card Style="width:40rem;">
     <CardBody>
         <AuthorizeView>
             <div class="post-heart">
-                <InteractiveEntityOptionsElement Entity="Comment" />         
+                <InteractiveEntityOptionsElement Entity="Comment" />
             </div>
         </AuthorizeView>
         <CardText>Posted by <a href="/Profile/@Comment.Owner.UserName">@Comment.Owner.UserName</a> at @Comment.CreatedAt.ToShortTimeString() @IsModified()</CardText>
@@ -13,40 +28,39 @@
         @if (ShowBanMessage)
         {
             <CardText>
-            <BannedUserElement User="User.Viewer" />
+                <BannedUserElement User="User.Viewer" />
             </CardText>
         }
         <div class="row" style="max-width:30rem;">
             <div class="col">
                 <VoteElement Entity="Comment" />
-             </div>
-             @if (Comment.IsActive)
-             {
+            </div>
+            @if (Comment.IsActive)
+            {
                 <div class="col">
-                    <Button @onclick="OnShowEditor" class="btn btn-small" Color="ButtonColor.None" Type="ButtonType.Link" Disabled=@IsDisabled><Icon Name="IconName.Messenger" /> Reply</Button>
+                    <button @onclick="OnShowEditor" class="home-button" disabled="@IsDisabled">Reply</button>
                 </div>
-             }
-         </div>
-         
-         @if (ShowEditor)
-         {
-             <CommentEditorElement @ref=EditorWindow Owner="User.Viewer" Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
-         }
-         
-         @if (ShowChildren)
-         {
+            }
+        </div>
+
+        @if (ShowEditor)
+        {
+            <CommentEditorElement @ref=EditorWindow Owner="User.Viewer" Parent="Comment" OnCancel="OnCancelClick" OnComplete="OnCompleteClick" />
+        }
+
+        @if (ShowChildren)
+        {
             @foreach (Comment child in Comment.Comments)
             {
                 <br />
                 <CommentElement Comment="child" />
             }
-         }
+        }
     </CardBody>
 </Card>
 <br />
 
-@code 
-{
+@code {
     /// <summary>
     /// Is this element enabled? Do not allow the element to be enabled if the user is not signed in.
     /// </summary>
@@ -70,7 +84,7 @@
     /// <summary>
     /// The comment we should display using this comment.
     /// </summary>
-    [Parameter] public Comment? Comment { get; set; } = new Comment();
+    [Parameter] public Comment Comment { get; set; }
 
     /// <summary>
     /// Should we show the children of this comment along with the comment?
@@ -82,10 +96,6 @@
     /// </summary>
     [CascadingParameter] protected UserState User { get; set; }
 
-    /// <summary>
-    /// Initialize the element.
-    /// </summary>
-    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         if (User == null)
@@ -96,10 +106,7 @@
         await base.OnInitializedAsync();
     }
 
-    /// <summary>
-    /// Show the editor for this comment.
-    /// </summary>
-    protected async void OnShowEditor()
+    private void OnShowEditor()
     {
         if (User.Viewer.IsBanned != null)
         {
@@ -111,35 +118,16 @@
         }
     }
 
-    /// <summary>
-    /// The editor cancel button has been clicked.
-    /// </summary>
     private void OnCancelClick()
     {
-        this.Dispose();
+        ShowEditor = false;
     }
 
-    /// <summary>
-    /// The editor complete has been clicked.
-    /// </summary>
     private void OnCompleteClick()
     {
-        this.Dispose();
+        ShowEditor = false;
     }
 
-    /// <summary>
-    /// Hide the editor and dipose of the editor for best measures.
-    /// </summary>
-    private void Dispose()
-    {
-        this.ShowEditor = false;
-        this.EditorWindow = null;
-    }
-
-    /// <summary>
-    /// Gets a string telling whether the post has been modified.
-    /// </summary>
-    /// <returns></returns>
     private string IsModified()
     {
         if (Comment.CreatedAt != Comment.ModifiedAt)

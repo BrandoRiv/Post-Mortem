@@ -3,10 +3,23 @@
 @inject NavigationManager Navigation
 @inject IRefreshService RefreshService;
 
+<style>
+    .home-button {
+        color: white;
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+        margin-top: 10px; /* Adjust as needed */
+    }
+
+        .home-button:hover {
+            color: white;
+            background-color: #5c3799;
+            border-color: #5c3799;
+        }
+</style>
+
 <EditForm Model=@Comment OnSubmit=@FormSubmitted>
-    <DataAnnotationsValidator />
     <br />
-    <p>Reply...</p>
     <div class="form-group">
         <div class="row">
             <div class="col">
@@ -18,13 +31,12 @@
     <div class="form-group">
         <div class="row" style="max-width:200px">
             <div class="col">
-                <input type="submit" class="btn btn-outline-primary btn-sm" value="Submit!" style="max-width:80px" /> <div class="divider" />
+                <button type="submit" class="btn home-button">Reply</button> <div class="divider" />
             </div>
-
             @if (Parent.EntityType != "Post")
             {
                 <div class="col">
-                    <input @onclick=OnCancelClick class="btn btn-outline-primary btn-sm" value="Cancel" style="max-width:80px" />
+                    <button @onclick=OnCancelClick class="btn home-button">Cancel</button>
                 </div>
             }
         </div>
@@ -32,6 +44,7 @@
     <ValidationSummary />
 </EditForm>
 <br />
+
 
 @code
 {
@@ -112,7 +125,7 @@
 
         Worker.SaveChanges();
 
-        // Request the parent refreshes to stop any issues we may see 
+        // Request the parent refreshes to stop any issues we may see
         // with EntityFramework trying to add duplicate entries.
         RefreshService.CallRequestRefresh();
 
