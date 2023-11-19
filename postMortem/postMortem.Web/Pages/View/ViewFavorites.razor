@@ -23,11 +23,19 @@
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        foreach (FavoritePost post in User.Viewer.Favorites)
+        try
         {
-            _favorites.Add(post.Post);
-        }
 
-        await base.OnInitializedAsync();
+            foreach (FavoritePost post in User.Viewer.Favorites)
+            {
+                _favorites.Add(post.Post);
+            }
+
+            await base.OnInitializedAsync();
+        }
+        catch (Exception e)
+        {
+            // No catching allowed. Poachers will be shot.
+        }
     }
 }
