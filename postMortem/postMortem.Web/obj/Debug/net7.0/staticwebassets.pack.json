@@ -1,175 +1,167 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\postMortem.Web.bundle.scp.css",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\postMortem.Web.bundle.scp.css",
       "PackagePath": "staticwebassets\\postMortem.Web.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\animation.js",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\animation.js",
       "PackagePath": "staticwebassets\\animation.js"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\greensmoke.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\greensmoke.png",
       "PackagePath": "staticwebassets\\css\\greensmoke.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\PM-logo\\PM-logo-vector.ai",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\PM-logo\\PM-logo-vector.ai",
       "PackagePath": "staticwebassets\\css\\icons\\PM-logo\\PM-logo-vector.ai"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\PM-logo\\Post Mortem-logo-icon.jpg",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\PM-logo\\Post Mortem-logo-icon.jpg",
       "PackagePath": "staticwebassets\\css\\icons\\PM-logo\\Post Mortem-logo-icon.jpg"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\PM-logo\\Post Mortem-logo-icon.svg",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\PM-logo\\Post Mortem-logo-icon.svg",
       "PackagePath": "staticwebassets\\css\\icons\\PM-logo\\Post Mortem-logo-icon.svg"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\Upvote v2.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\Upvote v2.png",
       "PackagePath": "staticwebassets\\css\\icons\\Upvote v2.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\Upvote.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\Upvote.png",
       "PackagePath": "staticwebassets\\css\\icons\\Upvote.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\Upvotev2nc.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\Upvotev2nc.png",
       "PackagePath": "staticwebassets\\css\\icons\\Upvotev2nc.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\comment.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\comment.png",
       "PackagePath": "staticwebassets\\css\\icons\\comment.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\downvote v2.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\downvote v2.png",
       "PackagePath": "staticwebassets\\css\\icons\\downvote v2.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\downvote.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\downvote.png",
       "PackagePath": "staticwebassets\\css\\icons\\downvote.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\downvotev2nc.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\downvotev2nc.png",
       "PackagePath": "staticwebassets\\css\\icons\\downvotev2nc.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\home.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\home.png",
       "PackagePath": "staticwebassets\\css\\icons\\home.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\iocn-pack\\PNG\\.DS_Store",
-      "PackagePath": "staticwebassets\\css\\icons\\iocn-pack\\PNG\\.DS_Store"
-    },
-    {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\iocn-pack\\icon-vector.ai",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\iocn-pack\\icon-vector.ai",
       "PackagePath": "staticwebassets\\css\\icons\\iocn-pack\\icon-vector.ai"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\myaccount.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\myaccount.png",
       "PackagePath": "staticwebassets\\css\\icons\\myaccount.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\placeholder\\.DS_Store",
-      "PackagePath": "staticwebassets\\css\\icons\\placeholder\\.DS_Store"
-    },
-    {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\placeholder\\placeholder-vector.ai",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\placeholder\\placeholder-vector.ai",
       "PackagePath": "staticwebassets\\css\\icons\\placeholder\\placeholder-vector.ai"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\placeholder\\placeholder.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\placeholder\\placeholder.png",
       "PackagePath": "staticwebassets\\css\\icons\\placeholder\\placeholder.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\placeholder\\placeholder.svg",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\placeholder\\placeholder.svg",
       "PackagePath": "staticwebassets\\css\\icons\\placeholder\\placeholder.svg"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\pmlogo.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\pmlogo.png",
       "PackagePath": "staticwebassets\\css\\icons\\pmlogo.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\tag.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\tag.png",
       "PackagePath": "staticwebassets\\css\\icons\\tag.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\My Account.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\My Account.png",
       "PackagePath": "staticwebassets\\css\\icons\\without-color\\My Account.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\Upvote.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\Upvote.png",
       "PackagePath": "staticwebassets\\css\\icons\\without-color\\Upvote.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\comment.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\comment.png",
       "PackagePath": "staticwebassets\\css\\icons\\without-color\\comment.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\downvote.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\downvote.png",
       "PackagePath": "staticwebassets\\css\\icons\\without-color\\downvote.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\home.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\home.png",
       "PackagePath": "staticwebassets\\css\\icons\\without-color\\home.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\tag.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\without-color\\tag.png",
       "PackagePath": "staticwebassets\\css\\icons\\without-color\\tag.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\woods.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\icons\\woods.png",
       "PackagePath": "staticwebassets\\css\\icons\\woods.png"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "PackagePath": "staticwebassets\\css\\open-iconic"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "PackagePath": "staticwebassets\\css\\open-iconic"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\README.md",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\README.md",
       "PackagePath": "staticwebassets\\css\\open-iconic\\README.md"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\Brandon\\Documents\\GitHub\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\favicon.png",
+      "Id": "C:\\Users\\adouglas\\Source\\Repos\\2023_F_Brandon\\postMortem\\postMortem.Web\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
