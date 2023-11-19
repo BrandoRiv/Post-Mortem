@@ -1,66 +1,59 @@
 ﻿@inject postMortemWorker Worker
+@inject NavigationManager NavigationManager
 
-<Card Style="width:50rem;">
-    <CardBody Style="padding: 20px;">
+<Card Style="width:50rem;" @onclick="NavigateToPost">
+    <CardBody Style="padding: 20px;" @onclick="NavigateToPost">
         <AuthorizeView>
-            <div class="post-heart">
-                <Button class="btn btn-small" Color="ButtonColor.Danger" @onclick="OnFavoriteClick" Type="ButtonType.Button"><Icon Name="@IsFavorited" /></Button>
+            <div class="post-heart" @onclick:stopPropagation="true">
+                <Button class="btn btn-small" Color="ButtonColor.Danger" @onclick="OnFavoriteClick" Type="ButtonType.Button">
+                    <Icon Name="@IsFavorited" />
+                </Button>
                 <InteractiveEntityOptionsElement Entity="Post" />
             </div>
         </AuthorizeView>
         <CardTitle class="post-title">@Post.Title</CardTitle>
-        <CardText class="subtitle"><a href="/Account/@Post.Owner.UserName">@Post.Owner.UserName</a> @Post.CreatedAt.ToShortTimeString()</CardText>
+        <CardText class="subtitle">
+            <a href="/Account/@Post.Owner.UserName" @onclick:stopPropagation="true">@Post.Owner.UserName</a> 
+            @Post.CreatedAt.ToShortTimeString()
+        </CardText>
         <CardText class="card-text-container">@Post.Message</CardText>
         <div>
             <img src="css/icons/tag.png" alt="Comment" class="comment-icon"/>
             @foreach (Tag tag in Post.Tags)
             {
-                <a href="/Tags?Name=@tag.Name"><Badge Color="BadgeColor.Primary" class="lowercase">#@tag.Name</Badge></a>
+                <a href="/Tags?Name=@tag.Name" @onclick:stopPropagation="true">
+                    <Badge Color="BadgeColor.Primary" class="lowercase">#@tag.Name</Badge>
+                </a>
                 <div class="divider" />
             }
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" @onclick:stopPropagation="true">
                 <VoteElement Entity="Post" />
             </div>
             <div class="col">
-                <Button class="btn" Color="ButtonColor.None" To="@ViewURL" Type="ButtonType.Link"><img src="css/icons/comment.png" alt="Comment" class="comment-icon"/>@Post.GetCommentWeight Comments</Button>
+                <Button class="btn" Color="ButtonColor.None" To="@ViewURL" Type="ButtonType.Link">
+                    <img src="css/icons/comment.png" alt="Comment" class="comment-icon"/>
+                    @Post.GetCommentWeight Comments
+                </Button>
             </div>
         </div>
     </CardBody>
 </Card>
 
-
-@code 
-{
-        /// <summary>
-        /// Tells whether the post is favorited.
-        /// </summary>
+@code {
     private IconName IsFavorited = IconName.Heart;
 
-    /// <summary>
-    /// Gets or sets the post for this element to display.
-    /// </summary>
     [Parameter] public Post? Post { get; set; } = new Post();
 
-    /// <summary>
-    /// The currently signed in user.
-    /// </summary>
     [CascadingParameter] protected UserState User { get; set; }
 
-    /// <summary>
-    /// Initialize the element.
-    /// </summary>
-    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         await UpdateFavoriteStatus();
         await base.OnInitializedAsync();
     }
 
-    /// <summary>
-    /// Update the favorite status for the user on this element.
-    /// </summary>
     protected async Task UpdateFavoriteStatus(bool change = false)
     {
         if (User.Viewer == null)
@@ -68,7 +61,6 @@
             return;
         }
 
-        //Worker.Favorites.FirstOrDefault(r => r.User == User.Viewer && r.Post.Id == Post.Id);
         FavoritePost favorited = User.Viewer.Favorites.FirstOrDefault(r => r.Post.Id == Post.Id);
 
         if (change)
@@ -99,34 +91,29 @@
         StateHasChanged();
     }
 
-    /// <summary>
-    /// Gets the URL of the post. Using the razor page it likes to act up.
-    /// </summary>
     private string ViewURL
     {
         get { return "/Posts/View/" + Post.Id; }
     }
 
-    /// <summary>
-    /// Gets a string telling whether the post has been modified.
-    /// </summary>
-    /// <returns></returns>
     private string IsModified()
     {
-        if (Post.CreatedAt != Post.ModifiedAt)
-        {
-            return "(Edited, " + Post.ModifiedAt.ToShortDateString() + ")";
-        }
-
-        return "";
+        return Post.CreatedAt != Post.ModifiedAt ? "(Edited, " + Post.ModifiedAt.ToShortDateString() + ")" : "";
     }
 
-    /// <summary>
-    /// Update the favorite status.
-    /// </summary>
-    /// <returns></returns>
     private async Task OnFavoriteClick()
     {
         await UpdateFavoriteStatus(true);
     }
+
+    private void NavigateToPost()
+    {
+        var targetUrl = $"/Posts/View/{Post.Id}";
+        if (!NavigationManager.Uri.EndsWith(targetUrl))
+        {
+            NavigationManager.NavigateTo(targetUrl);
+        }
+    }
+
+
 }
