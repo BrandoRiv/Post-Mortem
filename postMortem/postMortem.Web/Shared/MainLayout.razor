@@ -4,7 +4,6 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>postMortem.Web</PageTitle>
-
 <div class="page" >
     <div class="left-sidebar">
         <!-- Left sidebar content -->
@@ -30,6 +29,16 @@
                         <li><a class="dropdown-item" href="/Favorites">Favorites</a></li>
                         <li><a class="dropdown-item" href="@("/Account/" + CurrentUserState.Viewer.UserName)">History</a></li>
                     </ul>
+                    @if (CurrentUserState.HasRole("Moderator", "Admin")) 
+                    {
+                        <a class="image-text-button dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Moderation
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="/Admins">Admins</a></li>
+                        <li><a class="dropdown-item" href="/Admin/Reports/">Reports</a></li>
+                    </ul>
+                    }
                 </div>
                 <LoginDisplay />
             }

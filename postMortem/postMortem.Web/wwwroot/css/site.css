@@ -26,7 +26,11 @@ body {
     border-right: 0;
     border-bottom: 0;
     border-radius: 5px;
+    /* Removed fixed height to allow the card to grow with content */
 }
+
+
+
 
 .post-title {
     font-size: 1.5rem;
@@ -36,13 +40,13 @@ body {
 }
 
 .card-text-container {
-    height: 30%;
-    max-height: 800px;
+    min-height: 50px;
     overflow-y: auto;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    padding: 10px;
+    font-size: 1em;
+    color: #333;
 }
+
 
 .title, .subtitle {
     line-height: 1.5;
@@ -113,6 +117,7 @@ body {
 
 .post-heart {
     position: absolute;
+    padding: 20px;
     top: 10px;
     right: 10px;
 }

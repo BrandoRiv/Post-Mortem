@@ -1,7 +1,7 @@
 ﻿@inject postMortemWorker Worker
 
-<Card Style="width:50rem; height:20rem;">
-    <CardBody>
+<Card Style="width:50rem;">
+    <CardBody Style="padding: 20px;">
         <AuthorizeView>
             <div class="post-heart">
                 <Button class="btn btn-small" Color="ButtonColor.Danger" @onclick="OnFavoriteClick" Type="ButtonType.Button"><Icon Name="@IsFavorited" /></Button>
