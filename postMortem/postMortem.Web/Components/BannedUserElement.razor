@@ -27,12 +27,15 @@
     /// Initialize the component.
     /// </summary>
     /// <returns></returns>
-    protected override async Task OnInitializedAsync()
+     protected override async Task OnInitializedAsync()
     {
-        Ban = User.IsBanned;
-        if (Ban != null)
+        if (User != null)
         {
-            IsBanned = true;
+            Ban = User.IsBanned;
+            if (Ban != null)
+            {
+                IsBanned = true;
+            }
         }
 
         await base.OnInitializedAsync();
